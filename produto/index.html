@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="Style.css">
+  <title>Projeto</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-lg">
+      <div class="row Nav-bar">
+        <div class="col" style="margin-right: auto">
+          <a class="navbar-brand" href="https://youtube.com">Página Inicial</a>
+          <a class="navbar-brand" id="Nav-Produto" href="https://youtube.com">Produto</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+
+
+  <div class="container Cadastro_Produtos">
+    <form>
+      <ul class="nav nav-tabs" id="myTabs" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1"
+            aria-selected="true">Produto</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2"
+            aria-selected="false">Estoque</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabsContent">
+        <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+          <div class="mb-3">
+            <div class="row">
+              <div class="col-2">
+                <label for="IdProduto" class="form-label">ID do Produto: </label>
+                <input type="number" class="form-control" id="IdProduto" name="IdProduto"
+                  requiredplaceholder="ID do produto....">
+              </div>
+              <div class="col-2">
+                <label for="UnidadeVenda" class="form-label">Unidade de venda: </label>
+                <select class="form-select form-select" aria-label=".form-select-sm example">
+                  <option selected></option>
+                  <option value="1">UN</option>
+                  <option value="2">KG</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <label for="UnidadeVenda" class="form-label">Código de Barras: </label>
+                <input type="number" class="form-control" id="IdProduto" name="IdProduto"
+                  requiredplaceholder="ID do produto....">
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <div class="row">
+              <div class="col-4">
+                <label for="nomeProduto" class="form-label">Nome do Produto:</label>
+                <input type="text" class="form-control" id="nomeProduto" name="nomeProduto" required
+                  placeholder="Digite o nome do produto...">
+              </div>
+              <div class="col-3">
+                <label for="nomeProduto" class="form-label">Categoria:</label>
+                <select class="form-select form-select" aria-label=".form-select-sm example">
+                  <option selected></option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <div class="row">
+              <div class="col-6">
+                <label for="descricao" class="form-label">Descrição:</label>
+                <textarea class="form-control" id="descricao" name="descricao" rows="3" required
+                  placeholder="Descrição do Produto...."></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="row-cols-1">
+            <div class="col-1">
+              <div class="mb-3">
+                <label for="preco" class="form-label">Preço:</label>
+                <input type="text" class="form-control col-sm-6" id="preco" name="preco" required value="0,00">
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+              <label class="form-check-label" for="flexCheckDefault">
+                Estoque
+              </label>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Cadastrar Produto</button>
+        </div>
+        <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+          <form>
+            <div class="mb-3">
+              <label for="nomeProduto" class="form-label">Nome do Produto</label>
+              <input type="text" class="form-control" id="nomeProduto" name="nomeProduto" required>
+            </div>
+            <div class="mb-3">
+              <label for="descricao" class="form-label">Descrição</label>
+              <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="preco" class="form-label">Preço</label>
+              <input type="text" class="form-control" id="preco" name="preco" required>
+            </div>
+            <div class="mb-3">
+              <label for="estoque" class="form-label">Estoque</label>
+              <input type="number" class="form-control" id="estoque" name="estoque" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Cadastrar Produto</button>
+          </form>
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+
+</body>
+
+</html>
