@@ -6,6 +6,7 @@ export default function ProdutosCreate() {
     <div className=''>
       <div className="container Cadastro_Produtos">
         <form>
+          <a>asdasdsa</a>
           <ul className="nav nav-tabs" id="myTabs" role="tablist">
             <li className="nav-item">
               <a className="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1"
