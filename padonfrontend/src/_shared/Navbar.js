@@ -1,10 +1,21 @@
 import { Link } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
 
 function Navbar({ nome="" }) {
   return (
+    
     <div className="App">
+        <nav class="navbar navbar-dark bg-dark">
+            <div class="container-fluid">
+                <Link to="/">
+                    <Button variant="link" className="navbar-brand"> 
+                        Padon
+                    </Button>
+                </Link>
+            </div>
+        </nav>
         <Link to="/">
-            <button variant="outlined">
+            <button className="btn btn-primary" variant="outlined">
                 Home
             </button>
         </Link>
