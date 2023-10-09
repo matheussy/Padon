@@ -1,14 +1,14 @@
 import './style/App.css';
 import Navbar from './_shared/Navbar';
 import Main from './Main';
-import Header from './_shared/Header';
 import Footer from './_shared/Footer';
+import Header from './_shared/Header';
 
 function App() {
   return (
     <div className="App">
-      <Header />
       <Navbar />
+      <Header />
       <Main />
       <Footer/>
     </div>
