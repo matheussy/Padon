@@ -1,5 +1,5 @@
 import React from 'react';
-import './style.css';
+import './Style.css';
 
 
 
@@ -22,11 +22,11 @@ export default function ProdutosCreate() {
                 <div className="row">
                   <div className="col-2">
                     <label htmlFor="IdProduto" className="form-label">ID do Produto: </label>
-                    <input type="number" className="form-control" id="IdProduto" name="IdProduto" requiredplaceholder="ID do produto...." />
+                    <input type="number" className="form-control shadow-sm" id="IdProduto" name="IdProduto" required placeholder="ID do produto...." />
                   </div>
                   <div className="col-2">
                     <label htmlFor="UnidadeVenda" className="form-label">Unidade de venda: </label>
-                    <select defaultValue="" className="form-select form-select" aria-label=".form-select-sm example">
+                    <select defaultValue="" className="form-select shadow-sm" aria-label=".form-select-sm example">
                       <option value="" />
                       <option value={1}>UN</option>
                       <option value={2}>KG</option>
@@ -34,7 +34,7 @@ export default function ProdutosCreate() {
                   </div>
                   <div className="col-6">
                     <label htmlFor="CodBarra" className="form-label">Código de Barras: </label>
-                    <input type="number" className="form-control" id="CodBarra" name="IdProduto" requiredplaceholder="ID do produto...." />
+                    <input type="number" className="form-control shadow-sm" id="CodBarra" name="IdProduto" required placeholder="Código de barras do produto..." />
                   </div>
                 </div>
               </div>
@@ -42,11 +42,11 @@ export default function ProdutosCreate() {
                 <div className="row">
                   <div className="col-4">
                     <label htmlFor="nomeProduto" className="form-label">Nome do Produto:</label>
-                    <input type="text" className="form-control" id="nomeProduto" name="nomeProduto" required placeholder="Digite o nome do produto..." />
+                    <input type="text" className="form-control shadow-sm" id="nomeProduto" name="nomeProduto" required placeholder="Digite o nome do produto..." />
                   </div>
-                  <div className="col-3">
+                  <div className="col-2">
                     <label htmlFor="Categoria" className="form-label">Categoria:</label>
-                    <select defaultValue="" className="form-select form-select" aria-label=".form-select-sm example">
+                    <select defaultValue="" className="form-select shadow-sm" aria-label=".form-select-sm example">
                       <option value="" />
                       <option value={1}>1</option>
                       <option value={2}>2</option>
@@ -58,7 +58,7 @@ export default function ProdutosCreate() {
                 <div className="row">
                   <div className="col-4">
                     <label htmlFor="nomeFabricante" className="form-label">Fabricante:</label>
-                    <input type="text" className="form-control" id="nomeFabricante" name="nomeProduto" required placeholder="Digite a marca do produto..." />
+                    <input type="text" className="form-control shadow-sm" id="nomeFabricante" name="nomeProduto" required placeholder="Digite a marca do produto..." />
                   </div>
                 </div>
               </div>
@@ -66,7 +66,7 @@ export default function ProdutosCreate() {
                 <div className="row">
                   <div className="col-6">
                     <label htmlFor="descricao" className="form-label">Descrição:</label>
-                    <textarea className="form-control" id="descricao" name="descricao" rows={3} required placeholder="Descrição do Produto...." defaultValue={""} />
+                    <textarea className="form-control shadow-sm" id="descricao" name="descricao" rows={3} required placeholder="Descrição do Produto...." defaultValue={""} />
                   </div>
                 </div>
               </div>
@@ -74,47 +74,70 @@ export default function ProdutosCreate() {
                 <div className="col-2">
                   <div className="mb-3">
                     <label htmlFor="precoUN" className="form-label">Preço por unidade:</label>
-                    <input type="text" className="form-control col-sm-6" id="precoUN" name="precoUN" required defaultValue="0,00" />
+                    <input type="number" className="form-control col-sm-6 shadow-sm" id="precoUN" name="precoUN" required defaultValue="0.00" />
                   </div>
                 </div>
                 <div className="col-2">
                   <div className="mb-3">
                     <label htmlFor="precoKG" className="form-label">Preço por quilo:</label>
-                    <input type="text" className="form-control col-sm-6" id="precoKG" name="precoKG" required defaultValue="0,00" />
+                    <input type="number" className="form-control col-sm-6 shadow-sm" id="precoKG" name="precoKG" required defaultValue="0.00" />
                   </div>
                 </div>
               </div>
               <div className="mb-3">
                 <div className="form-check">
-                  <input className="form-check-input" type="checkbox" defaultValue id="flexCheckDefaultEstoque" />
-                  <label className="form-check-label" htmlFor="flexCheckDefault">
+                  <input className="form-check-input shadow-sm" type="checkbox" defaultValue id="flexCheckDefaultEstoque" />
+                  <label className="form-check-label" htmlFor="flexCheckDefaultEstoque">
                     Estoque
                   </label>
                 </div>
                 <div className="form-check">
-                  <input className="form-check-input" type="checkbox" defaultValue id="flexCheckDefaultInativo" />
-                  <label className="form-check-label" htmlFor="flexCheckDefault">
+                  <input className="form-check-input shadow-sm" type="checkbox" defaultValue id="flexCheckDefaultInativo" />
+                  <label className="form-check-label" htmlFor="flexCheckDefaultInativo">
                     Inativo
                   </label>
                 </div>
               </div>
-              <button type="submit" className="btn btn-primary">Cadastrar Produto</button>
+              <button type="submit" className="btn btn-outline-secondary btn-lg shadow">Cadastrar Produto</button>
             </div>
             <div className="tab-pane" id="estoque" role="tabpanel" aria-labelledby="estoque-tab">
               <div className="mb-3">
-                <p />
-                <label htmlFor="nomeProduto" className="form-label">Nome do Produto</label>
-                <input type="text" className="form-control" id="nomeProduto" name="nomeProduto" required />
+                  <div className="form-check">
+                    <input className="form-check-input shadow-sm" type="checkbox" defaultValue id="flexCheckDefaultEstoque" />
+                    <label className="form-check-label" htmlFor="flexCheckDefaultEstoque">
+                      Estoque
+                    </label>
+                  </div>
+                </div>
+              <div className="mb-3">
+                  <div className="row">
+                    <div className="col-2">
+                      <label htmlFor="QntDisp" className="form-label">Quantidade disponível: </label>
+                      <input type="number" className="form-control shadow-sm" id="QntDisp" name="QntDisp" defaultValue="0.00" disabled/>
+                    </div>
+                    <div className="col-2">
+                      <label htmlFor="QntMin" className="form-label">Quantidade mínima: </label>
+                      <input type="number" className="form-control shadow-sm" id="QntMin" name="QntMin" defaultValue=""/>
+                    </div>
+                </div>
               </div>
               <div className="mb-3">
-                <label htmlFor="descricao" className="form-label">Descrição</label>
-                <textarea className="form-control" id="descricao" name="descricao" rows={3} required defaultValue={""} />
+                  <div className="row">
+                    <div className="col-3">
+                      <label htmlFor="QntEntrada" className="form-label">Quantidade de Entrada: </label>
+                      <input type="number" className="form-control shadow-sm" id="QntEntrada" name="QntEntrada" defaultValue= "0.00" placeholder='Digite a quantidade que deseja dar entrada no estoque...'/>
+                    </div>
+                  </div>
               </div>
               <div className="mb-3">
-                <label htmlFor="estoque" className="form-label">Estoque</label>
-                <input type="number" className="form-control" id="estoque" name="estoque" required />
-              </div>
-              <button type="submit" className="btn btn-primary">Cadastrar Produto</button>
+                <div className="form-check">
+                    <input className="form-check-input shadow-sm" type="checkbox" defaultValue id="flexCheckDefaultQntNeg" paddi />
+                    <label className="form-check-label" htmlFor="flexCheckDefaultQntNeg">
+                      Quantidade Negativa
+                    </label>
+                  </div>
+                </div>
+                <button type="submit" className="btn btn-outline-secondary btn-lg shadow">Salvar</button>
             </div>
           </div>
         </form>

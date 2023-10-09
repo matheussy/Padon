@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import Home from './pages/Home';
 import Pagina from './pages/Pagina';
-import { ProdutoIndex, ProdutoCreate, ProdutoDelete } from './pages/Produtos';
+import { ProdutoIndex, ProdutoCreate, ProdutoDelete, ProdutoCategoria } from './pages/Produtos';
 
 /*<Route exact path='/Teste' element={<Teste />}></Route>
 
@@ -19,6 +19,7 @@ export default function Main() {
       <Route exact path='/Produtos/Index' element={<ProdutoIndex />}></Route>
       <Route exact path='/Produtos/Create' element={<ProdutoCreate />}></Route>
       <Route exact path='/Produtos/Delete' element={<ProdutoDelete />}></Route>
+      <Route exact path='/Produtos/Categoria' element={<ProdutoCategoria />}></Route>
     </Routes>
   );
 }

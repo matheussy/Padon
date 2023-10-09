@@ -6,7 +6,7 @@ function Navbar() {
     
     <div className="App">
         <nav className="navbar navbar-dark bg-dark">
-            <div className="container-fluid">
+            <div className="container">
                 <Link to="/">
                     <Button variant="link" className="navbar-brand"> 
                         Padon
@@ -15,6 +15,11 @@ function Navbar() {
                 <Link to="/Produtos/Create">
                     <Button variant="link" className="navbar-brand"> 
                         Produto
+                    </Button>
+                </Link>
+                <Link to="/Produtos/Categoria">
+                    <Button variant="link" className="navbar-brand"> 
+                        Categoria
                     </Button>
                 </Link>
             </div>
