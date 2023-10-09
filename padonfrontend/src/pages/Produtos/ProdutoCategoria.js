@@ -10,7 +10,7 @@ export default function ProdutoCategoria() {
         <form>
           <ul className="nav nav-tabs" id="myTab" role="tablist">
             <li className="nav-item" role="presentation">
-              <button className="nav-link active" id="categoria-tab" data-bs-toggle="tab" data-bs-target="#categoria" type="button" role="tab" aria-controls="categoria" aria-selected="true">Categoria</button>
+              <button className="nav-link active" id="categoria-tab" data-bs-toggle="tab" data-bs-target="#categoria" type="button" role="tab" aria-controls="categoria">Categoria</button>
             </li>
           </ul>
           <div className="tab-content">
