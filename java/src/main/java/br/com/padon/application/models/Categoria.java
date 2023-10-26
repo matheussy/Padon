@@ -4,15 +4,41 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "categoria")
+@Table(name = "Categoria")
 public class Categoria {
 
-    private final int id;
-    private String nome;
-    private String descricao;
+	private final int categoriaId;
+	private String nome;
+	private String descricao;
 
 
-    public Categoria(int id) {
-        this.id = id;
-    }
+	public Categoria(int categoriaId) {
+		this.categoriaId = categoriaId;
+	}
+
+	public Categoria(int categoriaId, String nome, String descricao) {
+		this.categoriaId = categoriaId;
+		this.nome = nome;
+		this.descricao = descricao;
+	}
+
+	public int getCategoriaId() {
+		return categoriaId;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
 }
