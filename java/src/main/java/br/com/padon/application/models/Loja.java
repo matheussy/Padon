@@ -1,21 +1,16 @@
 package br.com.padon.application.models;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Loja")
+@Table(name = "produto")
 public class Loja {
 
-    @Column(name = "LojaId")
     private final int id;
-
-    @Column(name = "Nome")
     private String nome;
-
-    @Column(name = "Endereco")
     private String endereco;
+    //TODO Contem produtos
 
 
     public Loja(int id) {
