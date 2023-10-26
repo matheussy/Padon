@@ -1,5 +1,7 @@
 import React from 'react';
 import './Style.css';
+import Search from "./src/search.png";
+
 
 export default function ProdutosCreate() {
   return (
@@ -17,10 +19,13 @@ export default function ProdutosCreate() {
           <div className="tab-content">
             <div className="tab-pane active" id="produto" role="tabpanel" aria-labelledby="produto-tab">
               <div className="mb-3">
-                <div className="row">
+                <div className="row column1">
                   <div className="col-2">
                     <label htmlFor="IdProduto" className="form-label">ID do Produto: </label>
                     <input type="number" className="form-control shadow-sm" id="IdProduto" name="IdProduto" required placeholder="ID do produto...." />
+                  </div>
+                  <div className="col-1">
+                    <a className='SearchImageHref' href=''><img className='SearchImage' src={Search} alt='Search'/></a>
                   </div>
                   <div className="col-2">
                     <label htmlFor="UnidadeVenda" className="form-label">Unidade de venda: </label>
@@ -96,7 +101,14 @@ export default function ProdutosCreate() {
                   </label>
                 </div>
               </div>
-              <button type="submit" className="btn btn-outline-secondary btn-lg shadow">Cadastrar Produto</button>
+              <div className='row justify-content-md-left'>
+                <div className='col-md-auto'>
+                    <button type="submit" className="btn btn-outline-secondary btn-lg shadow">Cadastrar Produto</button>
+                </div>
+                <div className='col-md-auto'>
+                    <button type="submit" className="btn btn-outline-secondary btn-lg shadow">Excluir Produto</button>
+                </div>
+              </div>
             </div>
             <div className="tab-pane" id="estoque" role="tabpanel" aria-labelledby="estoque-tab">
               <div className="mb-3">
