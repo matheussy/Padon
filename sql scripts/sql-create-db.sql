@@ -2,7 +2,7 @@ CREATE DATABASE Padon;
 USE Padon;
 CREATE TABLE Produto 
 ( 
- produtoId INT PRIMARY KEY,  
+ produtoId INT PRIMARY KEY auto_increment,
  nome VARCHAR(255) NOT NULL,  
  fabricante VARCHAR(255),  
  imagem VARCHAR(255),  
@@ -15,21 +15,21 @@ CREATE TABLE Produto
 
 CREATE TABLE Loja
 ( 
- lojaId INT PRIMARY KEY,  
+ lojaId INT PRIMARY KEY auto_increment,  
  nome VARCHAR(255),  
  endereco VARCHAR(255)
 );
 
 CREATE TABLE Categoria 
 ( 
- categoriaId INT PRIMARY KEY,
+ categoriaId INT PRIMARY KEY auto_increment,
  nome VARCHAR(255),  
  descricao VARCHAR(255)
 );
 
 CREATE TABLE Fornecedor 
 ( 
- fornecedorId INT PRIMARY KEY,
+ fornecedorId INT PRIMARY KEY auto_increment,
  endereço VARCHAR(255),  
  contato VARCHAR(255),  
  telefone VARCHAR(255),  
@@ -38,7 +38,7 @@ CREATE TABLE Fornecedor
 
 CREATE TABLE Venda 
 ( 
- vendaId INT PRIMARY KEY,  
+ vendaId INT PRIMARY KEY auto_increment,
  dataVenda DATETIME,  
  valorTotal FLOAT,  
  statusVenda INT,  
@@ -47,7 +47,7 @@ CREATE TABLE Venda
 
 CREATE TABLE Funcionario 
 ( 
- cpf VARCHAR(255) PRIMARY KEY,  
+ cpf VARCHAR(255) PRIMARY KEY,
  usuario VARCHAR(255),  
  nome VARCHAR(255),  
  senha VARCHAR(255),  

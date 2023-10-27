@@ -17,10 +17,6 @@ public class Funcionario {
 	private String telefone;
 	private boolean gerente;
 
-	public Funcionario(String cpf) {
-		this.cpf = cpf;
-	}
-
 	public Funcionario(String cpf, String usuario, String nome, String senha, String email, String telefone, boolean gerente) {
 		this.cpf = cpf;
 		this.usuario = usuario;

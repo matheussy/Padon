@@ -1,24 +1,18 @@
 package br.com.padon.application.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Loja")
 public class Loja {
 
 	@Id
-	private final int lojaId;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private int lojaId;
 	private String nome;
 	private String endereco;
 
-	public Loja(int lojaId) {
-		this.lojaId = lojaId;
-	}
-
-	public Loja(int lojaId, String nome, String endereco) {
-		this.lojaId = lojaId;
+	public Loja(String nome, String endereco) {
 		this.nome = nome;
 		this.endereco = endereco;
 	}

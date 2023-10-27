@@ -1,8 +1,6 @@
 package br.com.padon.application.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.Date;
 
@@ -11,18 +9,14 @@ import java.util.Date;
 public class Venda {
 
 	@Id
-	private final int vendaId;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private int vendaId;
 	private Date dataVenda;
 	private double valorTotal;
 	private String statusVenda;
 	private int comanda;
 
-	public Venda(int vendaId) {
-		this.vendaId = vendaId;
-	}
-
-	public Venda(int vendaId, Date dataVenda, String statusVenda, double valorTotal, int comanda) {
-		this.vendaId = vendaId;
+	public Venda(Date dataVenda, String statusVenda, double valorTotal, int comanda) {
 		this.dataVenda = dataVenda;
 		this.statusVenda = statusVenda;
 		this.valorTotal = valorTotal;
