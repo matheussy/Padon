@@ -1,13 +1,16 @@
 package br.com.padon.application.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Participa")
 public class Trabalha {
 
+	@Id
 	private final int lojaId;
+	@Id
 	private final String cpf;
 
 	public Trabalha(int lojaId, String cpf) {

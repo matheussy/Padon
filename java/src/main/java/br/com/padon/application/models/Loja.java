@@ -1,12 +1,14 @@
 package br.com.padon.application.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Loja")
 public class Loja {
 
+	@Id
 	private final int lojaId;
 	private String nome;
 	private String endereco;
