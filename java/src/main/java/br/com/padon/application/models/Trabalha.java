@@ -8,18 +8,18 @@ import jakarta.persistence.Table;
 public class Trabalha {
 
 	private final int lojaId;
-	private final int funcionarioId;
+	private final String cpf;
 
-	public Trabalha(int lojaId, int funcionarioId) {
+	public Trabalha(int lojaId, String cpf) {
 		this.lojaId = lojaId;
-		this.funcionarioId = funcionarioId;
+		this.cpf = cpf;
 	}
 
 	public int getLojaId() {
 		return lojaId;
 	}
 
-	public int getFuncionarioId() {
-		return funcionarioId;
+	public String getCpf() {
+		return cpf;
 	}
 }
