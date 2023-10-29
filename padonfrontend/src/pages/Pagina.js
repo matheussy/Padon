@@ -1,11 +1,11 @@
 import React from 'react';
-import Navbar from '../_shared/Navbar';
+import PadonNavbar from '../_shared/PadonNavbar';
 
 export default function Pagina() {
   return (
     <div>
         <p>Teste de Pagina</p>
-        <Navbar nome="Pagina" /> 
+        <PadonNavbar nome="Pagina" /> 
     </div>
   );
 }
