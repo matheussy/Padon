@@ -63,10 +63,7 @@ function PadonNavbar() {
                                     <NavDropdown.Item href="/Funcionarios/Delete">Deletar Funcionarios</NavDropdown.Item>
                                 </NavDropdown>
                             }
-
-
-
-
+                            
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
