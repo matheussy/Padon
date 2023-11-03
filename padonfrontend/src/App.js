@@ -1,5 +1,5 @@
 import './style/App.css';
-import Navbar from './_shared/Navbar';
+import PadonNavbar from './_shared/PadonNavbar';
 import Main from './Main';
 import Footer from './_shared/Footer';
 import Header from './_shared/Header';
@@ -7,7 +7,8 @@ import Header from './_shared/Header';
 function App() {
   return (
     <div className="App">
-      <Navbar />
+      <Header />
+            <PadonNavbar />
       <Header />
       <Main />
       <Footer/>
