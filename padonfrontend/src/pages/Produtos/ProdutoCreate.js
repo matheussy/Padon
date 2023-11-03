@@ -25,7 +25,7 @@ export default function ProdutosCreate() {
                     <input type="number" className="form-control shadow-sm" id="IdProduto" name="IdProduto" required placeholder="ID do produto...." />
                   </div>
                   <div className="col-1">
-                    <a className='SearchImageHref' href=''><img className='SearchImage' src={Search} alt='Search'/></a>
+                    <a className='SearchImageHref' href="/#"><img className='SearchImage' src={Search} alt='Search'/></a>
                   </div>
                   <div className="col-2">
                     <label htmlFor="UnidadeVenda" className="form-label">Unidade de venda: </label>
