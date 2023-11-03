@@ -3,7 +3,8 @@ import { Routes, Route } from 'react-router-dom';
 
 import Home from './pages/Home';
 import Pagina from './pages/Pagina';
-import { ProdutoIndex, ProdutoCreate, ProdutoDelete, ProdutoEdit } from './pages/Produtos';
+import { ProdutoIndex, ProdutoCreate, ProdutoEdit, ProdutoDelete } from './pages/Produtos';
+import { CategoriaIndex, CategoriaCreate, CategoriaEdit, CategoriaDelete } from './pages/Categorias';
 
 /*<Route exact path='/Teste' element={<Teste />}></Route>
 
@@ -20,6 +21,12 @@ export default function Main() {
       <Route exact path='/Produtos/Create' element={<ProdutoCreate />}></Route>
       <Route exact path='/Produtos/Edit' element={<ProdutoEdit />}></Route>
       <Route exact path='/Produtos/Delete' element={<ProdutoDelete />}></Route>
+
+      <Route exact path='/Categorias/' element={<CategoriaIndex />}></Route>
+      <Route exact path='/Categorias/Index' element={<CategoriaIndex />}></Route>
+      <Route exact path='/Categorias/Create' element={<CategoriaCreate />}></Route>
+      <Route exact path='/Categorias/Edit' element={<CategoriaEdit />}></Route>
+      <Route exact path='/Categorias/Delete' element={<CategoriaDelete />}></Route>
 
     </Routes>
   );
