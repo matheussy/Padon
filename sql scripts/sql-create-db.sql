@@ -57,7 +57,8 @@ CREATE TABLE Funcionario
 );
 
 CREATE TABLE Conter 
-( 
+(
+ conterId INT PRIMARY KEY auto_increment, 
  produtoId INT,  
  lojaId INT,  
  estoque INT,  
@@ -65,13 +66,15 @@ CREATE TABLE Conter
 );
 
  CREATE TABLE Participa 
-( 
+(
+ participaId INT PRIMARY KEY auto_increment, 
  categoriaId INT,  
  produtoId INT  
 );
 
 CREATE TABLE Fornece 
 ( 
+ forneceId INT PRIMARY KEY auto_increment,
  preco FLOAT,  
  fornecedorId INT,  
  produtoId INT  
@@ -79,6 +82,7 @@ CREATE TABLE Fornece
 
 CREATE TABLE Pertence 
 ( 
+ pertenceId INT PRIMARY KEY auto_increment,
  precoTotal FLOAT,  
  quantidade INT,  
  precoAtual FLOAT,  
@@ -88,6 +92,7 @@ CREATE TABLE Pertence
 
 CREATE TABLE Trabalha 
 ( 
+ trabalhaId INT PRIMARY KEY auto_increment,
  lojaId INT,  
  cpf VARCHAR(255)  
 ); 

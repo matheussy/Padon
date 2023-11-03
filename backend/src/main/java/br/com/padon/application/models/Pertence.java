@@ -1,16 +1,15 @@
 package br.com.padon.application.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Pertence")
 public class Pertence {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private int pertenceId;
 	private final int produtoId;
-	@Id
 	private final int vendaId;
 	private double precoTotal;
 	private int quantidade;
@@ -27,6 +26,10 @@ public class Pertence {
 		this.precoTotal = precoTotal;
 		this.quantidade = quantidade;
 		this.precoAtual = precoAtual;
+	}
+
+	public int getPertenceId() {
+		return pertenceId;
 	}
 
 	public int getProdutoId() {

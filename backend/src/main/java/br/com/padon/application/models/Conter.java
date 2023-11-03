@@ -1,16 +1,15 @@
 package br.com.padon.application.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Conter")
 public class Conter {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private int conterId;
 	private final int produtoId;
-	@Id
 	private final int lojaId;
 	private int estoque;
 	private int quantidadeMinima;
@@ -25,6 +24,10 @@ public class Conter {
 		this.lojaId = lojaId;
 		this.estoque = estoque;
 		this.quantidadeMinima = quantidadeMinima;
+	}
+
+	public int getConterId() {
+		return conterId;
 	}
 
 	public int getProdutoId() {
