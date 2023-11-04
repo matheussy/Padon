@@ -18,6 +18,8 @@ public class Produto {
 	private double precoPorUnidade;
 	private boolean porQuilo;
 
+	public Produto() {}
+
 	public Produto(String nome, String fabricante, byte[] imagem, double codigoDeBarras, boolean bloquado, double precoPorQuilo, double precoPorUnidade, boolean porQuilo) {
 		this.nome = nome;
 		this.fabricante = fabricante;
