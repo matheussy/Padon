@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="App">
       <Header />
-            <PadonNavbar />
+      <PadonNavbar />
       <Header />
       <Main />
       <Footer/>
