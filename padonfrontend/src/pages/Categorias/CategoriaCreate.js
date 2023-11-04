@@ -21,12 +21,12 @@ export default function CategoriaCreate() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        alert(JSON.stringify(inputs) + " -> " + textarea);
         let data = {
             nome: inputs.nome,
             descricao: textarea
         }
-        //postApi('/categoria/create', data);
+        alert(JSON.stringify(data));
+        postApi('/categoria/create', data);
         navigate("/Categorias");
     }
     return (
