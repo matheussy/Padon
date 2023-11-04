@@ -14,6 +14,8 @@ public class Fornecedor {
 	private String telefone;
 	private String nome;
 
+	public Fornecedor() {}
+
 	public Fornecedor(String endereco, String contato, String telefone, String nome) {
 		this.endereco = endereco;
 		this.contato = contato;

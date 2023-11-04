@@ -35,7 +35,7 @@ public class CategoriaController {
 	}
 
 	@PostMapping("/byid")
-	public Optional<Categoria> saveCategoria(@RequestParam(name = "id") int categoriaId) {
+	public Optional<Categoria> getCategoria(@RequestParam(name = "id") int categoriaId) {
 		return categoria.findById(categoriaId);
 	}
 
