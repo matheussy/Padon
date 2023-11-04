@@ -1,10 +1,13 @@
 import React from 'react';
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import { postApi } from '../../Services/RequestHandler';
 
 export default function CategoriaCreate() {
-    // Manipulador de envio do formulário
+    let navigate = useNavigate();
+
     const [inputs, setInputs] = useState({});
-    const [textarea, setTextarea] = useState("The content of a textarea goes in the value attribute");
+    const [textarea, setTextarea] = useState("");
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -14,40 +17,44 @@ export default function CategoriaCreate() {
 
     const handleChangeTextArea = (event) => {
         setTextarea(event.target.value)
-      }
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        alert(JSON.stringify(inputs)+" -> "+textarea);
+        alert(JSON.stringify(inputs) + " -> " + textarea);
+        let data = {
+            nome: inputs.nome,
+            descricao: textarea
+        }
+        //postApi('/categoria/create', data);
+        navigate("/Categorias");
     }
-
     return (
         <div className='justify-content-center row'>
-            <div className='col col-md-8'>
+            <div className='col-11 col-md-8'>
                 <div className='card mt-1'>
-                    <div className='card-header'>
-                        <span>Adicionar Categoria</span>
+                    <div className='card-header text-center'>
+                        <span className='h4'>Adicionar Categoria</span>
                     </div>
                     <form onSubmit={handleSubmit}>
-                        <input
-                            type="text"
-                            name="username"
-                            value={inputs.username || ""}
-                            onChange={handleChange}
-                        />
-                        <input
-                            type="number"
-                            name="age"
-                            value={inputs.age || ""}
-                            onChange={handleChange}
-                        />
-                        <textarea value={textarea} onChange={handleChangeTextArea} />
-                        <input type="submit" />
+                        <div className='card-body'>
+                            <div className="mb-3">
+                                <label htmlFor="nome" className="form-label">Nome da Categoria:</label>
+                                <input type="text" name="nome" id="nome" className='form-control' value={inputs.nome || ""} onChange={handleChange} />
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="desc" className="form-label">Descrição da Categoria</label>
+                                <textarea className="form-control" id="desc" rows="3" value={textarea} onChange={handleChangeTextArea}></textarea>
+                            </div>
+
+                            <button type="submit" className='btn btn-success'>
+                                <i className="bi bi-plus-circle"></i> 
+                                <span className='mx-1'>Adicionar Categoria</span>
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
-
-
     );
 }
