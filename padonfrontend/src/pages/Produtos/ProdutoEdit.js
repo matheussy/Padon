@@ -6,7 +6,9 @@ import { postApi } from '../../Services/RequestHandler';
 
 export default function ProdutoEdit({ catid = null }) {
   const { id } = useParams();
-
+  if (catid === undefined || catid === null) {
+    catid = id;
+  }
   let data = {
     id: catid
   }
@@ -14,7 +16,7 @@ export default function ProdutoEdit({ catid = null }) {
   //var response = postApi('/categoria/byid', data);
   let response = {
     Idproduto: id,
-    descricao: "TEste de descrição2" + id
+    descricao: "TEste de descrição2"
   };
 
   const [inputs, setInputs] = useState({ Idproduto: response.Idproduto,  });

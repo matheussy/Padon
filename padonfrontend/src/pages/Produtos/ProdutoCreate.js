@@ -9,47 +9,28 @@ export default function ProdutosCreate() {
   let navigate = useNavigate();
 
   const [inputs, setInputs] = useState({});
-  const [textarea, setTextarea] = useState("");
 
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     setInputs(values => ({ ...values, [name]: value }))
   }
-
-  const handleChangeSelect = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
-  };
-
-  const handleChangeTextArea = (event) => {
-    setTextarea(event.target.value)
-  }
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    const unidadeVenda = inputs.UnidadeVenda;
-    const IdCategoria = inputs.IdCategoria;
+    const pquilo = inputs.pquilo;
 
-    alert(JSON.stringify(inputs) + " -> " + textarea);
+    alert(JSON.stringify(inputs));
     let data = {
-      Idproduto: inputs.Idproduto,
-      descricao: textarea,
-      codbarra: inputs.CodBarra,
-      nomeProduto: inputs.nomeProduto,
-      nomeFabricante: inputs.nomeFabricante,
-      precoUN: inputs.precoUN,
-      precoKG: inputs.precoKG,
-      Inativo: inputs.Inativo,
-      Qntmin: inputs.Qntmin,
-      QntEntrada: inputs.QntEntrada,
-      QntNeg: inputs.QntNeg,
-      UnidadeVenda: unidadeVenda,
-      IdCategoria: IdCategoria,
+      codigodeBarras: inputs.CodBarra,
+      nome: inputs.nomeProduto,
+      fabricante: inputs.nomeFabricante,
+      precoPorUnidade: inputs.precoUN,
+      precoPorQuilo: inputs.precoKG,
+      Bloqueado: inputs.Inativo,
+      porQuilo:inputs.porQuilo,
     }
     
-    //postApi('/categoria/create', data);
+    postApi('/produto/create', data);
     navigate("/Produtos");
   }
   return (
@@ -66,20 +47,16 @@ export default function ProdutosCreate() {
           </ul>
           <div className="tab-content">
             <div className="tab-pane active" id="produto" role="tabpanel" aria-labelledby="produto-tab">
+            <div className="mb-3">
+                <div className="row">
+                  <div className="col-4">
+                    <label htmlFor="nomeProduto" className="form-label">Nome do Produto:</label>
+                    <input type="text" className="form-control shadow-sm" id="nomeProduto" name="nomeProduto" value={inputs.nomeProduto || ""} onChange={handleChange} required placeholder="Digite o nome do produto..." />
+                  </div>
+                </div>
+              </div>
               <div className="mb-3">
                 <div className="row align-items-start">
-                  <div className="col-2">
-                    <label htmlFor="IdProduto" className="form-label">ID do Produto: </label>
-                    <input type="number" className="form-control shadow-sm" id="IdProduto" name="IdProduto" value={inputs.Idproduto} onChange={handleChange} required placeholder="ID do produto...." />
-                  </div>
-                  <div className="col-2">
-                    <label htmlFor="UnidadeVenda" className="form-label">Unidade de venda: </label>
-                    <select defaultValue={'0'} className="form-select shadow-sm" id="UnidadeVenda" name="UnidadeVenda" value={inputs.UnidadeVenda || ""} onChange={handleChangeSelect} aria-label=".form-select-sm example">
-                      <option value="">Selecione</option>
-                      <option value="1">UN</option>
-                      <option value="2">KG</option>
-                    </select>
-                  </div>
                   <div className="col-6">
                     <label htmlFor="CodBarra" className="form-label">Código de Barras: </label>
                     <input type="number" className="form-control shadow-sm" id="CodBarra" name="CodBarra" value={inputs.CodBarra || ""} onChange={handleChange} required placeholder="Código de barras do produto..." />
@@ -89,32 +66,8 @@ export default function ProdutosCreate() {
               <div className="mb-3">
                 <div className="row">
                   <div className="col-4">
-                    <label htmlFor="nomeProduto" className="form-label">Nome do Produto:</label>
-                    <input type="text" className="form-control shadow-sm" id="nomeProduto" name="nomeProduto" value={inputs.nomeProduto || ""} onChange={handleChange} required placeholder="Digite o nome do produto..." />
-                  </div>
-                  <div className="col-2">
-                    <label htmlFor="IdCategoria" className="form-label">Categoria </label>
-                    <select defaultValue={'0'} className="form-select shadow-sm" id="IdCategoria" name="IdCategoria" value={inputs.IdCategoria || ""} onChange={handleChangeSelect} aria-label=".form-select-sm example">
-                      <option value="0">Selecione</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div className="mb-3">
-                <div className="row">
-                  <div className="col-4">
                     <label htmlFor="nomeFabricante" className="form-label">Fabricante:</label>
                     <input type="text" className="form-control shadow-sm" id="nomeFabricante" name="nomeFabricante" value={inputs.nomeFabricante || ""} onChange={handleChange} required placeholder="Digite a marca do produto..." />
-                  </div>
-                </div>
-              </div>
-              <div className="mb-3">
-                <div className="row">
-                  <div className="col-6">
-                    <label htmlFor="descricao" className="form-label">Descrição:</label>
-                    <textarea className="form-control shadow-sm" id="descricao" name="descricao" rows={3} required placeholder="Descrição do Produto...." value={textarea} onChange={handleChangeTextArea} defaultValue={""} />
                   </div>
                 </div>
               </div>
@@ -136,7 +89,13 @@ export default function ProdutosCreate() {
                 <div className="form-check">
                   <input className="form-check-input shadow-sm" type="checkbox" defaultValue id="flexCheckDefaultInativo" name="Inativo" value={inputs.Inativo || ""} onChange={handleChange} />
                   <label className="form-check-label" htmlFor="flexCheckDefaultInativo">
-                    Inativo
+                    Bloqueado
+                  </label>
+                </div>
+                <div className="form-check">
+                  <input className="form-check-input shadow-sm" type="checkbox" defaultValue id="flexCheckDefaultquilo" name="pquilo" value={inputs.pquilo || ""} onChange={handleChange} />
+                  <label className="form-check-label" htmlFor="flexCheckDefaultquilo">
+                    Preço por quilo
                   </label>
                 </div>
               </div>

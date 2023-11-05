@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 import Table from 'react-bootstrap/Table';
@@ -17,7 +17,7 @@ export default function Categoria({ catid = null }) {
 
   
 
-  /*useEffect(() => {
+  useEffect(() => {
     postApi('/categoria/byid')
       .then((data) => {
         //console.log(JSON.stringify(data) + "LENGHT ->" + data.length);
@@ -26,7 +26,7 @@ export default function Categoria({ catid = null }) {
       .catch((err) => {
         console.log(err.message);
       });
-  }, []);*/
+  }, []);
 
   let categoria = {
     categoriaId: catid,
@@ -87,7 +87,7 @@ export default function Categoria({ catid = null }) {
   );
 }
 
-/*{prodCat.map((pc, index) =>
+{prodCat.map((pc, index) =>
                       <tr key={pc}>
                         <td>{cat.categoriaId}</td>
                         <td>{cat.nome}</td>
