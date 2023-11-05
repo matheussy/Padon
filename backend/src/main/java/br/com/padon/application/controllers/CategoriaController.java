@@ -2,11 +2,11 @@ package br.com.padon.application.controllers;
 
 import br.com.padon.application.models.Categoria;
 import br.com.padon.application.repositorys.CategoriaRepository;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -17,8 +17,8 @@ public class CategoriaController {
 	private CategoriaRepository categoria;
 
 	@PostMapping("/create")
-	public void createCategoria(@RequestParam(name = "nome") String nome, @RequestParam(name = "descricao") String descricao) {
-		categoria.save(new Categoria(nome, descricao));
+	public void createCategoria(@RequestBody JsonNode node) {
+		categoria.save(new Categoria(node.get("nome").asText(), node.get("descricao").asText()));
 	}
 
 	@GetMapping("/get")
@@ -27,20 +27,20 @@ public class CategoriaController {
 	}
 
 	@PostMapping("/save")
-	public void saveCategoria(@RequestParam(name = "id") int categoriaId, @RequestParam(name = "nome") String nome, @RequestParam(name = "descricao") String descricao) {
-		Categoria categoriaById = categoria.findById(categoriaId).orElseThrow();
-		categoriaById.setNome(nome);
-		categoriaById.setDescricao(descricao);
+	public void saveCategoria(@RequestBody JsonNode node) {
+		Categoria categoriaById = categoria.findById(node.get("id").asInt()).orElseThrow();
+		categoriaById.setNome(node.get("nome").asText());
+		categoriaById.setDescricao(node.get("descricao").asText());
 		categoria.save(categoriaById);
 	}
 
 	@PostMapping("/byid")
-	public Optional<Categoria> getCategoria(@RequestParam(name = "id") int categoriaId) {
-		return categoria.findById(categoriaId);
+	public Categoria getCategoria(@RequestBody JsonNode node) {
+		return categoria.findById(node.get("id").asInt()).orElseThrow();
 	}
 
 	@PostMapping("/delete")
-	public void deleteCategoria(@RequestParam(name = "id") int categoriaId) {
-		categoria.deleteById(categoriaId);
+	public void deleteCategoria(@RequestBody JsonNode node) {
+		categoria.deleteById(node.get("id").asInt());
 	}
 }
