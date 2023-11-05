@@ -6,21 +6,21 @@ import { postApi } from '../../Services/RequestHandler';
 
 export default function ProdutoEdit({ catid = null }) {
   const { id } = useParams();
-  if (catid === undefined || catid === null) {
-    catid = id;
-  }
+
   let data = {
     id: catid
   }
   console.log(JSON.stringify(data));
   //var response = postApi('/categoria/byid', data);
   let response = {
-    Idproduto: catid,
-    descricao: "TEste de descriçao2"
-  }
+    Idproduto: id,
+    descricao: "TEste de descrição2" + id
+  };
 
-  const [inputs, setInputs] = useState({ nome: response.nome,  });
+  const [inputs, setInputs] = useState({ Idproduto: response.Idproduto,  });
   const [textarea, setTextarea] = useState(response.descricao);
+
+  
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -32,11 +32,20 @@ export default function ProdutoEdit({ catid = null }) {
     setTextarea(event.target.value)
   }
 
+  const handleChangeSelect = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setInputs((values) => ({ ...values, [name]: value }));
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    const unidadeVenda = inputs.UnidadeVenda;
+    const IdCategoria = inputs.IdCategoria;
+
     alert(JSON.stringify(inputs) + " -> " + textarea);
     let data = {
-      Idproduto: catid,
+      id: inputs.Idproduto,
       descricao: textarea,
       codbarra: inputs.CodBarra,
       nomeProduto: inputs.nomeProduto,
@@ -46,7 +55,9 @@ export default function ProdutoEdit({ catid = null }) {
       Inativo: inputs.Inativo,
       Qntmin: inputs.Qntmin,
       QntEntrada: inputs.QntEntrada,
-      QntNeg: inputs.QntNeg
+      QntNeg: inputs.QntNeg,
+      UnidadeVenda: unidadeVenda,
+      IdCategoria: IdCategoria,
     }
     postApi('/Produtos/save', data);
   }
@@ -68,11 +79,11 @@ export default function ProdutoEdit({ catid = null }) {
                 <div className="row align-items-start">
                   <div className="col-2">
                     <label htmlFor="IdProduto" className="form-label">ID do Produto: </label> 
-                    <input type="number" className="form-control shadow-sm" id="IdProduto" name="IdProduto" value={inputs.Idproduto} onChange={handleChange} required placeholder="ID do produto...."></input>
+                    <input type="text" className="form-control shadow-sm" id="IdProduto" name="IdProduto" value={inputs.Idproduto || ""} onChange={handleChange} required placeholder="ID do produto...." />
                   </div>
                   <div className="col-2">
                     <label htmlFor="UnidadeVenda" className="form-label">Unidade de venda: </label>
-                    <select defaultValue="" className="form-select shadow-sm" id="UnidadeVenda" name="UnidadeVenda" aria-label=".form-select-sm example">
+                    <select defaultValue="" className="form-select shadow-sm" id="UnidadeVenda" name="UnidadeVenda"  value={inputs.UnidadeVenda || ""} onChange={handleChangeSelect} aria-label=".form-select-sm example">
                       <option value="">Selecione</option>
                       <option value="1">UN</option>
                       <option value="2">KG</option>
@@ -92,7 +103,7 @@ export default function ProdutoEdit({ catid = null }) {
                   </div>
                   <div className="col-2">
                     <label htmlFor="IdCategoria" className="form-label">Categoria </label>
-                    <select defaultValue="" className="form-select shadow-sm" id="IdCategoria" name="IdCategoria" aria-label=".form-select-sm example">
+                    <select defaultValue="" className="form-select shadow-sm" id="IdCategoria" name="IdCategoria" value={inputs.IdCategoria || ""} onChange={handleChangeSelect} aria-label=".form-select-sm example">
                       <option value="">Selecione</option>
                       <option value="1">1</option>
                       <option value="2">2</option>

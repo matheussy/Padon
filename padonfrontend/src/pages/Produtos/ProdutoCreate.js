@@ -17,12 +17,21 @@ export default function ProdutosCreate() {
     setInputs(values => ({ ...values, [name]: value }))
   }
 
+  const handleChangeSelect = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setInputs((values) => ({ ...values, [name]: value }));
+  };
+
   const handleChangeTextArea = (event) => {
     setTextarea(event.target.value)
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const unidadeVenda = inputs.UnidadeVenda;
+    const IdCategoria = inputs.IdCategoria;
+
     alert(JSON.stringify(inputs) + " -> " + textarea);
     let data = {
       Idproduto: inputs.Idproduto,
@@ -35,8 +44,11 @@ export default function ProdutosCreate() {
       Inativo: inputs.Inativo,
       Qntmin: inputs.Qntmin,
       QntEntrada: inputs.QntEntrada,
-      QntNeg: inputs.QntNeg
+      QntNeg: inputs.QntNeg,
+      UnidadeVenda: unidadeVenda,
+      IdCategoria: IdCategoria,
     }
+    
     //postApi('/categoria/create', data);
     navigate("/Produtos");
   }
@@ -62,7 +74,7 @@ export default function ProdutosCreate() {
                   </div>
                   <div className="col-2">
                     <label htmlFor="UnidadeVenda" className="form-label">Unidade de venda: </label>
-                    <select defaultValue="" className="form-select shadow-sm" id="UnidadeVenda" name="UnidadeVenda" aria-label=".form-select-sm example">
+                    <select defaultValue={'0'} className="form-select shadow-sm" id="UnidadeVenda" name="UnidadeVenda" value={inputs.UnidadeVenda || ""} onChange={handleChangeSelect} aria-label=".form-select-sm example">
                       <option value="">Selecione</option>
                       <option value="1">UN</option>
                       <option value="2">KG</option>
@@ -82,8 +94,8 @@ export default function ProdutosCreate() {
                   </div>
                   <div className="col-2">
                     <label htmlFor="IdCategoria" className="form-label">Categoria </label>
-                    <select defaultValue="" className="form-select shadow-sm" id="IdCategoria" name="IdCategoria" aria-label=".form-select-sm example">
-                      <option value="">Selecione</option>
+                    <select defaultValue={'0'} className="form-select shadow-sm" id="IdCategoria" name="IdCategoria" value={inputs.IdCategoria || ""} onChange={handleChangeSelect} aria-label=".form-select-sm example">
+                      <option value="0">Selecione</option>
                       <option value="1">1</option>
                       <option value="2">2</option>
                     </select>
