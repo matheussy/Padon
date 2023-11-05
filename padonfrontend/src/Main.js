@@ -5,7 +5,7 @@ import Home from './pages/Home';
 import Pagina from './pages/Pagina';
 import { ProdutoIndex, ProdutoCreate, ProdutoEdit, ProdutoDelete } from './pages/Produtos';
 import { Categoria, CategoriaIndex, CategoriaCreate, CategoriaEdit, CategoriaDelete } from './pages/Categorias';
-import { FuncionarioCreate } from './pages/Funcionarios';
+import { FuncionarioCreate, FuncionarioIndex, FuncionarioEdit, FuncionarioDelete } from './pages/Funcionarios';
 
 /*<Route exact path='/Teste' element={<Teste />}></Route>
 
@@ -21,7 +21,7 @@ export default function Main() {
       <Route exact path='/Produtos/Index' element={<ProdutoIndex />}></Route>
       <Route exact path='/Produtos/Create' element={<ProdutoCreate />}></Route>
       <Route exact path='/Produtos/Edit/:id' element={<ProdutoEdit />}></Route>
-      <Route exact path='/Produtos/Delete' element={<ProdutoDelete />}></Route>
+      <Route exact path='/Produtos/Delete/:id' element={<ProdutoDelete />}></Route>
 
       <Route exact path='/Categorias/' element={<CategoriaIndex />}></Route>
       <Route exact path='/Categorias/Index' element={<CategoriaIndex />}></Route>
@@ -30,7 +30,11 @@ export default function Main() {
       <Route exact path='/Categorias/Edit/:id' element={<CategoriaEdit />}></Route>
       <Route exact path='/Categorias/Delete/:id' element={<CategoriaDelete />}></Route>
 
+      <Route exact path='/Funcionarios/' element={<FuncionarioIndex />}></Route>
+      <Route exact path='/Funcionarios/Index' element={<FuncionarioIndex />}></Route>
       <Route exact path='/Funcionarios/Create' element={<FuncionarioCreate />}></Route>
+      <Route exact path='/Funcionarios/Edit/:cpf' element={<FuncionarioEdit />}></Route>
+      <Route exact path='/Funcionarios/Delete/:cpf' element={<FuncionarioDelete />}></Route>
     </Routes>
   );
 }
