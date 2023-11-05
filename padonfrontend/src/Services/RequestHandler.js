@@ -46,7 +46,7 @@ export const postApi = async (endpoint, data) => {
         const response = await fetch(URL + endpoint, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
+            body: data,
         });
 
         if (!response.ok) {
