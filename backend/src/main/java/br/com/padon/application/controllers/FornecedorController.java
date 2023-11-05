@@ -2,6 +2,7 @@ package br.com.padon.application.controllers;
 
 import br.com.padon.application.models.Fornecedor;
 import br.com.padon.application.repositorys.FornecedorRepository;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +18,8 @@ public class FornecedorController {
 	private FornecedorRepository fornecedor;
 
 	@PostMapping("/create")
-	public void createFornecedor(@RequestParam(name = "endereco") String endereco, @RequestParam(name = "contato") String contato, @RequestParam(name = "telefone") String telefone, @RequestParam(name = "nome") String nome) {
-		fornecedor.save(new Fornecedor(endereco, contato, telefone, nome));
+	public void createFornecedor(@RequestBody JsonNode node) {
+		fornecedor.save(new Fornecedor(node.get("endereco").asText(), node.get("contato").asText(), node.get("telefone").asText(), node.get("nome").asText()));
 	}
 
 	@GetMapping("/get")
@@ -27,22 +28,22 @@ public class FornecedorController {
 	}
 
 	@PostMapping("/save")
-	public void saveFornecedor(@RequestParam(name = "id") int fornecedorId, @RequestParam(name = "endereco") String endereco, @RequestParam(name = "contato") String contato, @RequestParam(name = "telefone") String telefone, @RequestParam(name = "nome") String nome) {
-		Fornecedor fornecedorById = fornecedor.findById(fornecedorId).orElseThrow();
-		fornecedorById.setEndereco(endereco);
-		fornecedorById.setContato(contato);
-		fornecedorById.setTelefone(telefone);
-		fornecedorById.setNome(nome);
+	public void saveFornecedor(@RequestBody JsonNode node) {
+		Fornecedor fornecedorById = fornecedor.findById(node.get("id").asInt()).orElseThrow();
+		fornecedorById.setEndereco(node.get("endereco").asText());
+		fornecedorById.setContato(node.get("contato").asText());
+		fornecedorById.setTelefone(node.get("telefone").asText());
+		fornecedorById.setNome(node.get("nome").asText());
 		fornecedor.save(fornecedorById);
 	}
 
 	@PostMapping("/byid")
-	public Optional<Fornecedor> getFornecedor(@RequestParam(name = "id") int fornecedorId) {
-		return fornecedor.findById(fornecedorId);
+	public Optional<Fornecedor> getFornecedor(@RequestBody JsonNode node) {
+		return fornecedor.findById(node.get("id").asInt());
 	}
 
 	@PostMapping("/delete")
-	public void deleteFornecedor(@RequestParam(name = "id") int fornecedorId) {
-		fornecedor.deleteById(fornecedorId);
+	public void deleteFornecedor(@RequestBody JsonNode node) {
+		fornecedor.deleteById(node.get("id").asInt());
 	}
 }
