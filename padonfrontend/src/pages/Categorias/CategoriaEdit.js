@@ -1,26 +1,34 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { postApi } from '../../Services/RequestHandler';
+import { useNavigate } from "react-router-dom";
 
 export default function CategoriaEdit({ catid = null }) {
+  let navigate = useNavigate();
+
   const { id } = useParams();
   if (catid === undefined || catid === null) {
     catid = id;
   }
 
-  let data = {
-    id: catid
-  }
-  console.log(JSON.stringify(data));
-  //var response = postApi('/categoria/byid', data);
-  let response = {
-    nome: "Teste2" + catid,
-    descricao: "TEste de descriçao2"
-  }
+  const [categoria, setCategoria] = useState([]);
+  useEffect(() => {
+    postApi('/categoria/byid', { id: catid })
+      .then((data) => {
+        console.log(JSON.stringify(data));
+        setCategoria(data);
 
-  const [inputs, setInputs] = useState({ nome: response.nome });
-  const [textarea, setTextarea] = useState(response.descricao);
+        setInputs({ nome: data.nome });
+        setTextarea(data.descricao);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
+
+  const [inputs, setInputs] = useState({ nome: categoria.nome });
+  const [textarea, setTextarea] = useState(categoria.descricao);
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -34,13 +42,16 @@ export default function CategoriaEdit({ catid = null }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert(JSON.stringify(inputs) + " -> " + textarea);
+
     let data = {
       id: catid,
       nome: inputs.nome,
       descricao: textarea
     }
-    postApi('/categoria/save', data);
+    postApi('/categoria/save', data).then(data => {
+      navigate("/Categorias/" + data.categoriaId);
+    });
+
   }
 
   return (

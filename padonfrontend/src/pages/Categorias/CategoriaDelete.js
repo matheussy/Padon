@@ -1,36 +1,36 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { postApi } from '../../Services/RequestHandler';
 
 export default function CategoriaDelete({catid = null}) {
   let navigate = useNavigate();
-  const { id } = useParams();
 
+  const { id } = useParams();
   if (catid === undefined || catid === null) {
     catid = id;
   }
 
-  let data = {
-    id: catid
-  }
-  console.log(JSON.stringify(data));
-  //var categoria = postApi('/categoria/byid', data);
-  const categoria = {
-    id: catid,
-    nome: "Teste2" + catid,
-    descricao: "TEste de descriçao2"
-  }
+  const [categoria, setCategoria] = useState([]);
+  useEffect(() => {
+    postApi('/categoria/byid', { id: catid })
+      .then((data) => {
+        console.log(JSON.stringify(data));
+        setCategoria(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
 
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    /*let data = {
-      nome: inputs.nome,
-      descricao: textarea
-    }*/
-    //postApi('/categoria/create', data);
-    navigate("/Categorias");
+    postApi('/categoria/delete', { id: catid }).then(data => {
+      alert("Categoria deletada com Sucesso");
+      navigate("/Categorias");
+    });
+    
   }
   return (
     <div className='justify-content-center row' >
@@ -42,7 +42,7 @@ export default function CategoriaDelete({catid = null}) {
           <form onSubmit={handleSubmit}>
             <div className='card-body'>
               <div className="mb-3">
-                <span className='fw-bold'>Id da Categoria: </span>{ categoria.id }
+                <span className='fw-bold'>Id da Categoria: </span>{ categoria.categoriaId }
               </div>
               <div className="mb-3">
                 <span className='fw-bold'>Nome da Categoria: </span>{ categoria.nome }
