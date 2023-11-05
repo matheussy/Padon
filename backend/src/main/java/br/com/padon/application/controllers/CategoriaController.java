@@ -17,8 +17,8 @@ public class CategoriaController {
 	private CategoriaRepository categoria;
 
 	@PostMapping("/create")
-	public void createCategoria(@RequestBody JsonNode node) {
-		categoria.save(new Categoria(node.get("nome").asText(), node.get("descricao").asText()));
+	public Categoria createCategoria(@RequestBody JsonNode node) {
+		return categoria.save(new Categoria(node.get("nome").asText(), node.get("descricao").asText()));
 	}
 
 	@GetMapping("/get")
@@ -27,11 +27,11 @@ public class CategoriaController {
 	}
 
 	@PostMapping("/save")
-	public void saveCategoria(@RequestBody JsonNode node) {
+	public Categoria saveCategoria(@RequestBody JsonNode node) {
 		Categoria categoriaById = categoria.findById(node.get("id").asInt()).orElseThrow();
 		categoriaById.setNome(node.get("nome").asText());
 		categoriaById.setDescricao(node.get("descricao").asText());
-		categoria.save(categoriaById);
+		return categoria.save(categoriaById);
 	}
 
 	@PostMapping("/byid")
@@ -40,7 +40,8 @@ public class CategoriaController {
 	}
 
 	@PostMapping("/delete")
-	public void deleteCategoria(@RequestBody JsonNode node) {
+	public boolean deleteCategoria(@RequestBody JsonNode node) {
 		categoria.deleteById(node.get("id").asInt());
+		return true;
 	}
 }

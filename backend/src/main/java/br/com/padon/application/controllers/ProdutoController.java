@@ -2,9 +2,11 @@ package br.com.padon.application.controllers;
 
 import br.com.padon.application.models.Produto;
 import br.com.padon.application.repositorys.ProdutoRepository;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,26 +29,26 @@ public class ProdutoController {
 	}
 
 	@PostMapping("/save")
-	public void saveProduto(@RequestParam(name = "id") int produtoId, @RequestParam(name = "nome") String nome, @RequestParam(name = "fabricante") String fabricante, @RequestParam(name = "imagem") byte[] imagem, @RequestParam(name = "codigoDeBarras") double codigoDeBarras, @RequestParam(name = "bloquado") boolean bloquado, @RequestParam(name = "precoPorQuilo") double precoPorQuilo, @RequestParam(name = "precoPorUnidade") double precoPorUnidade, @RequestParam(name = "porQuilo") boolean porQuilo) {
-		Produto produtoById = produto.findById(produtoId).orElseThrow();
-		produtoById.setNome(nome);
-		produtoById.setFabricante(fabricante);
-		produtoById.setImagem(imagem);
-		produtoById.setCodigoDeBarras(codigoDeBarras);
-		produtoById.setBloquado(bloquado);
-		produtoById.setPrecoPorQuilo(precoPorQuilo);
-		produtoById.setPrecoPorUnidade(precoPorUnidade);
-		produtoById.setPorQuilo(porQuilo);
+	public void saveProduto(@RequestBody JsonNode node) throws IOException {
+		Produto produtoById = produto.findById(node.get("id").asInt()).orElseThrow();
+		produtoById.setNome(node.get("nome").asText());
+		produtoById.setFabricante(node.get("fabricante").asText());
+		produtoById.setImagem(node.get("imagem").binaryValue());
+		produtoById.setCodigoDeBarras(node.get("codigoDeBarras").asDouble());
+		produtoById.setBloquado(node.get("bloquado").asBoolean());
+		produtoById.setPrecoPorQuilo(node.get("precoPorQuilo").asDouble());
+		produtoById.setPrecoPorUnidade(node.get("precoPorUnidade").asDouble());
+		produtoById.setPorQuilo(node.get("porQuilo").asBoolean());
 		produto.save(produtoById);
 	}
 
 	@PostMapping("/byid")
-	public Optional<Produto> getProduto(@RequestParam(name = "id") int produtoId) {
-		return produto.findById(produtoId);
+	public Optional<Produto> getProduto(@RequestBody JsonNode node) {
+		return produto.findById(node.get("id").asInt());
 	}
 
 	@PostMapping("/delete")
-	public void deleteProduto(@RequestParam(name = "id") int produtoId) {
-		produto.deleteById(produtoId);
+	public void deleteProduto(@RequestBody JsonNode node) {
+		produto.deleteById(node.get("id").asInt());
 	}
 }
