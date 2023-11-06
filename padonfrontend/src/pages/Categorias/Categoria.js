@@ -1,38 +1,39 @@
-/*import React from 'react';
+import React from 'react';
 import { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
+import { postApi } from '../../Services/RequestHandler';
 
 export default function Categoria({ catid = null }) {
-  //const [categoria, setCategoria] = useState([]);
+  const [categoria, setCategoria] = useState([]);
   const [prodCat, setProdCat] = useState([]);
   const [prod, setProd] = useState([]);
-  
 
   const { id } = useParams();
   if (catid === undefined || catid === null) {
     catid = id;
   }
 
-  
 
   useEffect(() => {
-    postApi('/categoria/byid')
+    postApi('/categoria/byid', { id: catid })
       .then((data) => {
-        //console.log(JSON.stringify(data) + "LENGHT ->" + data.length);
-        setData(data);
+        console.log(JSON.stringify(data) + "LENGHT ->" + data.length);
+        setCategoria(data);
       })
       .catch((err) => {
         console.log(err.message);
       });
+
+
   }, []);
 
-  let categoria = {
+  /*let categoria = {
     categoriaId: catid,
     nome: "Teste",
     descricao: "Testando esse teste"
-  }
+  }*/
 
   return (
     <div className='justify-content-center row'>
@@ -43,37 +44,43 @@ export default function Categoria({ catid = null }) {
           </div>
 
           <div className='card-body'>
-            <div className="mb-3">
-              <span className="">Descrição:</span>
+            <div className="mb-3 h5">
+              <span className="">Descrição: </span>
               <span>{categoria.descricao}</span>
             </div>
 
+            <hr />
+
             <div className='row'>
               <div className='text-center'>
-                <span className='h5'>Produtos na Categoria</span>
+                <span className='h4'>Produtos na Categoria</span>
               </div>
-              <div>{data.length > 0 ?
-                <Table responsive>
-                  <thead>
-                    <tr>
-                      <th>Id</th>
-                      <th>Nome</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    
+              <div>
+                {prodCat.length > 0 ?
+                  <Table responsive>
+                    <thead>
+                      <tr>
+                        <th>Id</th>
+                        <th>Nome</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
 
-                  </tbody>
-                </Table>
 
-                :
+                    </tbody>
+                  </Table>
 
-                <div className='row text-center'>
-                  <span className='h3'>Sem Categorias Cadastradas</span>
-                </div>
-              }</div>
+                  :
+
+                  <div className='row text-center mt-2'>
+                    <span className='h5'>Sem Produtos na Categoria</span>
+                  </div>
+                }
+              </div>
             </div>
+
+            <hr />
 
             <div className='row'>
               <div></div>
@@ -87,7 +94,7 @@ export default function Categoria({ catid = null }) {
   );
 }
 
-{prodCat.map((pc, index) =>
+/*{prodCat.map((pc, index) =>
                       <tr key={pc}>
                         <td>{cat.categoriaId}</td>
                         <td>{cat.nome}</td>

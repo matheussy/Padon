@@ -25,9 +25,11 @@ export default function CategoriaCreate() {
             nome: inputs.nome,
             descricao: textarea
         }
-        alert(JSON.stringify(data));
-        postApi('/categoria/create', data);
-        navigate("/Categorias");
+
+        postApi('/categoria/create', data).then(data => {
+            navigate("/Categorias/"+data.categoriaId);
+        });
+        
     }
     return (
         <div className='justify-content-center row'>
