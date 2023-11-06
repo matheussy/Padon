@@ -19,8 +19,17 @@ public class ProdutoController {
 	private ProdutoRepository produto;
 
 	@PostMapping("/create")
-	public void createProduto(@RequestParam(name = "nome") String nome, @RequestParam(name = "fabricante") String fabricante, @RequestParam(name = "imagem") byte[] imagem, @RequestParam(name = "codigoDeBarras") double codigoDeBarras, @RequestParam(name = "bloquado") boolean bloquado, @RequestParam(name = "precoPorQuilo") double precoPorQuilo, @RequestParam(name = "precoPorUnidade") double precoPorUnidade, @RequestParam(name = "porQuilo") boolean porQuilo) {
-		produto.save(new Produto(nome, fabricante, imagem, codigoDeBarras, bloquado, precoPorQuilo, precoPorUnidade, porQuilo));
+	public void createProduto(@RequestBody JsonNode node) throws IOException {
+		produto.save(new Produto(
+				node.get("nome").asText(),
+				node.get("fabricante").asText(),
+				node.get("imagem").binaryValue(),
+				node.get("codigoDeBarras").asDouble(),
+				node.get("bloquado").asBoolean(),
+				node.get("precoPorQuilo").asDouble(),
+				node.get("precoPorUnidade").asDouble(),
+				node.get("porQuilo").asBoolean()
+		));
 	}
 
 	@GetMapping("/get")
