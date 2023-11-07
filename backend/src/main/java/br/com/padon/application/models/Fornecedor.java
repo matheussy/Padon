@@ -27,6 +27,10 @@ public class Fornecedor {
 		return fornecedorId;
 	}
 
+	public void setFornecedorId(int fornecedorId) {
+		this.fornecedorId = fornecedorId;
+	}
+
 	public String getEndereco() {
 		return endereco;
 	}

@@ -19,17 +19,19 @@ export default function ProdutosCreate() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    alert(JSON.stringify(inputs));
+    
     let data = {
-      codigodeBarras: inputs.codigodeBarras,
+      codigoDeBarras: inputs.codigodeBarras,
       nome: inputs.nome,
       fabricante: inputs.fabricante,
       precoPorUnidade: inputs.precoPorUnidade,
       precoPorQuilo: inputs.precoPorQuilo,
-      Bloqueado: inputs.Bloqueado,
+      bloqueado: inputs.Bloqueado,
       porQuilo: inputs.porQuilo,
+      image: ""
     }
 
+    alert(JSON.stringify(data));
     postApi('/produto/create', data);
     navigate("/Produtos");
   }

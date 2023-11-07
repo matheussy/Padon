@@ -16,6 +16,8 @@ public class Venda {
 	private String statusVenda;
 	private int comanda;
 
+	public Venda() {}
+
 	public Venda(Date dataVenda, String statusVenda, double valorTotal, int comanda) {
 		this.dataVenda = dataVenda;
 		this.statusVenda = statusVenda;
@@ -25,6 +27,10 @@ public class Venda {
 
 	public int getVendaId() {
 		return vendaId;
+	}
+
+	public void setVendaId(int vendaId) {
+		this.vendaId = vendaId;
 	}
 
 	public Date getDataVenda() {

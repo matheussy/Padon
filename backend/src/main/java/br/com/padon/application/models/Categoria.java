@@ -12,21 +12,19 @@ public class Categoria {
 	private String nome;
 	private String descricao;
 
-	public Categoria() {
-
-	}
+	public Categoria() {}
 
 	public Categoria(String nome, String descricao) {
 		this.nome = nome;
 		this.descricao = descricao;
 	}
 
-	public void setCategoriaId(int categoriaId) {
-		this.categoriaId = categoriaId;
-	}
-
 	public int getCategoriaId() {
 		return categoriaId;
+	}
+
+	public void setCategoriaId(int categoriaId) {
+		this.categoriaId = categoriaId;
 	}
 
 	public String getNome() {

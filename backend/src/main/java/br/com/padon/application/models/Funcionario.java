@@ -9,13 +9,16 @@ import jakarta.persistence.Table;
 public class Funcionario {
 
 	@Id
-	private final String cpf;
+	private String cpf;
 	private String usuario;
 	private String nome;
 	private String senha;
 	private String email;
 	private String telefone;
 	private boolean gerente;
+
+	public Funcionario() {
+	}
 
 	public Funcionario(String cpf, String usuario, String nome, String senha, String email, String telefone, boolean gerente) {
 		this.cpf = cpf;

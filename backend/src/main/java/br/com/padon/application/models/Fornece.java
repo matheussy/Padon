@@ -9,14 +9,11 @@ public class Fornece {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int forneceId;
-	private final int fornecedorId;
-	private final int produtoId;
+	private int fornecedorId;
+	private int produtoId;
 	private double preco;
 
-	public Fornece(int fornecedorId, int produtoId) {
-		this.fornecedorId = fornecedorId;
-		this.produtoId = produtoId;
-	}
+	public Fornece() {}
 
 	public Fornece(int fornecedorId, int produtoId, double preco) {
 		this.fornecedorId = fornecedorId;
@@ -28,12 +25,24 @@ public class Fornece {
 		return forneceId;
 	}
 
+	public void setForneceId(int forneceId) {
+		this.forneceId = forneceId;
+	}
+
 	public int getFornecedorId() {
 		return fornecedorId;
 	}
 
+	public void setFornecedorId(int fornecedorId) {
+		this.fornecedorId = fornecedorId;
+	}
+
 	public int getProdutoId() {
 		return produtoId;
+	}
+
+	public void setProdutoId(int produtoId) {
+		this.produtoId = produtoId;
 	}
 
 	public double getPreco() {
