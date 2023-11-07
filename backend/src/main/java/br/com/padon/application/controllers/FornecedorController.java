@@ -18,8 +18,13 @@ public class FornecedorController {
 	private FornecedorRepository fornecedor;
 
 	@PostMapping("/create")
-	public void createFornecedor(@RequestBody JsonNode node) {
-		fornecedor.save(new Fornecedor(node.get("endereco").asText(), node.get("contato").asText(), node.get("telefone").asText(), node.get("nome").asText()));
+	public Fornecedor createFornecedor(@RequestBody JsonNode node) {
+		return fornecedor.save(new Fornecedor(
+				node.get("endereco").asText(),
+				node.get("contato").asText(),
+				node.get("telefone").asText(),
+				node.get("nome").asText()
+		));
 	}
 
 	@GetMapping("/get")
@@ -28,13 +33,13 @@ public class FornecedorController {
 	}
 
 	@PostMapping("/save")
-	public void saveFornecedor(@RequestBody JsonNode node) {
+	public Fornecedor saveFornecedor(@RequestBody JsonNode node) {
 		Fornecedor fornecedorById = fornecedor.findById(node.get("id").asInt()).orElseThrow();
 		fornecedorById.setEndereco(node.get("endereco").asText());
 		fornecedorById.setContato(node.get("contato").asText());
 		fornecedorById.setTelefone(node.get("telefone").asText());
 		fornecedorById.setNome(node.get("nome").asText());
-		fornecedor.save(fornecedorById);
+		return fornecedor.save(fornecedorById);
 	}
 
 	@PostMapping("/byid")
@@ -43,7 +48,8 @@ public class FornecedorController {
 	}
 
 	@PostMapping("/delete")
-	public void deleteFornecedor(@RequestBody JsonNode node) {
+	public boolean deleteFornecedor(@RequestBody JsonNode node) {
 		fornecedor.deleteById(node.get("id").asInt());
+		return true;
 	}
 }
