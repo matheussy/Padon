@@ -31,7 +31,7 @@ function PadonNavbar() {
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item href="/Produtos">Listar</NavDropdown.Item>
                                 <NavDropdown.Item href="/Produtos/Create">Adicionar Produto</NavDropdown.Item>
-                                <NavDropdown.Item href="/Produtos/Edit">Editar Produto</NavDropdown.Item>
+                                <NavDropdown.Item href="/Produtos">Editar Produto</NavDropdown.Item>
                                 <NavDropdown.Item href="/Produtos/Delete">Deletar Produto</NavDropdown.Item>
                             </NavDropdown>
 

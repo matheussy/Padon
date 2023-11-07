@@ -1,60 +1,76 @@
 import React from 'react';
-import './Style.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { postApi } from '../../Services/RequestHandler';
+import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 export default function ProdutoEdit({ catid = null }) {
+  let navigate = useNavigate();
+
   const { id } = useParams();
   if (catid === undefined || catid === null) {
     catid = id;
   }
-  let data = {
-    id: catid
-  }
-  console.log(JSON.stringify(data));
-  //var response = postApi('/categoria/byid', data);
-  let response = {
-    nome: "teste" + catid,
-    codigodeBarras: "1111111111",
-    fabricante: "Tua mãe",
-    precoPorUnidade: "1",
-    precoPorQuilo: "2",
-    Bloqueado: true,
-    porQuilo: false,
-  };
 
-  const [inputs, setInputs] = useState({
-    nome: response.nome,
-    codigodeBarras: response.codigodeBarras,
-    fabricante: response.fabricante,
-    precoPorUnidade: response.precoPorUnidade,
-    precoPorQuilo: response.precoPorQuilo,
-    Bloqueado: response.Bloqueado,
-    porQuilo: response.porQuilo,
-    });
+  const [produto, setProduto] = useState([]);
+  useEffect(() => {
+    postApi('/produto/byid', { id: catid })
+      .then((data) => {
+        console.log(JSON.stringify(data));
+        setProduto(data);
 
-  
+        setInputs({ 
+          nome: data.nome,
+          codigoDeBarras: data.codigoDeBarras,
+          fabricante: data.fabricante,
+          precoPorUnidade: data.precoPorUnidade,
+          precoPorQuilo: data.precoPorQuilo,
+          bloqueado: data.bloqueado,
+          porQuilo: data.porQuilo,
+          image: ""
+         });
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
+
+  const [inputs, setInputs] = useState({ 
+    nome: produto.nome,
+    codigoDeBarras: produto.codigodeBarras,
+    fabricante: produto.fabricante,
+    precoPorUnidade: produto.precoPorUnidade,
+    precoPorQuilo: produto.precoPorQuilo,
+    bloqueado: produto.bloqueado === true,
+    porQuilo: produto.porQuilo === true,
+    image: ""
+   });
+
   const handleChange = (event) => {
     const name = event.target.name;
-    const value = event.target.value;
-    setInputs(values => ({ ...values, [name]: value }));
+    const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
+    setInputs(values => ({ ...values, [name]: value }))
   }
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    alert(JSON.stringify(inputs));
     let data = {
+      id: catid,
+      codigoDeBarras: inputs.codigoDeBarras,
       nome: inputs.nome,
-      codigodeBarras: inputs.codigodeBarras,
       fabricante: inputs.fabricante,
       precoPorUnidade: inputs.precoPorUnidade,
       precoPorQuilo: inputs.precoPorQuilo,
-      Bloqueado: inputs.Bloqueado,
-      porQuilo: inputs.porQuilo,
+      bloqueado: inputs.bloqueado === true,
+      porQuilo: inputs.porQuilo === true,
+      image: ""
     }
-    postApi('/Produtos/save', data);
+    postApi('/produto/save', data).then(data => {
+      navigate("/Produtos/");
+    });
   }
   return (
     <div>
@@ -77,8 +93,8 @@ export default function ProdutoEdit({ catid = null }) {
                 <div className="mb-3">
                   <div className="row align-items-start">
                     <div className="col-6">
-                      <label htmlFor="codigodeBarras" className="form-label">Código de Barras: </label>
-                      <input type="number" className="form-control shadow-sm" id="codigodeBarras" name="codigodeBarras" value={inputs.codigodeBarras || ""} onChange={handleChange} required placeholder="Código de barras do produto..." />
+                      <label htmlFor="codigoDeBarras" className="form-label">Código de Barras: </label>
+                      <input type="text" className="form-control shadow-sm" id="codigoDeBarras" name="codigoDeBarras" value={inputs.codigoDeBarras || ""} onChange={handleChange} required placeholder="Código de barras do produto..." />
                     </div>
                   </div>
                 </div>
@@ -106,13 +122,13 @@ export default function ProdutoEdit({ catid = null }) {
                 </div>
                 <div className="mb-3">
                   <div className="form-check">
-                    <input className="form-check-input shadow-sm" type="checkbox" defaultValue id="Bloqueado" name="Bloqueado" checked={inputs.Bloqueado} onChange={handleChange} />
-                    <label className="form-check-label" htmlFor="Bloqueado">
+                    <input className="form-check-input shadow-sm" type="checkbox" id="bloqueado" name="bloqueado" checked={inputs.bloqueado || false} onChange={handleChange} />
+                    <label className="form-check-label" htmlFor="bloqueado">
                       Bloqueado
                     </label>
                   </div>
                   <div className="form-check">
-                    <input className="form-check-input shadow-sm" type="checkbox" defaultValue id="porQuilo" name="porQuilo" checked={inputs.porQuilo} onChange={handleChange} />
+                    <input className="form-check-input shadow-sm" type="checkbox" id="porQuilo" name="porQuilo" checked={inputs.porQuilo || false} onChange={handleChange} />
                     <label className="form-check-label" htmlFor="porQuilo">
                       Preço por quilo
                     </label>
@@ -124,6 +140,14 @@ export default function ProdutoEdit({ catid = null }) {
                       <i class="bi bi-floppy-fill"></i>
                       <span className='mx-2'>Salvar</span>
                     </button>
+                  </div>
+                  <div className='col-md-auto'>
+                    <Link to={'/Produtos'}>
+                      <button className="btn btn-lg shadow btn-success mb-2">
+                        <i class="bi bi-arrow-left"></i>
+                        <span className='mx-1'>Voltar</span>
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </form>

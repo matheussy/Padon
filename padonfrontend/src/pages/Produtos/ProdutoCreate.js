@@ -21,19 +21,21 @@ export default function ProdutosCreate() {
 
     
     let data = {
-      codigoDeBarras: inputs.codigodeBarras,
+      codigoDeBarras: inputs.codigoDeBarras,
       nome: inputs.nome,
       fabricante: inputs.fabricante,
       precoPorUnidade: inputs.precoPorUnidade,
       precoPorQuilo: inputs.precoPorQuilo,
-      bloqueado: inputs.Bloqueado,
-      porQuilo: inputs.porQuilo,
+      bloqueado: inputs.bloqueado === true,
+      porQuilo: inputs.porQuilo === true,
       image: ""
     }
 
     alert(JSON.stringify(data));
-    postApi('/produto/create', data);
-    navigate("/Produtos");
+    postApi('/produto/create', data).then(data => {
+      navigate("/Produtos/");
+  });
+
   }
   return (
     <div>
@@ -56,8 +58,8 @@ export default function ProdutosCreate() {
                 <div className="mb-3">
                   <div className="row align-items-start">
                     <div className="col-6">
-                      <label htmlFor="codigodeBarras" className="form-label">Código de Barras: </label>
-                      <input type="number" className="form-control shadow-sm" id="codigodeBarras" name="codigodeBarras" value={inputs.codigodeBarras || ""} onChange={handleChange} required placeholder="Código de barras do produto..." />
+                      <label htmlFor="codigoDeBarras" className="form-label">Código de Barras: </label>
+                      <input type="text" className="form-control shadow-sm" id="codigoDeBarras" name="codigoDeBarras" value={inputs.codigoDeBarras || ""} onChange={handleChange} required placeholder="Código de barras do produto..." />
                     </div>
                   </div>
                 </div>
@@ -85,8 +87,8 @@ export default function ProdutosCreate() {
                 </div>
                 <div className="mb-3">
                   <div className="form-check">
-                    <input className="form-check-input shadow-sm" type="checkbox" id="Bloqueado" name="Bloqueado" checked={inputs.Bloqueado || false} onChange={handleChange} />
-                    <label className="form-check-label" htmlFor="Bloqueado">
+                    <input className="form-check-input shadow-sm" type="checkbox" id="bloqueado" name="bloqueado" checked={inputs.bloqueado || false} onChange={handleChange} />
+                    <label className="form-check-label" htmlFor="bloqueado">
                       Bloqueado
                     </label>
                   </div>
