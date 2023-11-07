@@ -11,7 +11,7 @@ public class Produto {
 	private int produtoId;
 	private String nome;
 	private String fabricante;
-	private byte[] imagem;
+	private byte[] image;
 	private double codigoDeBarras;
 	private boolean bloqueado;
 	private double precoPorQuilo;
@@ -20,10 +20,10 @@ public class Produto {
 
 	public Produto() {}
 
-	public Produto(String nome, String fabricante, byte[] imagem, double codigoDeBarras, boolean bloqueado, double precoPorQuilo, double precoPorUnidade, boolean porQuilo) {
+	public Produto(String nome, String fabricante, byte[] image, double codigoDeBarras, boolean bloqueado, double precoPorQuilo, double precoPorUnidade, boolean porQuilo) {
 		this.nome = nome;
 		this.fabricante = fabricante;
-		this.imagem = imagem;
+		this.image = image;
 		this.codigoDeBarras = codigoDeBarras;
 		this.bloqueado = bloqueado;
 		this.precoPorQuilo = precoPorQuilo;
@@ -55,12 +55,12 @@ public class Produto {
 		this.fabricante = fabricante;
 	}
 
-	public byte[] getImagem() {
-		return imagem;
+	public byte[] getImage() {
+		return image;
 	}
 
-	public void setImagem(byte[] imagem) {
-		this.imagem = imagem;
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 
 	public double getCodigoDeBarras() {

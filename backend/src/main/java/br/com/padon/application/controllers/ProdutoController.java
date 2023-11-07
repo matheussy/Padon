@@ -42,7 +42,7 @@ public class ProdutoController {
 		Produto produtoById = produto.findById(node.get("id").asInt()).orElseThrow();
 		produtoById.setNome(node.get("nome").asText());
 		produtoById.setFabricante(node.get("fabricante").asText());
-		produtoById.setImagem(node.get("imagem").binaryValue());
+		produtoById.setImage(node.get("image").binaryValue());
 		produtoById.setCodigoDeBarras(node.get("codigoDeBarras").asDouble());
 		produtoById.setBloqueado(node.get("bloqueado").asBoolean());
 		produtoById.setPrecoPorQuilo(node.get("precoPorQuilo").asDouble());
