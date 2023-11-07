@@ -13,19 +13,19 @@ public class Produto {
 	private String fabricante;
 	private byte[] imagem;
 	private double codigoDeBarras;
-	private boolean bloquado;
+	private boolean bloqueado;
 	private double precoPorQuilo;
 	private double precoPorUnidade;
 	private boolean porQuilo;
 
 	public Produto() {}
 
-	public Produto(String nome, String fabricante, byte[] imagem, double codigoDeBarras, boolean bloquado, double precoPorQuilo, double precoPorUnidade, boolean porQuilo) {
+	public Produto(String nome, String fabricante, byte[] imagem, double codigoDeBarras, boolean bloqueado, double precoPorQuilo, double precoPorUnidade, boolean porQuilo) {
 		this.nome = nome;
 		this.fabricante = fabricante;
 		this.imagem = imagem;
 		this.codigoDeBarras = codigoDeBarras;
-		this.bloquado = bloquado;
+		this.bloqueado = bloqueado;
 		this.precoPorQuilo = precoPorQuilo;
 		this.precoPorUnidade = precoPorUnidade;
 		this.porQuilo = porQuilo;
@@ -33,6 +33,10 @@ public class Produto {
 
 	public int getProdutoId() {
 		return produtoId;
+	}
+
+	public void setProdutoId(int produtoId) {
+		this.produtoId = produtoId;
 	}
 
 	public String getNome() {
@@ -67,12 +71,12 @@ public class Produto {
 		this.codigoDeBarras = codigoDeBarras;
 	}
 
-	public boolean isBloquado() {
-		return bloquado;
+	public boolean isBloqueado() {
+		return bloqueado;
 	}
 
-	public void setBloquado(boolean bloquado) {
-		this.bloquado = bloquado;
+	public void setBloqueado(boolean bloqueado) {
+		this.bloqueado = bloqueado;
 	}
 
 	public double getPrecoPorQuilo() {

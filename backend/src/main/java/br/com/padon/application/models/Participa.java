@@ -9,8 +9,11 @@ public class Participa {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int participaId;
-	private final int categoriaId;
-	private final int produtoId;
+	private int categoriaId;
+	private int produtoId;
+
+	public Participa() {
+	}
 
 	public Participa(int produtoId, int categoriaId) {
 		this.produtoId = produtoId;
@@ -21,11 +24,23 @@ public class Participa {
 		return participaId;
 	}
 
+	public void setParticipaId(int participaId) {
+		this.participaId = participaId;
+	}
+
 	public int getCategoriaId() {
 		return categoriaId;
 	}
 
+	public void setCategoriaId(int categoriaId) {
+		this.categoriaId = categoriaId;
+	}
+
 	public int getProdutoId() {
 		return produtoId;
+	}
+
+	public void setProdutoId(int produtoId) {
+		this.produtoId = produtoId;
 	}
 }

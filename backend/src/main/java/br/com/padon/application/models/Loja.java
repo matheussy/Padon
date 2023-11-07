@@ -12,6 +12,9 @@ public class Loja {
 	private String nome;
 	private String endereco;
 
+	public Loja() {
+	}
+
 	public Loja(String nome, String endereco) {
 		this.nome = nome;
 		this.endereco = endereco;
@@ -19,6 +22,10 @@ public class Loja {
 
 	public int getLojaId() {
 		return lojaId;
+	}
+
+	public void setLojaId(int lojaId) {
+		this.lojaId = lojaId;
 	}
 
 	public String getNome() {

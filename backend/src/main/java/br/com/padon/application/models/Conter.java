@@ -9,15 +9,12 @@ public class Conter {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int conterId;
-	private final int produtoId;
-	private final int lojaId;
+	private int produtoId;
+	private int lojaId;
 	private int estoque;
 	private int quantidadeMinima;
 
-	public Conter(int produtoId, int lojaId) {
-		this.produtoId = produtoId;
-		this.lojaId = lojaId;
-	}
+	public Conter() {}
 
 	public Conter(int produtoId, int lojaId, int estoque, int quantidadeMinima) {
 		this.produtoId = produtoId;
@@ -30,12 +27,24 @@ public class Conter {
 		return conterId;
 	}
 
+	public void setConterId(int conterId) {
+		this.conterId = conterId;
+	}
+
 	public int getProdutoId() {
 		return produtoId;
 	}
 
+	public void setProdutoId(int produtoId) {
+		this.produtoId = produtoId;
+	}
+
 	public int getLojaId() {
 		return lojaId;
+	}
+
+	public void setLojaId(int lojaId) {
+		this.lojaId = lojaId;
 	}
 
 	public int getEstoque() {

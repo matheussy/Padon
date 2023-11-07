@@ -1,7 +1,9 @@
 package br.com.padon.application.controllers;
 
 import br.com.padon.application.models.Categoria;
+import br.com.padon.application.models.Participa;
 import br.com.padon.application.repositorys.CategoriaRepository;
+import br.com.padon.application.repositorys.ParticipaRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,8 @@ public class CategoriaController {
 
 	@Autowired
 	private CategoriaRepository categoria;
+	@Autowired
+	private ParticipaRepository participa;
 
 	@PostMapping("/create")
 	public Categoria createCategoria(@RequestBody JsonNode node) {
@@ -42,6 +46,18 @@ public class CategoriaController {
 	@PostMapping("/delete")
 	public boolean deleteCategoria(@RequestBody JsonNode node) {
 		categoria.deleteById(node.get("id").asInt());
+		return true;
+	}
+
+	@PostMapping("/add")
+	public Participa addProduto(@RequestBody JsonNode node) {
+		return participa.save(new Participa(node.get("produtoId").asInt(), node.get("categoriaId").asInt()));
+	}
+
+	@PostMapping("/remove")
+	public boolean removeProduto(@RequestBody JsonNode node) {
+		Participa result = participa.getParticipa(node.get("produtoId").asInt(), node.get("categoriaId").asInt());
+		participa.delete(result);
 		return true;
 	}
 }

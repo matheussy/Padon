@@ -9,16 +9,13 @@ public class Pertence {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int pertenceId;
-	private final int produtoId;
-	private final int vendaId;
+	private int produtoId;
+	private int vendaId;
 	private double precoTotal;
 	private int quantidade;
 	private double precoAtual;
 
-	public Pertence(int produtoId, int vendaId) {
-		this.produtoId = produtoId;
-		this.vendaId = vendaId;
-	}
+	public Pertence() {}
 
 	public Pertence(int produtoId, int vendaId, double precoTotal, int quantidade, double precoAtual) {
 		this.produtoId = produtoId;
@@ -32,12 +29,24 @@ public class Pertence {
 		return pertenceId;
 	}
 
+	public void setPertenceId(int pertenceId) {
+		this.pertenceId = pertenceId;
+	}
+
 	public int getProdutoId() {
 		return produtoId;
 	}
 
+	public void setProdutoId(int produtoId) {
+		this.produtoId = produtoId;
+	}
+
 	public int getVendaId() {
 		return vendaId;
+	}
+
+	public void setVendaId(int vendaId) {
+		this.vendaId = vendaId;
 	}
 
 	public double getPrecoTotal() {
