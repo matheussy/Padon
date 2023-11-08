@@ -27,12 +27,8 @@ function PadonNavbar() {
                             </NavDropdown>
 
                             <NavDropdown title="Produtos" id="basic-nav-dropdown">
-                                <NavDropdown.Item href="/Produtos">Produtos</NavDropdown.Item>
-                                <NavDropdown.Divider />
                                 <NavDropdown.Item href="/Produtos">Listar</NavDropdown.Item>
                                 <NavDropdown.Item href="/Produtos/Create">Adicionar Produto</NavDropdown.Item>
-                                <NavDropdown.Item href="/Produtos">Editar Produto</NavDropdown.Item>
-                                <NavDropdown.Item href="/Produtos/Delete">Deletar Produto</NavDropdown.Item>
                             </NavDropdown>
 
                             <NavDropdown title="Categorias" id="basic-nav-dropdown">
