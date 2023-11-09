@@ -21,7 +21,9 @@ export default function ProdutoEdit({ catid = null }) {
     postApi('/produto/byid', { id: catid })
       .then((data) => {
         console.log(JSON.stringify(data));
+        
         setProduto(data);
+        setImageBase64(data.image);
 
         setInputs({
           nome: data.nome,
@@ -31,14 +33,13 @@ export default function ProdutoEdit({ catid = null }) {
           precoPorQuilo: data.precoPorQuilo,
           bloqueado: data.bloqueado,
           porQuilo: data.porQuilo,
-          image: data.imageBase64
+          image: data.image,
         });
       })
       .catch((err) => {
         console.log(err.message);
       });
   }, []);
-
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -50,7 +51,7 @@ export default function ProdutoEdit({ catid = null }) {
         setImageBase64(base64Data); // Armazena somente os dados em base64
       };
       reader.readAsDataURL(file);
-    }
+    };
   };
   
   const handleRemoveImage = () => {
@@ -67,9 +68,10 @@ export default function ProdutoEdit({ catid = null }) {
     precoPorQuilo: produto.precoPorQuilo,
     bloqueado: produto.bloqueado === true,
     porQuilo: produto.porQuilo === true,
-    image: produto.imageBase64,
+    image: produto.image,
+    
   });
-
+ 
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
@@ -82,11 +84,11 @@ export default function ProdutoEdit({ catid = null }) {
 
     let data = {
       id: catid,
-      codigoDeBarras: inputs.codigoDeBarras,
-      nome: inputs.nome,
-      fabricante: inputs.fabricante,
-      precoPorUnidade: inputs.precoPorUnidade,
-      precoPorQuilo: inputs.precoPorQuilo,
+      codigoDeBarras: inputs.codigoDeBarras!= null ? inputs.codigoDeBarras : "",
+      nome: inputs.nome != null ? inputs.nome : "",
+      fabricante: inputs.fabricante != null ? inputs.fabricante : "",
+      precoPorUnidade: inputs.precoPorUnidade != null ? inputs.precoPorUnidade : 0,
+      precoPorQuilo: inputs.precoPorQuilo != null ? inputs.precoPorQuilo : 0,
       bloqueado: inputs.bloqueado === true,
       porQuilo: inputs.porQuilo === true,
       image: imageBase64
@@ -95,6 +97,7 @@ export default function ProdutoEdit({ catid = null }) {
       navigate("/Produtos/");
     });
   }
+
   return (
     <div>
       <div className="justify-content-center row">
@@ -113,19 +116,19 @@ export default function ProdutoEdit({ catid = null }) {
                     </div>
                     <div className="mb-3">
                       <label htmlFor="codigoDeBarras" className="form-label">Código de Barras:</label>
-                      <input type="text" className="form-control shadow-sm" id="codigoDeBarras" name="codigoDeBarras" value={inputs.codigoDeBarras} onChange={handleChange} placeholder="Código de barras do produto..." defaultValue={""} />
+                      <input type="text" className="form-control shadow-sm" id="codigoDeBarras" name="codigoDeBarras" value={inputs.codigoDeBarras} onChange={handleChange} placeholder="Código de barras do produto..."  />
                     </div>
                     <div className="mb-3">
                       <label htmlFor="fabricante" className="form-label">Fabricante:</label>
-                      <input type="text" className="form-control shadow-sm" id="fabricante" name="fabricante" value={inputs.fabricante} onChange={handleChange} placeholder="Digite a marca do produto..." defaultValue={""} />
+                      <input type="text" className="form-control shadow-sm" id="fabricante" name="fabricante" value={inputs.fabricante} onChange={handleChange} placeholder="Digite a marca do produto..."  />
                     </div>
                     <div className="mb-3">
                       <label htmlFor="precoPorUnidade" className="form-label">Preço por unidade:</label>
-                      <input type="number" className="form-control col-sm-6 shadow-sm" id="precoPorUnidade" name="precoPorUnidade" value={inputs.precoPorUnidade} onChange={handleChange} defaultValue={0.00} />
+                      <input type="number" className="form-control col-sm-6 shadow-sm" id="precoPorUnidade" name="precoPorUnidade" value={inputs.precoPorUnidade} onChange={handleChange}  />
                     </div>
                     <div className="mb-3">
                       <label htmlFor="precoPorQuilo" className="form-label">Preço por quilo:</label>
-                      <input type="number" className="form-control col-sm-6 shadow-sm" id="precoPorQuilo" name="precoPorQuilo" value={inputs.precoPorQuilo} onChange={handleChange} defaultValue={0.00}/>
+                      <input type="number" className="form-control col-sm-6 shadow-sm" id="precoPorQuilo" name="precoPorQuilo" value={inputs.precoPorQuilo} onChange={handleChange} />
                     </div>
                     <div className="mb-3">
                       <div className="form-check">
@@ -160,8 +163,8 @@ export default function ProdutoEdit({ catid = null }) {
                   </div>
                   <div className="col-md-6 ">
                     <div className="mb-3">
-                      <label htmlFor="image" className="form-label">Imagem do Produto:</label>
-                      <input type="file" accept="image/*" className="form-control shadow-sm" id="image" name='image' onChange={handleImageChange} />
+                      <label htmlFor="image" className="form-label">Adicionar nova imagem:</label>
+                      <input type="file" accept="image/*" className="form-control shadow-sm" id="image" name='image' value={imageBase64 ? undefined : ''} onChange={handleImageChange} />
                     </div>
                     <div className="mb-3">
                       <button type="button" className="btn btn-sm btn-danger" onClick={() => handleRemoveImage()}>Remover Imagem</button>

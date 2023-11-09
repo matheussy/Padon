@@ -26,12 +26,14 @@ export default function ProdutosCreate() {
       reader.onload = (e) => {
         const base64Data = e.target.result.split(',')[1]; // Obtém somente os dados em base64, excluindo o prefixo "data:image/jpeg;base64,"
         setImage(file);
-        setImageBase64(base64Data); // Armazena somente os dados em base64
+        setImageBase64(base64Data);
+        // Armazena somente os dados em base64
       };
       reader.readAsDataURL(file);
     }
   };
-  
+
+
 
 
   const handleRemoveImage = () => {
@@ -46,11 +48,11 @@ export default function ProdutosCreate() {
 
 
     let data = {
-      codigoDeBarras: inputs.codigoDeBarras,
-      nome: inputs.nome,
-      fabricante: inputs.fabricante,
-      precoPorUnidade: inputs.precoPorUnidade,
-      precoPorQuilo: inputs.precoPorQuilo,
+      codigoDeBarras: inputs.codigoDeBarras != null ? inputs.codigoDeBarras : "",
+      nome: inputs.nome != null ? inputs.nome : "",
+      fabricante: inputs.fabricante != null ? inputs.fabricante : "",
+      precoPorUnidade: inputs.precoPorUnidade != null ? inputs.precoPorUnidade : 0,
+      precoPorQuilo: inputs.precoPorQuilo != null ? inputs.precoPorQuilo : 0,
       bloqueado: inputs.bloqueado === true,
       porQuilo: inputs.porQuilo === true,
       image: imageBase64
@@ -81,19 +83,19 @@ export default function ProdutosCreate() {
                     </div>
                     <div className="mb-3">
                       <label htmlFor="codigoDeBarras" className="form-label">Código de Barras:</label>
-                      <input type="text" className="form-control shadow-sm" id="codigoDeBarras" name="codigoDeBarras" value={inputs.codigoDeBarras} onChange={handleChange} placeholder="Código de barras do produto..." defaultValue={""} />
+                      <input type="text" className="form-control shadow-sm" id="codigoDeBarras" name="codigoDeBarras" value={inputs.codigoDeBarras} onChange={handleChange} placeholder="Código de barras do produto..." />
                     </div>
                     <div className="mb-3">
                       <label htmlFor="fabricante" className="form-label">Fabricante:</label>
-                      <input type="text" className="form-control shadow-sm" id="fabricante" name="fabricante" value={inputs.fabricante} onChange={handleChange} placeholder="Digite a marca do produto..." defaultValue={""}/>
+                      <input type="text" className="form-control shadow-sm" id="fabricante" name="fabricante" value={inputs.fabricante} onChange={handleChange} placeholder="Digite a marca do produto..." />
                     </div>
                     <div className="mb-3">
                       <label htmlFor="precoPorUnidade" className="form-label">Preço por unidade:</label>
-                      <input type="number" className="form-control col-sm-6 shadow-sm" id="precoPorUnidade" name="precoPorUnidade" value={inputs.precoPorUnidade} onChange={handleChange} defaultValue={0.00} />
+                      <input type="number" className="form-control col-sm-6 shadow-sm" id="precoPorUnidade" name="precoPorUnidade" value={inputs.precoPorUnidade || 0} onChange={handleChange} />
                     </div>
                     <div className="mb-3">
                       <label htmlFor="precoPorQuilo" className="form-label">Preço por quilo:</label>
-                      <input type="number" className="form-control col-sm-6 shadow-sm" id="precoPorQuilo" name="precoPorQuilo" value={inputs.precoPorQuilo} onChange={handleChange} defaultValue={0.00}/>
+                      <input type="number" className="form-control col-sm-6 shadow-sm" id="precoPorQuilo" name="precoPorQuilo" value={inputs.precoPorQuilo} onChange={handleChange} />
                     </div>
                     <div className="mb-3">
                       <div className="form-check">
@@ -119,12 +121,14 @@ export default function ProdutosCreate() {
                     </div>
                   </div>
                   <div className="col-md-6 ">
-                    <div className="mb-3">
+                    <div className="mb">
                       <label htmlFor="image" className="form-label">Imagem do Produto:</label>
-                      <input type="file" accept="image/*" className="form-control shadow-sm" id="image" name='image' onChange={handleImageChange} />
                     </div>
-                    <div className="mb-3">
-                      <button type="button" className="btn btn-sm btn-danger" onClick={() => handleRemoveImage()}>Remover Imagem</button>
+                    <div className="mb-2 d-flex align-items-center">
+                      <input type="file" accept="image/*" className="form-control shadow-sm me-2" id="image" name='image' onChange={handleImageChange} />
+                      <button type="button" className="btn btn-danger" onClick={() => handleRemoveImage()}>
+                        <i class="bi bi-file-earmark-x"></i>
+                      </button>
                     </div>
                     {imageBase64 && (
                       <div className="text-center">
