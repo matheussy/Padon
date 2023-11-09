@@ -162,12 +162,14 @@ export default function ProdutoEdit({ catid = null }) {
                     </div>
                   </div>
                   <div className="col-md-6 ">
-                    <div className="mb-3">
+                    <div className="mb">
                       <label htmlFor="image" className="form-label">Adicionar nova imagem:</label>
-                      <input type="file" accept="image/*" className="form-control shadow-sm" id="image" name='image' value={imageBase64 ? undefined : ''} onChange={handleImageChange} />
                     </div>
-                    <div className="mb-3">
-                      <button type="button" className="btn btn-sm btn-danger" onClick={() => handleRemoveImage()}>Remover Imagem</button>
+                    <div className="mb-2 d-flex align-items-center">
+                      <input type="file" accept="image/*" className="form-control shadow-sm me-2" id="image" name='image' onChange={handleImageChange} />
+                      <button type="button" className="btn btn-danger" onClick={() => handleRemoveImage()}>
+                        <i class="bi bi-file-earmark-x"></i>
+                      </button>
                     </div>
                     {imageBase64 && (
                       <div className="text-center">

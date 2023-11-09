@@ -28,7 +28,6 @@ export default function ProdutoDelete({ catid = null }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     postApi('/produto/delete', { id: catid }).then(data => {
-      alert("Produto deletado com Sucesso");
       navigate("/Produtos");
     });
   }

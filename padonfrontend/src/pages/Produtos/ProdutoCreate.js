@@ -58,7 +58,6 @@ export default function ProdutosCreate() {
       image: imageBase64
     }
 
-    alert(JSON.stringify(data));
     postApi('/produto/create', data).then(data => {
       navigate("/Produtos/");
     });
