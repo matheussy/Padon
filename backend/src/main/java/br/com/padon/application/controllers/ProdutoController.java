@@ -19,11 +19,11 @@ public class ProdutoController {
 	private ProdutoRepository produto;
 
 	@PostMapping("/create")
-	public Produto createProduto(@RequestBody JsonNode node) throws IOException {
+	public Produto createProduto(@RequestBody JsonNode node) {
 		return produto.save(new Produto(
 				node.get("nome").asText(),
 				node.get("fabricante").asText(),
-				node.get("image").binaryValue(),
+				node.get("image").asText(),
 				node.get("codigoDeBarras").asDouble(),
 				node.get("bloqueado").asBoolean(),
 				node.get("precoPorQuilo").asDouble(),
@@ -38,11 +38,11 @@ public class ProdutoController {
 	}
 
 	@PostMapping("/save")
-	public Produto saveProduto(@RequestBody JsonNode node) throws IOException {
+	public Produto saveProduto(@RequestBody JsonNode node) {
 		Produto produtoById = produto.findById(node.get("id").asInt()).orElseThrow();
 		produtoById.setNome(node.get("nome").asText());
 		produtoById.setFabricante(node.get("fabricante").asText());
-		produtoById.setImage(node.get("image").binaryValue());
+		produtoById.setImage(node.get("image").asText());
 		produtoById.setCodigoDeBarras(node.get("codigoDeBarras").asDouble());
 		produtoById.setBloqueado(node.get("bloqueado").asBoolean());
 		produtoById.setPrecoPorQuilo(node.get("precoPorQuilo").asDouble());
