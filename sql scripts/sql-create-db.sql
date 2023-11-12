@@ -5,7 +5,7 @@ CREATE TABLE Produto
  produtoId INT PRIMARY KEY auto_increment,
  nome VARCHAR(255) NOT NULL,  
  fabricante VARCHAR(255),  
- image VARCHAR(255),  
+ image longtext,  
  codigoDeBarras FLOAT,  
  bloqueado INT,  
  precoPorQuilo FLOAT,  
@@ -57,8 +57,7 @@ CREATE TABLE Funcionario
 );
 
 CREATE TABLE Conter 
-(
- conterId INT PRIMARY KEY auto_increment, 
+( 
  produtoId INT,  
  lojaId INT,  
  estoque INT,  
@@ -66,15 +65,13 @@ CREATE TABLE Conter
 );
 
  CREATE TABLE Participa 
-(
- participaId INT PRIMARY KEY auto_increment, 
+( 
  categoriaId INT,  
  produtoId INT  
 );
 
 CREATE TABLE Fornece 
 ( 
- forneceId INT PRIMARY KEY auto_increment,
  preco FLOAT,  
  fornecedorId INT,  
  produtoId INT  
@@ -82,7 +79,6 @@ CREATE TABLE Fornece
 
 CREATE TABLE Pertence 
 ( 
- pertenceId INT PRIMARY KEY auto_increment,
  precoTotal FLOAT,  
  quantidade INT,  
  precoAtual FLOAT,  
@@ -92,7 +88,17 @@ CREATE TABLE Pertence
 
 CREATE TABLE Trabalha 
 ( 
- trabalhaId INT PRIMARY KEY auto_increment,
  lojaId INT,  
  cpf VARCHAR(255)  
 ); 
+
+ALTER TABLE Conter ADD FOREIGN KEY(produtoId) REFERENCES Produto (produtoId);
+ALTER TABLE Conter ADD FOREIGN KEY (lojaId) REFERENCES Loja (lojaId);
+ALTER TABLE Participa ADD FOREIGN KEY(categoriaId) REFERENCES Categoria (categoriaId);
+ALTER TABLE Participa ADD FOREIGN KEY(produtoId) REFERENCES Produto (produtoId);
+ALTER TABLE Fornece ADD FOREIGN KEY(fornecedorId) REFERENCES Fornecedor (fornecedorId);
+ALTER TABLE Fornece ADD FOREIGN KEY(produtoId) REFERENCES Produto (produtoId);
+ALTER TABLE Pertence ADD FOREIGN KEY(produtoId) REFERENCES Produto (produtoId);
+ALTER TABLE Pertence ADD FOREIGN KEY(vendaId) REFERENCES Venda (vendaId);
+ALTER TABLE Trabalha ADD FOREIGN KEY(lojaId) REFERENCES Loja (lojaId);
+ALTER TABLE Trabalha ADD FOREIGN KEY(cpf) REFERENCES Funcionario (cpf);

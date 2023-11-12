@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Pagina from './pages/Pagina';
 import { ProdutoIndex, ProdutoCreate, ProdutoEdit, ProdutoDelete } from './pages/Produtos';
 import { Categoria, CategoriaIndex, CategoriaCreate, CategoriaEdit, CategoriaDelete } from './pages/Categorias';
+import { Fornecedor, FornecedorCreate, FornecedorIndex, FornecedorEdit, FornecedorDelete } from './pages/Fornecedores';
 import { FuncionarioCreate, FuncionarioIndex, FuncionarioEdit, FuncionarioDelete } from './pages/Funcionarios';
 
 /*<Route exact path='/Teste' element={<Teste />}></Route>
@@ -29,6 +30,13 @@ export default function Main() {
       <Route exact path='/Categorias/Create' element={<CategoriaCreate />}></Route>
       <Route exact path='/Categorias/Edit/:id' element={<CategoriaEdit />}></Route>
       <Route exact path='/Categorias/Delete/:id' element={<CategoriaDelete />}></Route>
+
+      <Route exact path='/Fornecedores/' element={<FornecedorIndex />}></Route>
+      <Route exact path='/Fornecedores/Index' element={<FornecedorIndex />}></Route>
+      <Route exact path='/Fornecedores/:id' element={<Fornecedor />}></Route>
+      <Route exact path='/Fornecedores/Create' element={<FornecedorCreate />}></Route>
+      <Route exact path='/Fornecedores/Edit/:id' element={<FornecedorEdit />}></Route>
+      <Route exact path='/Fornecedores/Delete/:id' element={<FornecedorDelete />}></Route>
 
       <Route exact path='/Funcionarios/' element={<FuncionarioIndex />}></Route>
       <Route exact path='/Funcionarios/Index' element={<FuncionarioIndex />}></Route>
