@@ -71,4 +71,14 @@ public class ProdutoController {
 	public List<Produto> getProdutoOutCategoria(@RequestBody JsonNode node) {
 		return produto.getProdutosOutCategoria(node.get("id").asInt());
 	}
+
+	@PostMapping("/fromfornecedor")
+	public List<Produto> getProdutoFromFornecedor(@RequestBody JsonNode node) {
+		return produto.getProdutosFromFornecedor(node.get("id").asInt());
+	}
+
+	@PostMapping("/outfornecedor")
+	public List<Produto> getProdutoOutFornecedor(@RequestBody JsonNode node) {
+		return produto.getProdutosOutFornecedor(node.get("id").asInt());
+	}
 }
