@@ -61,4 +61,14 @@ public class ProdutoController {
 		produto.deleteById(node.get("id").asInt());
 		return true;
 	}
+
+	@PostMapping("/fromcategoria")
+	public List<Produto> getProdutoFromCategoria(@RequestBody JsonNode node) {
+		return produto.getProdutosFromCategoria(node.get("id").asInt());
+	}
+
+	@PostMapping("/outcategoria")
+	public List<Produto> getProdutoOutCategoria(@RequestBody JsonNode node) {
+		return produto.getProdutosOutCategoria(node.get("id").asInt());
+	}
 }
