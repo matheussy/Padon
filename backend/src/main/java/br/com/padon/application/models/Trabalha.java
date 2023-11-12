@@ -3,7 +3,7 @@ package br.com.padon.application.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Participa")
+@Table(name = "Trabalha")
 public class Trabalha {
 
 	@Id
