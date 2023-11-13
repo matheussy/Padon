@@ -25,7 +25,7 @@ export default function CategoriaEdit({ catid = null }) {
       .catch((err) => {
         console.log(err.message);
       });
-  }, []);
+  }, [catid]);
 
   const [inputs, setInputs] = useState({ nome: categoria.nome });
   const [textarea, setTextarea] = useState(categoria.descricao);

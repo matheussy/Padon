@@ -70,7 +70,7 @@ export default function Categoria({ catid = null }) {
       });
 
 
-  }, []);
+  }, [catid]);
 
   const AdicionarProd = (catId, prodId) => {
     postApi('/categoria/add', { produtoId: prodId, categoriaId: catId })

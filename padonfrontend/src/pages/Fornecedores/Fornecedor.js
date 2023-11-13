@@ -1,13 +1,12 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Table from 'react-bootstrap/Table';
 import { postApi } from '../../Services/RequestHandler';
 import Collapse from 'react-bootstrap/Collapse';
 import Modal from 'react-bootstrap/Modal';
 
 export default function Fornecedor({ fornid = null }) {
-  let navigate = useNavigate();
 
   // Info
   const [fornecedor, setFornecedor] = useState([]);
@@ -78,7 +77,7 @@ export default function Fornecedor({ fornid = null }) {
       });
 
 
-  }, []);
+  }, [fornid]);
 
   const AdicionarProd = (fornId, prodId, preco) => {
     postApi('/fornecedor/add', { produtoId: prodId, fornecedorId: fornId, preco:preco})

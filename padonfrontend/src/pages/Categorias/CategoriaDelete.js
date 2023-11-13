@@ -21,7 +21,7 @@ export default function CategoriaDelete({catid = null}) {
       .catch((err) => {
         console.log(err.message);
       });
-  }, []);
+  }, [catid]);
 
 
   const handleSubmit = (event) => {

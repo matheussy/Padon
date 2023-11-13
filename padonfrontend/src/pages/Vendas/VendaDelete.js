@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default function Venda() {
+export default function VendaDelete() {
   return (
     <div className='bg-white'>
-        <p>Teste de Venda</p>
+        <p>Teste de Venda delete</p>
     </div>
   );
 }
