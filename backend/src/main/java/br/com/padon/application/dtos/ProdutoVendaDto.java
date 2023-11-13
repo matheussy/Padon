@@ -1,6 +1,6 @@
 package br.com.padon.application.dtos;
 
-public record ProdutoDto(
+public record ProdutoVendaDto(
 		int produtoId,
 		String nome,
 		String fabricante,
@@ -10,6 +10,8 @@ public record ProdutoDto(
 		double precoPorQuilo,
 		double precoPorUnidade,
 		boolean porQuilo,
-		double preco
+		double precoTotal,
+		int quantidade,
+		double precoAtual
 ) {
 }

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
@@ -20,4 +21,10 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 
 	@Query("select p from Produto p where (select count(*) from Fornece r where r.fornecedorId = :fornecedorId and p.produtoId = r.produtoId) = 0")
 	List<Produto> getProdutosOutFornecedor(int fornecedorId);
+
+	@Query("select p from Produto p, Pertence r where r.vendaId = :vendaId and p.produtoId = r.produtoId")
+	List<Produto> getProdutosFromVenda(int vendaId);
+
+	@Query("select p from Produto p where (select count(*) from Pertence r where r.vendaId = :vendaId and p.produtoId = r.produtoId) = 0")
+	List<Produto> getProdutosOutVenda(int vendaId);
 }

@@ -1,10 +1,7 @@
 package br.com.padon.application.controllers;
 
-import br.com.padon.application.dtos.ProdutoDto;
 import br.com.padon.application.models.*;
-import br.com.padon.application.repositorys.ForneceRepository;
 import br.com.padon.application.repositorys.LojaRepository;
-import br.com.padon.application.repositorys.ProdutoRepository;
 import br.com.padon.application.repositorys.TrabalhaRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin

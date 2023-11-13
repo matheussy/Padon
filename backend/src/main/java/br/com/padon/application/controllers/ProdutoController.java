@@ -1,9 +1,12 @@
 package br.com.padon.application.controllers;
 
-import br.com.padon.application.dtos.ProdutoDto;
+import br.com.padon.application.dtos.ProdutoFornecedorDto;
+import br.com.padon.application.dtos.ProdutoVendaDto;
 import br.com.padon.application.models.Fornece;
+import br.com.padon.application.models.Pertence;
 import br.com.padon.application.models.Produto;
 import br.com.padon.application.repositorys.ForneceRepository;
+import br.com.padon.application.repositorys.PertenceRepository;
 import br.com.padon.application.repositorys.ProdutoRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,8 @@ public class ProdutoController {
 	private ProdutoRepository produto;
 	@Autowired
 	private ForneceRepository fornece;
+	@Autowired
+	private PertenceRepository pertence;
 
 	@PostMapping("/create")
 	public Produto createProduto(@RequestBody JsonNode node) {
@@ -78,11 +83,11 @@ public class ProdutoController {
 	}
 
 	@PostMapping("/fromfornecedor")
-	public List<ProdutoDto> getProdutoFromFornecedor(@RequestBody JsonNode node) {
+	public List<ProdutoFornecedorDto> getProdutoFromFornecedor(@RequestBody JsonNode node) {
 		int fornecedorId = node.get("id").asInt();
 		return produto.getProdutosFromFornecedor(fornecedorId).stream().map(p -> {
 			Fornece forneceModel = fornece.getFornece(p.getProdutoId(), fornecedorId);
-			return new ProdutoDto(
+			return new ProdutoFornecedorDto(
 					p.getProdutoId(),
 					p.getNome(),
 					p.getFabricante(),
@@ -98,11 +103,11 @@ public class ProdutoController {
 	}
 
 	@PostMapping("/outfornecedor")
-	public List<ProdutoDto> getProdutoOutFornecedor(@RequestBody JsonNode node) {
+	public List<ProdutoFornecedorDto> getProdutoOutFornecedor(@RequestBody JsonNode node) {
 		int fornecedorId = node.get("id").asInt();
 		return produto.getProdutosOutFornecedor(fornecedorId).stream().map(p -> {
 			Fornece forneceModel = fornece.getFornece(p.getProdutoId(), fornecedorId);
-			return new ProdutoDto(
+			return new ProdutoFornecedorDto(
 					p.getProdutoId(),
 					p.getNome(),
 					p.getFabricante(),
@@ -113,6 +118,50 @@ public class ProdutoController {
 					p.getPrecoPorUnidade(),
 					p.isPorQuilo(),
 					forneceModel != null ? forneceModel.getPreco() : 0
+			);
+		}).collect(Collectors.toList());
+	}
+
+	@PostMapping("/fromvenda")
+	public List<ProdutoVendaDto> getProdutoFromVenda(@RequestBody JsonNode node) {
+		int vendaId = node.get("id").asInt();
+		return produto.getProdutosFromVenda(vendaId).stream().map(p -> {
+			Pertence pertenceModel = pertence.getPertence(p.getProdutoId(), vendaId);
+			return new ProdutoVendaDto(
+					p.getProdutoId(),
+					p.getNome(),
+					p.getFabricante(),
+					p.getImage(),
+					p.getCodigoDeBarras(),
+					p.isBloqueado(),
+					p.getPrecoPorQuilo(),
+					p.getPrecoPorUnidade(),
+					p.isPorQuilo(),
+					pertenceModel.getPrecoTotal(),
+					pertenceModel.getQuantidade(),
+					pertenceModel.getPrecoAtual()
+			);
+		}).collect(Collectors.toList());
+	}
+
+	@PostMapping("/outvenda")
+	public List<ProdutoVendaDto> getProdutoOutVenda(@RequestBody JsonNode node) {
+		int vendaId = node.get("id").asInt();
+		return produto.getProdutosOutVenda(vendaId).stream().map(p -> {
+			Pertence pertenceModel = pertence.getPertence(p.getProdutoId(), vendaId);
+			return new ProdutoVendaDto(
+					p.getProdutoId(),
+					p.getNome(),
+					p.getFabricante(),
+					p.getImage(),
+					p.getCodigoDeBarras(),
+					p.isBloqueado(),
+					p.getPrecoPorQuilo(),
+					p.getPrecoPorUnidade(),
+					p.isPorQuilo(),
+					pertenceModel.getPrecoTotal(),
+					pertenceModel.getQuantidade(),
+					pertenceModel.getPrecoAtual()
 			);
 		}).collect(Collectors.toList());
 	}
