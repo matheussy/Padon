@@ -15,9 +15,9 @@ public class Fornece {
 
 	public Fornece() {}
 
-	public Fornece(int fornecedorId, int produtoId, double preco) {
-		this.fornecedorId = fornecedorId;
+	public Fornece(int produtoId, int fornecedorId, double preco) {
 		this.produtoId = produtoId;
+		this.fornecedorId = fornecedorId;
 		this.preco = preco;
 	}
 
