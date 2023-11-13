@@ -24,7 +24,7 @@ export default function FornecedorCreate() {
         }
 
         postApi('/fornecedor/create', data).then(data => {
-            navigate("/Fornecedores/"+data.id);
+            navigate("/Fornecedores/"+data.fornecedorId);
         });
         
     }
