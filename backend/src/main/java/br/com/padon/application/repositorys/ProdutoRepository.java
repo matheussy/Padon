@@ -12,12 +12,12 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 	@Query("select p from Produto p, Participa r where r.categoriaId = :categoriaId and p.produtoId = r.produtoId")
 	List<Produto> getProdutosFromCategoria(int categoriaId);
 
-	@Query("select p from Produto p, Participa r where r.categoriaId != :categoriaId and p.produtoId = r.produtoId")
+	@Query("select p from Produto p where (select count(*) from Participa r where r.categoriaId = :categoriaId and p.produtoId = r.produtoId) = 0")
 	List<Produto> getProdutosOutCategoria(int categoriaId);
 
-	@Query("select p from Produto p, Participa r where r.fornecedorId = :fornecedorId and p.produtoId = r.produtoId")
+	@Query("select p from Produto p, Fornece r where r.fornecedorId = :fornecedorId and p.produtoId = r.produtoId")
 	List<Produto> getProdutosFromFornecedor(int fornecedorId);
 
-	@Query("select p from Produto p, Participa r where r.fornecedorId != :fornecedorId and p.produtoId = r.produtoId")
+	@Query("select p from Produto p where (select count(*) from Fornece r where r.fornecedorId = :fornecedorId and p.produtoId = r.produtoId) = 0")
 	List<Produto> getProdutosOutFornecedor(int fornecedorId);
 }
