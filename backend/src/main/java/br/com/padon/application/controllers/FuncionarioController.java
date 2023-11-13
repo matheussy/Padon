@@ -18,7 +18,7 @@ public class FuncionarioController {
 	private FuncionarioRepository funcionario;
 
 	@PostMapping("/create")
-	public Funcionario createFornecedor(@RequestBody JsonNode node) {
+	public Funcionario createFuncionario(@RequestBody JsonNode node) {
 		return funcionario.save(new Funcionario(
 				node.get("cpf").asText(),
 				node.get("usuario").asText(),
@@ -37,14 +37,14 @@ public class FuncionarioController {
 
 	@PostMapping("/save")
 	public Funcionario saveFuncionario(@RequestBody JsonNode node) {
-		Funcionario fornecedorById = funcionario.findById(node.get("cpf").asText()).orElseThrow();
-		fornecedorById.setUsuario(node.get("usuario").asText());
-		fornecedorById.setNome(node.get("nome").asText());
-		fornecedorById.setSenha(node.get("senha").asText());
-		fornecedorById.setEmail(node.get("email").asText());
-		fornecedorById.setTelefone(node.get("telefone").asText());
-		fornecedorById.setGerente(node.get("gerente").asBoolean());
-		return funcionario.save(fornecedorById);
+		Funcionario funcionarioById = funcionario.findById(node.get("cpf").asText()).orElseThrow();
+		funcionarioById.setUsuario(node.get("usuario").asText());
+		funcionarioById.setNome(node.get("nome").asText());
+		funcionarioById.setSenha(node.get("senha").asText());
+		funcionarioById.setEmail(node.get("email").asText());
+		funcionarioById.setTelefone(node.get("telefone").asText());
+		funcionarioById.setGerente(node.get("gerente").asBoolean());
+		return funcionario.save(funcionarioById);
 	}
 
 	@PostMapping("/byid")
