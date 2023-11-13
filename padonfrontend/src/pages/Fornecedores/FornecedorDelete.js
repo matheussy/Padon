@@ -21,7 +21,7 @@ export default function FornecedorDelete({fornid = null}) {
       .catch((err) => {
         console.log(err.message);
       });
-  }, []);
+  }, [fornid]);
 
 
   const handleSubmit = (event) => {

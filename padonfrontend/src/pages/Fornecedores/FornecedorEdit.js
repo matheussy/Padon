@@ -24,7 +24,7 @@ export default function FornecedorEdit({ fornid = null }) {
       .catch((err) => {
         console.log(err.message);
       });
-  }, []);
+  }, [fornid]);
 
   const [inputs, setInputs] = useState({ nome: fornecedor.nome, contato: fornecedor.contato, endereco: fornecedor.endereco, telefone: fornecedor.telefone });
 

@@ -3,60 +3,69 @@ import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { postApi } from '../../Services/RequestHandler';
 
-export default function VendaCreate() {
-  let navigate = useNavigate();
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
-    const [inputs, setInputs] = useState({});
-    const [textarea, setTextarea] = useState("");
+export default function VendaCreate() {
+    let navigate = useNavigate();
+
+    const [comanda, setComanda] = useState();
+    const [selectedDate, setSelectedDate] = useState(new Date());
 
     const handleChange = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        setInputs(values => ({ ...values, [name]: value }))
+        const comanda = event.target.value;
+        if (comanda > 0) 
+            setComanda(comanda);
+        else 
+            setComanda(1);
     }
 
-    const handleChangeTextArea = (event) => {
-        setTextarea(event.target.value)
-    }
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+    };
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
         let data = {
-            nome: inputs.nome,
-            descricao: textarea
+            comanda: comanda,
+            valor: 0,
+            data:"10/11/2023",
+            status:1,
         }
+        //, data: selectedDate
 
-        postApi('/categoria/create', data).then(data => {
-            navigate("/Categorias/"+data.categoriaId);
+        postApi('/venda/create', data).then(data => {
+            //navigate("/vendas/" + data.vendaId);
         });
-      }
+    }
 
-  return (
-    <div className='justify-content-center row'>
+    return (
+        <div className='justify-content-center row'>
             <div className='col-11 col-md-8'>
                 <div className='card mt-1'>
                     <div className='card-header text-center'>
-                        <span className='h4'>Adicionar Venda</span>
+                        <span className='h4'>Iniciar Venda</span>
                     </div>
                     <form onSubmit={handleSubmit}>
                         <div className='card-body'>
                             <div className="mb-3">
-                                <label htmlFor="nome" className="form-label">Nome da Categoria:</label>
-                                <input type="text" name="nome" id="nome" className='form-control' value={inputs.nome || ""} onChange={handleChange} />
+                                <label htmlFor="comanda" className="form-label">Comanda da Venda:</label>
+                                <input type="text" name="comanda" id="comanda" className='form-control' value={comanda || ""} onChange={handleChange} />
                             </div>
                             <div className="mb-3">
-                                <label htmlFor="desc" className="form-label">Descrição da Categoria</label>
-                                <textarea className="form-control" id="desc" rows="3" value={textarea} onChange={handleChangeTextArea}></textarea>
+                                <label htmlFor="desc" className="form-label me-2">Data da Venda: </label>
+                                <DatePicker selected={selectedDate} onChange={handleDateChange} dateFormat="dd/MM/yyyy" placeholderText="Selecione uma data" className='form-control' disabled />
                             </div>
 
                             <button type="submit" className='btn btn-success'>
-                                <i className="bi bi-plus-circle"></i> 
-                                <span className='mx-1'>Adicionar Categoria</span>
+                                <i className="bi bi-bag"></i>
+                                <span className='mx-1'>Iniciar Venda</span>
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-  );
+    );
 }
