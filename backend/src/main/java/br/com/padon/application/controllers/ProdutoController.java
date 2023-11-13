@@ -82,7 +82,6 @@ public class ProdutoController {
 		int fornecedorId = node.get("id").asInt();
 		return produto.getProdutosFromFornecedor(fornecedorId).stream().map(p -> {
 			Fornece forneceModel = fornece.getFornece(p.getProdutoId(), fornecedorId);
-			double preco = forneceModel != null ? forneceModel.getPreco() : 0;
 			return new ProdutoDto(
 					p.getProdutoId(),
 					p.getNome(),
@@ -93,7 +92,7 @@ public class ProdutoController {
 					p.getPrecoPorQuilo(),
 					p.getPrecoPorUnidade(),
 					p.isPorQuilo(),
-					preco
+					forneceModel != null ? forneceModel.getPreco() : 0
 			);
 		}).collect(Collectors.toList());
 	}
@@ -103,7 +102,6 @@ public class ProdutoController {
 		int fornecedorId = node.get("id").asInt();
 		return produto.getProdutosOutFornecedor(fornecedorId).stream().map(p -> {
 			Fornece forneceModel = fornece.getFornece(p.getProdutoId(), fornecedorId);
-			double preco = forneceModel != null ? forneceModel.getPreco() : 0;
 			return new ProdutoDto(
 					p.getProdutoId(),
 					p.getNome(),
@@ -114,7 +112,7 @@ public class ProdutoController {
 					p.getPrecoPorQuilo(),
 					p.getPrecoPorUnidade(),
 					p.isPorQuilo(),
-					preco
+					forneceModel != null ? forneceModel.getPreco() : 0
 			);
 		}).collect(Collectors.toList());
 	}
