@@ -1,14 +1,17 @@
 package br.com.padon.application.controllers;
 
+import br.com.padon.application.dtos.ProdutoDto;
+import br.com.padon.application.models.Fornece;
 import br.com.padon.application.models.Produto;
+import br.com.padon.application.repositorys.ForneceRepository;
 import br.com.padon.application.repositorys.ProdutoRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
@@ -17,6 +20,8 @@ public class ProdutoController {
 
 	@Autowired
 	private ProdutoRepository produto;
+	@Autowired
+	private ForneceRepository fornece;
 
 	@PostMapping("/create")
 	public Produto createProduto(@RequestBody JsonNode node) {
@@ -60,5 +65,55 @@ public class ProdutoController {
 	public boolean deleteProduto(@RequestBody JsonNode node) {
 		produto.deleteById(node.get("id").asInt());
 		return true;
+	}
+
+	@PostMapping("/fromcategoria")
+	public List<Produto> getProdutoFromCategoria(@RequestBody JsonNode node) {
+		return produto.getProdutosFromCategoria(node.get("id").asInt());
+	}
+
+	@PostMapping("/outcategoria")
+	public List<Produto> getProdutoOutCategoria(@RequestBody JsonNode node) {
+		return produto.getProdutosOutCategoria(node.get("id").asInt());
+	}
+
+	@PostMapping("/fromfornecedor")
+	public List<ProdutoDto> getProdutoFromFornecedor(@RequestBody JsonNode node) {
+		int fornecedorId = node.get("id").asInt();
+		return produto.getProdutosFromFornecedor(fornecedorId).stream().map(p -> {
+			Fornece forneceModel = fornece.getFornece(p.getProdutoId(), fornecedorId);
+			return new ProdutoDto(
+					p.getProdutoId(),
+					p.getNome(),
+					p.getFabricante(),
+					p.getImage(),
+					p.getCodigoDeBarras(),
+					p.isBloqueado(),
+					p.getPrecoPorQuilo(),
+					p.getPrecoPorUnidade(),
+					p.isPorQuilo(),
+					forneceModel != null ? forneceModel.getPreco() : 0
+			);
+		}).collect(Collectors.toList());
+	}
+
+	@PostMapping("/outfornecedor")
+	public List<ProdutoDto> getProdutoOutFornecedor(@RequestBody JsonNode node) {
+		int fornecedorId = node.get("id").asInt();
+		return produto.getProdutosOutFornecedor(fornecedorId).stream().map(p -> {
+			Fornece forneceModel = fornece.getFornece(p.getProdutoId(), fornecedorId);
+			return new ProdutoDto(
+					p.getProdutoId(),
+					p.getNome(),
+					p.getFabricante(),
+					p.getImage(),
+					p.getCodigoDeBarras(),
+					p.isBloqueado(),
+					p.getPrecoPorQuilo(),
+					p.getPrecoPorUnidade(),
+					p.isPorQuilo(),
+					forneceModel != null ? forneceModel.getPreco() : 0
+			);
+		}).collect(Collectors.toList());
 	}
 }

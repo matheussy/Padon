@@ -30,7 +30,7 @@ CREATE TABLE Categoria
 CREATE TABLE Fornecedor 
 ( 
  fornecedorId INT PRIMARY KEY auto_increment,
- endereço VARCHAR(255),  
+ endereco VARCHAR(255),  
  contato VARCHAR(255),  
  telefone VARCHAR(255),  
  nome VARCHAR(255)  

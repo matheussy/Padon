@@ -57,6 +57,10 @@ public class CategoriaController {
 	@PostMapping("/remove")
 	public boolean removeProduto(@RequestBody JsonNode node) {
 		Participa result = participa.getParticipa(node.get("produtoId").asInt(), node.get("categoriaId").asInt());
+		if (result == null) {
+			return false;
+		}
+
 		participa.delete(result);
 		return true;
 	}

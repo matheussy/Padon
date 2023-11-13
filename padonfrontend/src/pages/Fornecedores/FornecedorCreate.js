@@ -23,9 +23,9 @@ export default function FornecedorCreate() {
             telefone: inputs.telefone,
         }
 
-        /*postApi('/Fornecedor/create', data).then(data => {
-            //navigate("/Fornecedores/"+data.id);
-        });*/
+        postApi('/fornecedor/create', data).then(data => {
+            navigate("/Fornecedores/"+data.fornecedorId);
+        });
         
     }
     return (

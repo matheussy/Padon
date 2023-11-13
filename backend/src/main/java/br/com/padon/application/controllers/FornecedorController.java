@@ -1,6 +1,8 @@
 package br.com.padon.application.controllers;
 
+import br.com.padon.application.models.Fornece;
 import br.com.padon.application.models.Fornecedor;
+import br.com.padon.application.repositorys.ForneceRepository;
 import br.com.padon.application.repositorys.FornecedorRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ public class FornecedorController {
 
 	@Autowired
 	private FornecedorRepository fornecedor;
+	@Autowired
+	private ForneceRepository fornece;
 
 	@PostMapping("/create")
 	public Fornecedor createFornecedor(@RequestBody JsonNode node) {
@@ -50,6 +54,22 @@ public class FornecedorController {
 	@PostMapping("/delete")
 	public boolean deleteFornecedor(@RequestBody JsonNode node) {
 		fornecedor.deleteById(node.get("id").asInt());
+		return true;
+	}
+
+	@PostMapping("/add")
+	public Fornece addProduto(@RequestBody JsonNode node) {
+		return fornece.save(new Fornece(node.get("produtoId").asInt(), node.get("fornecedorId").asInt(), node.get("preco").asDouble()));
+	}
+
+	@PostMapping("/remove")
+	public boolean removeProduto(@RequestBody JsonNode node) {
+		Fornece result = fornece.getFornece(node.get("produtoId").asInt(), node.get("fornecedorId").asInt());
+		if (result == null) {
+			return false;
+		}
+
+		fornece.delete(result);
 		return true;
 	}
 }
