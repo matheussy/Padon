@@ -1,6 +1,7 @@
 package br.com.padon.application.controllers;
 
 import br.com.padon.application.dtos.ProdutoDto;
+import br.com.padon.application.models.Fornece;
 import br.com.padon.application.models.Produto;
 import br.com.padon.application.repositorys.ForneceRepository;
 import br.com.padon.application.repositorys.ProdutoRepository;
@@ -79,34 +80,42 @@ public class ProdutoController {
 	@PostMapping("/fromfornecedor")
 	public List<ProdutoDto> getProdutoFromFornecedor(@RequestBody JsonNode node) {
 		int fornecedorId = node.get("id").asInt();
-		return produto.getProdutosFromFornecedor(fornecedorId).stream().map(p -> new ProdutoDto(
-				p.getProdutoId(),
-				p.getNome(),
-				p.getFabricante(),
-				p.getImage(),
-				p.getCodigoDeBarras(),
-				p.isBloqueado(),
-				p.getPrecoPorQuilo(),
-				p.getPrecoPorUnidade(),
-				p.isPorQuilo(),
-				fornece.getFornece(p.getProdutoId(), fornecedorId).getPreco()
-		)).collect(Collectors.toList());
+		return produto.getProdutosFromFornecedor(fornecedorId).stream().map(p -> {
+			Fornece forneceModel = fornece.getFornece(p.getProdutoId(), fornecedorId);
+			double preco = forneceModel != null ? forneceModel.getPreco() : 0;
+			return new ProdutoDto(
+					p.getProdutoId(),
+					p.getNome(),
+					p.getFabricante(),
+					p.getImage(),
+					p.getCodigoDeBarras(),
+					p.isBloqueado(),
+					p.getPrecoPorQuilo(),
+					p.getPrecoPorUnidade(),
+					p.isPorQuilo(),
+					preco
+			);
+		}).collect(Collectors.toList());
 	}
 
 	@PostMapping("/outfornecedor")
 	public List<ProdutoDto> getProdutoOutFornecedor(@RequestBody JsonNode node) {
 		int fornecedorId = node.get("id").asInt();
-		return produto.getProdutosOutFornecedor(fornecedorId).stream().map(p -> new ProdutoDto(
-				p.getProdutoId(),
-				p.getNome(),
-				p.getFabricante(),
-				p.getImage(),
-				p.getCodigoDeBarras(),
-				p.isBloqueado(),
-				p.getPrecoPorQuilo(),
-				p.getPrecoPorUnidade(),
-				p.isPorQuilo(),
-				fornece.getFornece(p.getProdutoId(), fornecedorId).getPreco()
-		)).collect(Collectors.toList());
+		return produto.getProdutosOutFornecedor(fornecedorId).stream().map(p -> {
+			Fornece forneceModel = fornece.getFornece(p.getProdutoId(), fornecedorId);
+			double preco = forneceModel != null ? forneceModel.getPreco() : 0;
+			return new ProdutoDto(
+					p.getProdutoId(),
+					p.getNome(),
+					p.getFabricante(),
+					p.getImage(),
+					p.getCodigoDeBarras(),
+					p.isBloqueado(),
+					p.getPrecoPorQuilo(),
+					p.getPrecoPorUnidade(),
+					p.isPorQuilo(),
+					preco
+			);
+		}).collect(Collectors.toList());
 	}
 }
