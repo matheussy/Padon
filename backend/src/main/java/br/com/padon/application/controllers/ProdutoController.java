@@ -1,14 +1,16 @@
 package br.com.padon.application.controllers;
 
+import br.com.padon.application.dtos.ProdutoDto;
 import br.com.padon.application.models.Produto;
+import br.com.padon.application.repositorys.ForneceRepository;
 import br.com.padon.application.repositorys.ProdutoRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
@@ -17,6 +19,8 @@ public class ProdutoController {
 
 	@Autowired
 	private ProdutoRepository produto;
+	@Autowired
+	private ForneceRepository fornece;
 
 	@PostMapping("/create")
 	public Produto createProduto(@RequestBody JsonNode node) {
@@ -73,12 +77,36 @@ public class ProdutoController {
 	}
 
 	@PostMapping("/fromfornecedor")
-	public List<Produto> getProdutoFromFornecedor(@RequestBody JsonNode node) {
-		return produto.getProdutosFromFornecedor(node.get("id").asInt());
+	public List<ProdutoDto> getProdutoFromFornecedor(@RequestBody JsonNode node) {
+		int fornecedorId = node.get("id").asInt();
+		return produto.getProdutosFromFornecedor(fornecedorId).stream().map(p -> new ProdutoDto(
+				p.getProdutoId(),
+				p.getNome(),
+				p.getFabricante(),
+				p.getImage(),
+				p.getCodigoDeBarras(),
+				p.isBloqueado(),
+				p.getPrecoPorQuilo(),
+				p.getPrecoPorUnidade(),
+				p.isPorQuilo(),
+				fornece.getFornece(p.getProdutoId(), fornecedorId).getPreco()
+		)).collect(Collectors.toList());
 	}
 
 	@PostMapping("/outfornecedor")
-	public List<Produto> getProdutoOutFornecedor(@RequestBody JsonNode node) {
-		return produto.getProdutosOutFornecedor(node.get("id").asInt());
+	public List<ProdutoDto> getProdutoOutFornecedor(@RequestBody JsonNode node) {
+		int fornecedorId = node.get("id").asInt();
+		return produto.getProdutosOutFornecedor(fornecedorId).stream().map(p -> new ProdutoDto(
+				p.getProdutoId(),
+				p.getNome(),
+				p.getFabricante(),
+				p.getImage(),
+				p.getCodigoDeBarras(),
+				p.isBloqueado(),
+				p.getPrecoPorQuilo(),
+				p.getPrecoPorUnidade(),
+				p.isPorQuilo(),
+				fornece.getFornece(p.getProdutoId(), fornecedorId).getPreco()
+		)).collect(Collectors.toList());
 	}
 }
