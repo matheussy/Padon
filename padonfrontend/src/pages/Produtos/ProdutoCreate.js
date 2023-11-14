@@ -94,7 +94,7 @@ export default function ProdutosCreate() {
                     </div>
                     <div className="mb-3">
                       <label htmlFor="precoPorQuilo" className="form-label">Preço por quilo:</label>
-                      <input type="number" className="form-control col-sm-6 shadow-sm" id="precoPorQuilo" name="precoPorQuilo" value={inputs.precoPorQuilo} onChange={handleChange} />
+                      <input type="number" className="form-control col-sm-6 shadow-sm" id="precoPorQuilo" name="precoPorQuilo" value={inputs.precoPorQuilo || 0} onChange={handleChange} />
                     </div>
                     <div className="mb-3">
                       <div className="form-check">

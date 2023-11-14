@@ -4,21 +4,25 @@ import { useParams } from "react-router-dom";
 import { postApi } from '../../Services/RequestHandler';
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
+import { Button, Modal } from 'react-bootstrap';
 
-export default function ProdutoEdit({ catid = null }) {
+export default function ProdutoEdit({ prodid = null }) {
   let navigate = useNavigate();
 
   const { id } = useParams();
-  if (catid === undefined || catid === null) {
-    catid = id;
+  if (prodid === undefined || prodid === null) {
+    prodid = id;
   }
 
   const [produto, setProduto] = useState([]);
   const [image, setImage] = useState(null);
   const [imageBase64, setImageBase64] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const handleShowModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
 
   useEffect(() => {
-    postApi('/produto/byid', { id: catid })
+    postApi('/produto/byid', { id: prodid })
       .then((data) => {
         console.log(JSON.stringify(data));
         
@@ -39,7 +43,7 @@ export default function ProdutoEdit({ catid = null }) {
       .catch((err) => {
         console.log(err.message);
       });
-  }, []);
+  }, [prodid]);
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -79,11 +83,11 @@ export default function ProdutoEdit({ catid = null }) {
   }
 
 
-  const handleSubmit = (event) => {
+  const handleDelete = (event) => {
     event.preventDefault();
 
     let data = {
-      id: catid,
+      id: prodid,
       codigoDeBarras: inputs.codigoDeBarras!= null ? inputs.codigoDeBarras : "",
       nome: inputs.nome != null ? inputs.nome : "",
       fabricante: inputs.fabricante != null ? inputs.fabricante : "",
@@ -107,7 +111,6 @@ export default function ProdutoEdit({ catid = null }) {
               <span className='h4'>Editar Produto</span>
             </div>
             <div className="container mt-2">
-              <form onSubmit={handleSubmit}>
                 <div className="row">
                   <div className="col-md-6">
                     <div className="mb-3">
@@ -124,11 +127,11 @@ export default function ProdutoEdit({ catid = null }) {
                     </div>
                     <div className="mb-3">
                       <label htmlFor="precoPorUnidade" className="form-label">Preço por unidade:</label>
-                      <input type="number" className="form-control col-sm-6 shadow-sm" id="precoPorUnidade" name="precoPorUnidade" value={inputs.precoPorUnidade} onChange={handleChange}  />
+                      <input type="number" className="form-control col-sm-6 shadow-sm" id="precoPorUnidade" name="precoPorUnidade" value={inputs.precoPorUnidade || 0} onChange={handleChange}  />
                     </div>
                     <div className="mb-3">
                       <label htmlFor="precoPorQuilo" className="form-label">Preço por quilo:</label>
-                      <input type="number" className="form-control col-sm-6 shadow-sm" id="precoPorQuilo" name="precoPorQuilo" value={inputs.precoPorQuilo} onChange={handleChange} />
+                      <input type="number" className="form-control col-sm-6 shadow-sm" id="precoPorQuilo" name="precoPorQuilo" value={inputs.precoPorQuilo || 0} onChange={handleChange} />
                     </div>
                     <div className="mb-3">
                       <div className="form-check">
@@ -146,7 +149,7 @@ export default function ProdutoEdit({ catid = null }) {
                     </div>
                     <div className='row justify-content-md-left'>
                       <div className='col-md-auto'>
-                        <button type="submit" className="btn btn-lg shadow btn-success mb-2">
+                        <button type="submit" className="btn btn-lg shadow btn-success mb-2" onClick={handleShowModal}>
                           <i class="bi bi-floppy-fill"></i>
                           <span className='mx-2'>Salvar</span>
                         </button>
@@ -178,11 +181,26 @@ export default function ProdutoEdit({ catid = null }) {
                     )}
                   </div>
                 </div>
-              </form>
             </div>
           </div>
         </div>
       </div>
+      <Modal show={showModal} onHide={handleCloseModal} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Confirmação</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Tem certeza que deseja salvar o Produto {prodid}?
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseModal}>
+                        Cancelar
+                    </Button>
+                    <Button variant="success" onClick={handleDelete}>
+                        Salvar
+                    </Button>
+                </Modal.Footer>
+            </Modal>
     </div>
   );
 }

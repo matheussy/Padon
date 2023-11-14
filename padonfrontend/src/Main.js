@@ -42,8 +42,8 @@ export default function Main() {
       <Route exact path='/Funcionarios/' element={<FuncionarioIndex />}></Route>
       <Route exact path='/Funcionarios/Index' element={<FuncionarioIndex />}></Route>
       <Route exact path='/Funcionarios/Create' element={<FuncionarioCreate />}></Route>
-      <Route exact path='/Funcionarios/Edit/:cpf' element={<FuncionarioEdit />}></Route>
-      <Route exact path='/Funcionarios/Delete/:cpf' element={<FuncionarioDelete />}></Route>
+      <Route exact path='/Funcionarios/Edit/:id' element={<FuncionarioEdit />}></Route>
+      <Route exact path='/Funcionarios/Delete/:id' element={<FuncionarioDelete />}></Route>
 
       <Route exact path='/Vendas/' element={<VendaIndex />}></Route>
       <Route exact path='/Vendas/Index' element={<VendaIndex />}></Route>

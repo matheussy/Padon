@@ -3,9 +3,15 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { postApi } from '../../Services/RequestHandler';
 import { Link } from 'react-router-dom';
+import { Button, Modal } from 'react-bootstrap';
 
 export default function ProdutoDelete({ catid = null }) {
   let navigate = useNavigate();
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleShowModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
 
   const { id } = useParams();
   if (catid === undefined || catid === null) {
@@ -25,7 +31,7 @@ export default function ProdutoDelete({ catid = null }) {
   }, []);
 
 
-  const handleSubmit = (event) => {
+  const handleDelete = (event) => {
     event.preventDefault();
     postApi('/produto/delete', { id: catid }).then(data => {
       navigate("/Produtos");
@@ -38,7 +44,6 @@ export default function ProdutoDelete({ catid = null }) {
           <div className='card-header text-center'>
             <span className='h4'>Deletar Produto: {produto.nome}</span>
           </div>
-          <form onSubmit={handleSubmit}>
             <div className='card-body'>
               <div className="mb-3">
                 <span className='fw-bold'>Id do produto: </span>{catid}
@@ -48,24 +53,39 @@ export default function ProdutoDelete({ catid = null }) {
               </div>
               <div className='row justify-content-md-left'>
                 <div className='col-md-auto'>
-                  <button type="submit" className='btn btn-danger'>
+                  <button type="submit" className='btn btn-danger' onClick={handleShowModal}>
                     <i className="bi bi-trash"></i>
                     <span className='mx-1'>Deletar Produto</span>
                   </button>
                 </div>
-                  <div className='col-md-auto'>
-                    <Link to={'/Produtos'}>
-                      <button className="btn shadow btn-success mb-2">
-                        <i class="bi bi-arrow-left"></i>
-                        <span className='mx-1'>Voltar</span>
-                      </button>
-                    </Link>
-                  </div>
+                <div className='col-md-auto'>
+                  <Link to={'/Produtos'}>
+                    <button className="btn shadow btn-success mb-2">
+                      <i class="bi bi-arrow-left"></i>
+                      <span className='mx-1'>Voltar</span>
+                    </button>
+                  </Link>
+                </div>
               </div>
             </div>
-          </form>
         </div>
       </div>
+      <Modal show={showModal} onHide={handleCloseModal} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmação</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Tem certeza que deseja deletar o produto {catid}?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Cancelar
+          </Button>
+          <Button variant="danger" onClick={handleDelete}>
+            Deletar
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 

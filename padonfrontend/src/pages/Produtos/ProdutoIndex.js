@@ -19,6 +19,21 @@ export default function CategoriaIndex() {
       });
   }, []);
 
+  function VerificaPreco(prod) {
+    if (prod.precoPorUnidade > 0)
+      return "R$" + prod.precoPorUnidade + " un.";
+    else
+      return "Não definido";
+  }
+
+  function VerificaPrecoPorQuilo(prod) {
+    if (prod.precoPorQuilo > 0)
+      return "R$" + prod.precoPorQuilo + " kg.";
+    else
+      return "Não definido";
+  }
+
+
 
   return (
     <div className='justify-content-center row'>
@@ -55,25 +70,28 @@ export default function CategoriaIndex() {
                     </tr>
                   </thead>
                   <tbody>
-                    {data.map((prod, index) =>
+                    {data.map((prod, index) => (
                       <tr key={prod.produtoId}>
                         <td>{prod.produtoId}</td>
                         <td>{prod.nome}</td>
                         <td>{prod.codigoDeBarras}</td>
                         <td>{prod.fabricante}</td>
-                        <td>{prod.precoPorUnidade}</td>
-                        <td>{prod.precoPorQuilo}</td>
+                        <td>{VerificaPreco(prod)}</td>
+                        <td>{VerificaPrecoPorQuilo(prod)}</td> {/* Correção aqui */}
                         <td className='text-center'>
-                          <Link to={'/Produtos/Edit/'+prod.produtoId}>
-                            <button className='btn btn-info mx-3'><i className="bi bi-pencil-square"></i></button>
+                          <Link to={'/Produtos/Edit/' + prod.produtoId}>
+                            <button className='btn btn-info mx-3'>
+                              <i className="bi bi-pencil-square"></i>
+                            </button>
                           </Link>
-                          <Link to={'/Produtos/Delete/'+prod.produtoId}>
-                            <button className='btn btn-danger'><i className="bi bi-trash"></i></button>
+                          <Link to={'/Produtos/Delete/' + prod.produtoId}>
+                            <button className='btn btn-danger'>
+                              <i className="bi bi-trash"></i>
+                            </button>
                           </Link>
                         </td>
                       </tr>
-                    )}
-
+                    ))}
                   </tbody>
                 </Table>
 
