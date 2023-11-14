@@ -33,8 +33,6 @@ export default function CategoriaIndex() {
       return "Não definido";
   }
 
-
-
   return (
     <div className='justify-content-center row'>
       <div className='col-11 col-md-9'>
