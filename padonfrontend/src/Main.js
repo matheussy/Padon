@@ -7,7 +7,7 @@ import { ProdutoIndex, ProdutoCreate, ProdutoEdit, ProdutoDelete } from './pages
 import { Categoria, CategoriaIndex, CategoriaCreate, CategoriaEdit, CategoriaDelete } from './pages/Categorias';
 import { Fornecedor, FornecedorCreate, FornecedorIndex, FornecedorEdit, FornecedorDelete } from './pages/Fornecedores';
 import { FuncionarioCreate, FuncionarioIndex, FuncionarioEdit, FuncionarioDelete } from './pages/Funcionarios';
-import { Venda, VendaIndex, VendaCreate, VendaEdit, VendaDelete } from './pages/Vendas';
+import { Venda, VendaIndex, VendaCreate, VendaEdit, VendaDelete, VendaFinalizar } from './pages/Vendas';
 
 /*<Route exact path='/Teste' element={<Teste />}></Route>
 
@@ -48,6 +48,7 @@ export default function Main() {
       <Route exact path='/Vendas/' element={<VendaIndex />}></Route>
       <Route exact path='/Vendas/Index' element={<VendaIndex />}></Route>
       <Route exact path='/Vendas/:id' element={<Venda />}></Route>
+      <Route exact path='/Vendas/Finalizar/:id' element={<VendaFinalizar />}></Route>
       <Route exact path='/Vendas/Create' element={<VendaCreate />}></Route>
       <Route exact path='/Vendas/Edit/:id' element={<VendaEdit />}></Route>
       <Route exact path='/Vendas/Delete/:id' element={<VendaDelete />}></Route>
