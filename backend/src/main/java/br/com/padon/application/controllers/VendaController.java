@@ -45,7 +45,7 @@ public class VendaController {
 	public Venda saveVenda(@RequestBody JsonNode node) throws ParseException {
 		Venda vendaById = venda.findById(node.get("id").asInt()).orElseThrow();
 		if (!vendaById.getStatusVenda()) {
-			throw new IllegalAccessError("comanda == 0, alteração negada");
+			throw new IllegalAccessError("venda encerrada, alteração negada");
 		}
 		vendaById.setDataVenda(DateFormat.getDateInstance().parse(node.get("data").asText()));
 		vendaById.setStatusVenda(node.get("status").asBoolean());
@@ -63,7 +63,7 @@ public class VendaController {
 	public boolean deleteVenda(@RequestBody JsonNode node) {
 		Venda vendaById = venda.findById(node.get("id").asInt()).orElseThrow();
 		if (!vendaById.getStatusVenda()) {
-			throw new IllegalAccessError("comanda == 0, alteração negada");
+			throw new IllegalAccessError("venda encerrada, alteração negada");
 		}
 		venda.delete(vendaById);
 		return true;
@@ -74,7 +74,7 @@ public class VendaController {
 		int vendaId = node.get("vendaId").asInt();
 		Venda vendaById = venda.findById(vendaId).orElseThrow();
 		if (!vendaById.getStatusVenda()) {
-			throw new IllegalAccessError("comanda == 0, alteração negada");
+			throw new IllegalAccessError("venda encerrada, alteração negada");
 		}
 
 		return pertence.save(new Pertence(
@@ -91,7 +91,7 @@ public class VendaController {
 		int vendaId = node.get("vendaId").asInt();
 		Venda vendaById = venda.findById(vendaId).orElseThrow();
 		if (!vendaById.getStatusVenda()) {
-			throw new IllegalAccessError("comanda == 0, alteração negada");
+			throw new IllegalAccessError("venda encerrada, alteração negada");
 		}
 
 		Pertence result = pertence.getPertence(node.get("produtoId").asInt(), vendaId);
@@ -101,5 +101,20 @@ public class VendaController {
 
 		pertence.delete(result);
 		return true;
+	}
+
+	@PostMapping("/editproduto")
+	public Pertence editProduto(@RequestBody JsonNode node) {
+		int vendaId = node.get("vendaId").asInt();
+		Venda vendaById = venda.findById(vendaId).orElseThrow();
+		if (!vendaById.getStatusVenda()) {
+			throw new IllegalAccessError("venda encerrada, alteração negada");
+		}
+
+		Pertence pertenceById = pertence.getPertence(node.get("produtoId").asInt(), vendaId);
+		pertenceById.setPrecoAtual(node.get("precoAtual").asDouble());
+		pertenceById.setPrecoTotal(node.get("precoTotal").asDouble());
+		pertenceById.setQuantidade(node.get("quantidade").asInt());
+		return pertence.save(pertenceById);
 	}
 }

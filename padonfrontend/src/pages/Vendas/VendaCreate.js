@@ -31,12 +31,14 @@ export default function VendaCreate() {
             comanda: comanda,
             valor: 0,
             data:"10/11/2023",
-            status:1,
+            status:true,
         }
         //, data: selectedDate
 
+        console.log("Teste ->"+JSON.stringify(data));
+
         postApi('/venda/create', data).then(data => {
-            //navigate("/vendas/" + data.vendaId);
+            navigate("/vendas/" + data.vendaId);
         });
     }
 

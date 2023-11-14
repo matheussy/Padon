@@ -226,7 +226,7 @@ export default function Fornecedor({ fornid = null }) {
       <Modal show={modalDel.show} size="lg" aria-labelledby="contained-modal-title-vcenter" centered onHide={handleCloseDel} >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Remoção de Produto do Fornecedor? 
+            Remoção de Produto do Fornecedor
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -247,7 +247,7 @@ export default function Fornecedor({ fornid = null }) {
       <Modal show={modalAdd.show} size="lg" aria-labelledby="contained-modal-title-vcenter" centered onHide={handleCloseAdd} >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Adição de Produto ao Fornecedor? {modalAdd.prodId}
+            Adição de Produto ao Fornecedor
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

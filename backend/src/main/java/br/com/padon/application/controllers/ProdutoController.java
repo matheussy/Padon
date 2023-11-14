@@ -159,9 +159,9 @@ public class ProdutoController {
 					p.getPrecoPorQuilo(),
 					p.getPrecoPorUnidade(),
 					p.isPorQuilo(),
-					pertenceModel.getPrecoTotal(),
-					pertenceModel.getQuantidade(),
-					pertenceModel.getPrecoAtual()
+					pertenceModel != null ? pertenceModel.getPrecoTotal() : 0,
+					pertenceModel != null ? pertenceModel.getQuantidade() : 0,
+					pertenceModel != null ? pertenceModel.getPrecoAtual() : 0
 			);
 		}).collect(Collectors.toList());
 	}
