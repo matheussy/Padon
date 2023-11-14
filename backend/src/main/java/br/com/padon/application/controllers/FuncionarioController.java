@@ -1,7 +1,10 @@
 package br.com.padon.application.controllers;
 
 import br.com.padon.application.models.Funcionario;
+import br.com.padon.application.models.Produto;
+import br.com.padon.application.models.Trabalha;
 import br.com.padon.application.repositorys.FuncionarioRepository;
+import br.com.padon.application.repositorys.TrabalhaRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -56,5 +59,15 @@ public class FuncionarioController {
 	public boolean deleteFuncionario(@RequestBody JsonNode node) {
 		funcionario.deleteById(node.get("cpf").asText());
 		return true;
+	}
+
+	@PostMapping("/fromloja")
+	public List<Funcionario> getProdutoFromLoja(@RequestBody JsonNode node) {
+		return funcionario.getFuncionarioFromLoja(node.get("id").asInt());
+	}
+
+	@PostMapping("/outloja")
+	public List<Funcionario> getProdutoOutLoja(@RequestBody JsonNode node) {
+		return funcionario.getFuncionarioOutLoja(node.get("id").asInt());
 	}
 }
