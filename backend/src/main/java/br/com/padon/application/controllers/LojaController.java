@@ -1,6 +1,7 @@
 package br.com.padon.application.controllers;
 
 import br.com.padon.application.models.*;
+import br.com.padon.application.repositorys.ConterRepository;
 import br.com.padon.application.repositorys.LojaRepository;
 import br.com.padon.application.repositorys.TrabalhaRepository;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -19,6 +20,8 @@ public class LojaController {
 	private LojaRepository loja;
 	@Autowired
 	private TrabalhaRepository trabalha;
+	@Autowired
+	private ConterRepository conter;
 
 	@PostMapping("/create")
 	public Loja createLoja(@RequestBody JsonNode node) {
@@ -65,6 +68,27 @@ public class LojaController {
 		}
 
 		trabalha.delete(result);
+		return true;
+	}
+
+	@PostMapping("/addproduto")
+	public Conter addProduto(@RequestBody JsonNode node) {
+		return conter.save(new Conter(
+				node.get("produtoId").asInt(),
+				node.get("lojaId").asInt(),
+				node.get("estoque").asInt(),
+				node.get("quantidadeMinima").asInt()
+		));
+	}
+
+	@PostMapping("/removeproduto")
+	public boolean removeProduto(@RequestBody JsonNode node) {
+		Conter result = conter.getConter(node.get("produtoId").asInt(), node.get("lojaId").asInt());
+		if (result == null) {
+			return false;
+		}
+
+		conter.delete(result);
 		return true;
 	}
 }
