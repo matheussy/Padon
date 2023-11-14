@@ -18,19 +18,19 @@ export default function Venda({ venid = null }) {
   const [open, setOpen] = useState(false);
 
   // ModalAdicionar
-  const [modalAdd, setModalAdd] = useState({ show: false, prodNome: "", prodId: 0 });
-  const handleCloseAdd = () => setModalAdd({ show: false, prodNome: "", prodId: 0 });
-  const handleShowAdd = (prodNome, prodId) => setModalAdd({ show: true, prodNome: prodNome, prodId: prodId });
+  const [modalAdd, setModalAdd] = useState({ show: false, prodNome: "", prodId: 0, prodPreco: 0, prodQtd: 0, prodSubtotal: 0 });
+  const handleCloseAdd = () => setModalAdd({ show: false, prodNome: "", prodId: 0, prodPreco: 0, prodQtd: 0, prodSubtotal: 0 });
+  const handleShowAdd = (prodNome, prodId, prodPreco) => setModalAdd({ show: true, prodNome: prodNome, prodId: prodId, prodPreco: prodPreco, prodQtd: 1, prodSubtotal: prodPreco });
 
   // ModalDelete
-  const [modalDel, setModalDel] = useState({ show: false, prodNome: "", prodId: 0 });
-  const handleCloseDel = () => setModalDel({ show: false, prodNome: "", prodId: 0 });
-  const handleShowDel = (prodNome, prodId) => setModalDel({ show: true, prodNome: prodNome, prodId: prodId });
+  const [modalDel, setModalDel] = useState({ show: false, prodNome: "", prodId: 0, prodPreco: 0, prodQtd: 0, prodSubtotal: 0 });
+  const handleCloseDel = () => setModalDel({ show: false, prodNome: "", prodId: 0, prodPreco: 0, prodQtd: 0, prodSubtotal: 0 });
+  const handleShowDel = (prodNome, prodId, prodPreco, prodQtd, prodSubtotal) => setModalDel({ show: true, prodNome: prodNome, prodId: prodId, prodPreco: prodPreco, prodQtd: prodQtd, prodSubtotal: prodSubtotal });
 
   // ModalEdit
   const [modalEdit, setModalEdit] = useState({ show: false, prodNome: "", prodId: 0 });
   const handleCloseEdit = () => setModalEdit({ show: false, prodNome: "", prodId: 0 });
-  const handleShowEdit = (prodNome, prodId) => setModalEdit({ show: true, prodNome: prodNome, prodId: prodId });
+  const handleShowEdit = (prodNome, prodId, prodPreco, prodQtd, prodSubtotal) => setModalEdit({ show: true, prodNome: prodNome, prodId: prodId });
 
   const { id } = useParams();
   if (venid === undefined || venid === null) {
@@ -46,12 +46,21 @@ export default function Venda({ venid = null }) {
       return "Não definido";
   }
 
+  function VerificaPrecoNum(prod) {
+    if (prod.precoPorUnidade > 0)
+      return prod.precoPorUnidade
+    else if (prod.precoPorQuilo > 0)
+      return prod.precoPorQuilo
+    else
+      return 0;
+  }
+
 
   useEffect(() => {
     postApi('/venda/byid', { id: venid })
       .then((data) => {
         console.log(JSON.stringify(data) + "LENGHT ->" + data.length);
-        //setCategoria(data);
+        setVenda(data);
 
         postApi('/produto/fromvenda', { id: venid })
           .then((data) => {
@@ -78,10 +87,11 @@ export default function Venda({ venid = null }) {
 
   }, [venid]);
 
+  // Request e evento de Adicionar
   const AdicionarProd = (venid, prodId) => {
-    postApi('/categoria/add', { produtoId: prodId, categoriaId: venid })
+    postApi('/venda/add', { vendaId: venid, produtoId: prodId })
       .then((data) => {
-        alert("Produto Adicionado a Categoria com Sucesso!");
+        alert("Produto Adicionado a Venda com Sucesso!");
         window.location.reload();
       })
       .catch((err) => {
@@ -89,8 +99,15 @@ export default function Venda({ venid = null }) {
       });
   };
 
+  const handleChangeAdd = (event) => {
+    const qtd = event.target.value;
+    const sub = modalAdd.prodPreco*qtd;
+    setModalAdd({show: modalAdd.show, prodNome: modalAdd.prodNome, prodId: modalAdd.prodId,
+       prodPreco: modalAdd.prodPreco, prodQtd: qtd, prodSubtotal: sub});
+  }
+
   const EditarProd = (venid, prodId) => {
-    postApi('/categoria/edit', { produtoId: prodId, categoriaId: venid })
+    postApi('/venda/editproduto', { vendaId: venid, produtoId: prodId })
       .then((data) => {
         alert("Produto Adicionado a Categoria com Sucesso!");
         window.location.reload();
@@ -101,7 +118,7 @@ export default function Venda({ venid = null }) {
   };
 
   const RemoverProd = (venid, prodId) => {
-    postApi('/categoria/remove', { produtoId: prodId, categoriaId: venid })
+    postApi('/venda/remove', { vendaId: venid, produtoId: prodId })
       .then((data) => {
         alert("Produto Removido da Categoria com Sucesso!");
         window.location.reload();
@@ -213,7 +230,7 @@ export default function Venda({ venid = null }) {
                             <td>{p.nome}</td>
                             <td>{VerificaPreco(p)}</td>
                             <td className='text-center'>
-                              <button onClick={() => handleShowAdd(p.nome, p.produtoId)} className='btn btn-success'>
+                              <button onClick={() => handleShowAdd(p.nome, p.produtoId, VerificaPrecoNum(p))} className='btn btn-success'>
                                 <i className="bi bi-plus-circle"></i>
                                 <span className='mx-1'>Adicionar Produto na Venda</span>
                               </button>
@@ -259,6 +276,7 @@ export default function Venda({ venid = null }) {
         </Modal.Footer>
       </Modal>
 
+      
       <Modal show={modalAdd.show} size="lg" aria-labelledby="contained-modal-title-vcenter" centered onHide={handleCloseAdd} >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
@@ -266,7 +284,29 @@ export default function Venda({ venid = null }) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h4>Você tem certeza que deseja adicionar o produto {modalAdd.prodNome} da categoria { }?</h4>
+          <h4>Você tem certeza que deseja adicionar o produto {modalAdd.prodNome} da venda na comanda {venda.comanda}?</h4>
+          <div className='row'>
+            <div className='col'>
+              <div className="mb-3">
+                <label htmlFor="preco" className="form-label">Preço do Produto:</label>
+                <input type="number" name="preco" id="preco" className='form-control' value={modalAdd.prodPreco || 0} onChange={handleChangeAdd} disabled />
+              </div>
+            </div>
+
+            <div className='col'>
+              <div className="mb-3">
+                <label htmlFor="qtd" className="form-label">Quantidade:</label>
+                <input type="number" name="qtd" id="qtd" className='form-control' value={modalAdd.prodQtd || 0} onChange={handleChangeAdd} />
+              </div>
+            </div>
+
+            <div className='col'>
+              <div className="mb-3">
+                <label htmlFor="subtotal" className="form-label">Valor Total:</label>
+                <input type="number" name="subtotal" id="subtotal" className='form-control' value={modalAdd.prodSubtotal || 0} onChange={handleChangeAdd} disabled />
+              </div>
+            </div>
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <button onClick={() => AdicionarProd(venid, modalAdd.prodId)} className='btn btn-success'>
@@ -280,7 +320,8 @@ export default function Venda({ venid = null }) {
         </Modal.Footer>
       </Modal>
 
-      <Modal show={modalAdd.show} size="lg" aria-labelledby="contained-modal-title-vcenter" centered onHide={handleCloseAdd} >
+
+      <Modal show={modalEdit.show} size="lg" aria-labelledby="contained-modal-title-vcenter" centered onHide={handleCloseAdd} >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
             Edição de Produto na Venda
