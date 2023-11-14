@@ -1,6 +1,5 @@
 package br.com.padon.application.controllers;
 
-import br.com.padon.application.models.Participa;
 import br.com.padon.application.models.Pertence;
 import br.com.padon.application.models.Venda;
 import br.com.padon.application.repositorys.PertenceRepository;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,12 +23,14 @@ public class VendaController {
 	private VendaRepository venda;
 	@Autowired
 	private PertenceRepository pertence;
+	private final SimpleDateFormat parser = new SimpleDateFormat("dd/MM/yyyy");
+
 
 	@PostMapping("/create")
 	public Venda createVenda(@RequestBody JsonNode node) throws ParseException {
 		return venda.save(new Venda(
-				DateFormat.getDateInstance().parse(node.get("data").asText()),
-				node.get("status").asText(),
+				parser.parse(node.get("data").asText()),
+				node.get("status").asBoolean(),
 				node.get("valor").asDouble(),
 				node.get("comanda").asInt()
 		));
@@ -42,11 +44,11 @@ public class VendaController {
 	@PostMapping("/save")
 	public Venda saveVenda(@RequestBody JsonNode node) throws ParseException {
 		Venda vendaById = venda.findById(node.get("id").asInt()).orElseThrow();
-		if (vendaById.getComanda() == 0) {
+		if (!vendaById.getStatusVenda()) {
 			throw new IllegalAccessError("comanda == 0, alteração negada");
 		}
 		vendaById.setDataVenda(DateFormat.getDateInstance().parse(node.get("data").asText()));
-		vendaById.setStatusVenda(node.get("status").asText());
+		vendaById.setStatusVenda(node.get("status").asBoolean());
 		vendaById.setValorTotal(node.get("valor").asDouble());
 		vendaById.setComanda(node.get("comanda").asInt());
 		return venda.save(vendaById);
@@ -60,7 +62,7 @@ public class VendaController {
 	@PostMapping("/delete")
 	public boolean deleteVenda(@RequestBody JsonNode node) {
 		Venda vendaById = venda.findById(node.get("id").asInt()).orElseThrow();
-		if (vendaById.getComanda() == 0) {
+		if (!vendaById.getStatusVenda()) {
 			throw new IllegalAccessError("comanda == 0, alteração negada");
 		}
 		venda.delete(vendaById);
@@ -71,7 +73,7 @@ public class VendaController {
 	public Pertence addProduto(@RequestBody JsonNode node) {
 		int vendaId = node.get("vendaId").asInt();
 		Venda vendaById = venda.findById(vendaId).orElseThrow();
-		if (vendaById.getComanda() == 0) {
+		if (!vendaById.getStatusVenda()) {
 			throw new IllegalAccessError("comanda == 0, alteração negada");
 		}
 
@@ -88,7 +90,7 @@ public class VendaController {
 	public boolean removeProduto(@RequestBody JsonNode node) {
 		int vendaId = node.get("vendaId").asInt();
 		Venda vendaById = venda.findById(vendaId).orElseThrow();
-		if (vendaById.getComanda() == 0) {
+		if (!vendaById.getStatusVenda()) {
 			throw new IllegalAccessError("comanda == 0, alteração negada");
 		}
 

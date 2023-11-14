@@ -13,12 +13,12 @@ public class Venda {
 	private int vendaId;
 	private Date dataVenda;
 	private double valorTotal;
-	private String statusVenda;
+	private boolean statusVenda;
 	private int comanda;
 
 	public Venda() {}
 
-	public Venda(Date dataVenda, String statusVenda, double valorTotal, int comanda) {
+	public Venda(Date dataVenda, boolean statusVenda, double valorTotal, int comanda) {
 		this.dataVenda = dataVenda;
 		this.statusVenda = statusVenda;
 		this.valorTotal = valorTotal;
@@ -41,11 +41,11 @@ public class Venda {
 		this.dataVenda = dataVenda;
 	}
 
-	public String getStatusVenda() {
+	public boolean getStatusVenda() {
 		return statusVenda;
 	}
 
-	public void setStatusVenda(String statusVenda) {
+	public void setStatusVenda(boolean statusVenda) {
 		this.statusVenda = statusVenda;
 	}
 
