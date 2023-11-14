@@ -208,7 +208,7 @@ export default function Categoria({ catid = null }) {
       <Modal show={modalDel.show} size="lg" aria-labelledby="contained-modal-title-vcenter" centered onHide={handleCloseDel} >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Remoção de Produto de Categoria?
+            Remoção de Produto de Categoria
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -229,7 +229,7 @@ export default function Categoria({ catid = null }) {
       <Modal show={modalAdd.show} size="lg" aria-labelledby="contained-modal-title-vcenter" centered onHide={handleCloseAdd} >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Adição de Produto de Categoria?
+            Adição de Produto de Categoria
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
