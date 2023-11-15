@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
@@ -41,13 +42,23 @@ public class VendaController {
 		return venda.findAll();
 	}
 
+	@GetMapping("/gettrue")
+	public List<Venda> getAllVendasTrue() {
+		return venda.findAll().stream().filter(Venda::getStatusVenda).collect(Collectors.toList());
+	}
+
+	@GetMapping("/getfalse")
+	public List<Venda> getAllVendasFalse() {
+		return venda.findAll().stream().filter(v -> !v.getStatusVenda()).collect(Collectors.toList());
+	}
+
 	@PostMapping("/save")
 	public Venda saveVenda(@RequestBody JsonNode node) throws ParseException {
 		Venda vendaById = venda.findById(node.get("id").asInt()).orElseThrow();
 		if (!vendaById.getStatusVenda()) {
 			throw new IllegalAccessError("venda encerrada, alteração negada");
 		}
-		vendaById.setDataVenda(DateFormat.getDateInstance().parse(node.get("data").asText()));
+		vendaById.setDataVenda(parser.parse(node.get("data").asText()));
 		vendaById.setStatusVenda(node.get("status").asBoolean());
 		vendaById.setValorTotal(node.get("valor").asDouble());
 		vendaById.setComanda(node.get("comanda").asInt());

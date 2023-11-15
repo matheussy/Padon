@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { postApi } from '../../Services/RequestHandler';
+import { format } from 'date-fns';
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -30,10 +31,9 @@ export default function VendaCreate() {
         let data = {
             comanda: comanda,
             valor: 0,
-            data:"10/11/2023",
+            data: format(selectedDate, 'dd/MM/yyyy'),
             status:true,
         }
-        //, data: selectedDate
 
         console.log("Teste ->"+JSON.stringify(data));
 

@@ -1,10 +1,13 @@
 package br.com.padon.application.controllers;
 
 import br.com.padon.application.dtos.ProdutoFornecedorDto;
+import br.com.padon.application.dtos.ProdutoLojaDto;
 import br.com.padon.application.dtos.ProdutoVendaDto;
+import br.com.padon.application.models.Conter;
 import br.com.padon.application.models.Fornece;
 import br.com.padon.application.models.Pertence;
 import br.com.padon.application.models.Produto;
+import br.com.padon.application.repositorys.ConterRepository;
 import br.com.padon.application.repositorys.ForneceRepository;
 import br.com.padon.application.repositorys.PertenceRepository;
 import br.com.padon.application.repositorys.ProdutoRepository;
@@ -27,6 +30,8 @@ public class ProdutoController {
 	private ForneceRepository fornece;
 	@Autowired
 	private PertenceRepository pertence;
+	@Autowired
+	private ConterRepository conter;
 
 	@PostMapping("/create")
 	public Produto createProduto(@RequestBody JsonNode node) {
@@ -162,6 +167,48 @@ public class ProdutoController {
 					pertenceModel != null ? pertenceModel.getPrecoTotal() : 0,
 					pertenceModel != null ? pertenceModel.getQuantidade() : 0,
 					pertenceModel != null ? pertenceModel.getPrecoAtual() : 0
+			);
+		}).collect(Collectors.toList());
+	}
+
+	@PostMapping("/fromloja")
+	public List<ProdutoLojaDto> getProdutoFromLoja(@RequestBody JsonNode node) {
+		int lojaId = node.get("id").asInt();
+		return produto.getProdutosFromLoja(lojaId).stream().map(p -> {
+			Conter conterModel = conter.getConter(p.getProdutoId(), lojaId);
+			return new ProdutoLojaDto(
+					p.getProdutoId(),
+					p.getNome(),
+					p.getFabricante(),
+					p.getImage(),
+					p.getCodigoDeBarras(),
+					p.isBloqueado(),
+					p.getPrecoPorQuilo(),
+					p.getPrecoPorUnidade(),
+					p.isPorQuilo(),
+					conterModel != null ? conterModel.getEstoque() : 0,
+					conterModel != null ? conterModel.getQuantidadeMinima() : 0
+			);
+		}).collect(Collectors.toList());
+	}
+
+	@PostMapping("/outloja")
+	public List<ProdutoLojaDto> getProdutoOutLoja(@RequestBody JsonNode node) {
+		int lojaId = node.get("id").asInt();
+		return produto.getProdutosOutLoja(lojaId).stream().map(p -> {
+			Conter conterModel = conter.getConter(p.getProdutoId(), lojaId);
+			return new ProdutoLojaDto(
+					p.getProdutoId(),
+					p.getNome(),
+					p.getFabricante(),
+					p.getImage(),
+					p.getCodigoDeBarras(),
+					p.isBloqueado(),
+					p.getPrecoPorQuilo(),
+					p.getPrecoPorUnidade(),
+					p.isPorQuilo(),
+					conterModel != null ? conterModel.getEstoque() : 0,
+					conterModel != null ? conterModel.getQuantidadeMinima() : 0
 			);
 		}).collect(Collectors.toList());
 	}

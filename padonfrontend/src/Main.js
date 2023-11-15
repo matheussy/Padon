@@ -9,6 +9,7 @@ import { Fornecedor, FornecedorCreate, FornecedorIndex, FornecedorEdit, Forneced
 import { FuncionarioCreate, FuncionarioIndex, FuncionarioEdit, FuncionarioDelete } from './pages/Funcionarios';
 import { Venda, VendaIndex, VendaCreate, VendaEdit, VendaDelete } from './pages/Vendas';
 import { LojaCreate, LojaIndex, LojaEdit } from './pages/Lojas';
+import { VendaFinalizar } from './pages/Vendas';
 
 /*<Route exact path='/Teste' element={<Teste />}></Route>
 
@@ -51,6 +52,7 @@ export default function Main() {
       <Route exact path='/Vendas/' element={<VendaIndex />}></Route>
       <Route exact path='/Vendas/Index' element={<VendaIndex />}></Route>
       <Route exact path='/Vendas/:id' element={<Venda />}></Route>
+      <Route exact path='/Vendas/Finalizar/:id' element={<VendaFinalizar />}></Route>
       <Route exact path='/Vendas/Create' element={<VendaCreate />}></Route>
       <Route exact path='/Vendas/Edit/:id' element={<VendaEdit />}></Route>
       <Route exact path='/Vendas/Delete/:id' element={<VendaDelete />}></Route>
@@ -58,6 +60,7 @@ export default function Main() {
       <Route exact path='/Lojas/Index' element={<LojaIndex />}></Route> 
       <Route exact path='/Lojas/Create' element={<LojaCreate />}></Route>
       <Route exact path='/Lojas/Edit/:id' element={<LojaEdit />}></Route>
+
     </Routes>
   );
 }
