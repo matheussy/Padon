@@ -14,11 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.List;
+import org.springframework.web.cors.CorsUtils;
 
 
 @Configuration
@@ -32,28 +28,17 @@ public class SecurityService {
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 		return httpSecurity
 				.csrf(AbstractHttpConfigurer::disable)
-				.cors(AbstractHttpConfigurer::disable)
 				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authorizeHttpRequests(a -> a
-//						.requestMatchers(HttpMethod.POST, "/login").permitAll()
-//						.requestMatchers(HttpMethod.POST, "/funcionario/create").permitAll()
-//						.requestMatchers(HttpMethod.GET, "/loja/get").permitAll()
-						.anyRequest().permitAll()
+						.requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+						.requestMatchers(HttpMethod.POST, "/login").permitAll()
+						.requestMatchers(HttpMethod.POST, "/funcionario/create").permitAll()
+						.requestMatchers(HttpMethod.GET, "/loja/get").permitAll()
+						.anyRequest().authenticated()
 				)
 				.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
 				.build();
 	}
-
-//	@Bean
-//	public CorsConfigurationSource corsConfigurationSource() {
-//		CorsConfiguration configuration = new CorsConfiguration();
-//		configuration.setAllowedOrigins(List.of("*"));
-//		configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT"));
-//		configuration.setAllowedHeaders(List.of("*"));
-//		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//		source.registerCorsConfiguration("/**", configuration);
-//		return source;
-//	}
 
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration auth) throws Exception {
