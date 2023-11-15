@@ -15,15 +15,18 @@ function PadonNavbar() {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <Nav.Link href="/">Home</Nav.Link>
-                            <Nav.Link href="/Relatorios">Relatórios</Nav.Link>
+                            <NavDropdown title="Relatórios" id="basic-nav-dropdown">
+                                <NavDropdown.Item href="/Relatorios">Relatórios</NavDropdown.Item>
+                                <NavDropdown.Divider />
+                                <NavDropdown.Item href="/Relatorios">Relatório Basico</NavDropdown.Item>
+                                <NavDropdown.Item href="/Relatorios/Produtos">Relatório com Produtos</NavDropdown.Item>
+                            </NavDropdown>
 
                             <NavDropdown title="Vendas" id="basic-nav-dropdown">
                                 <NavDropdown.Item href="/Vendas">Vendas</NavDropdown.Item>
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item href="/Vendas">Listar</NavDropdown.Item>
                                 <NavDropdown.Item href="/Vendas/Create">Adicionar Venda</NavDropdown.Item>
-                                <NavDropdown.Item href="/Vendas/Edit">Editar Venda</NavDropdown.Item>
-                                <NavDropdown.Item href="/Vendas/Delete">Deletar Venda</NavDropdown.Item>
                             </NavDropdown>
 
                             <NavDropdown title="Produtos" id="basic-nav-dropdown">
@@ -37,8 +40,6 @@ function PadonNavbar() {
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item href="/Categorias">Listar</NavDropdown.Item>
                                 <NavDropdown.Item href="/Categorias/Create">Adicionar Categoria</NavDropdown.Item>
-                                <NavDropdown.Item href="/Categorias/Edit">Editar Categoria</NavDropdown.Item>
-                                <NavDropdown.Item href="/Categorias/Delete">Deletar Categoria</NavDropdown.Item>
                             </NavDropdown>
 
                             <NavDropdown title="Fornecedores" id="basic-nav-dropdown">
@@ -46,8 +47,6 @@ function PadonNavbar() {
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item href="/Fornecedores">Listar</NavDropdown.Item>
                                 <NavDropdown.Item href="/Fornecedores/Create">Adicionar Fornecedor</NavDropdown.Item>
-                                <NavDropdown.Item href="/Fornecedores/Edit">Editar Fornecedor</NavDropdown.Item>
-                                <NavDropdown.Item href="/Fornecedores/Delete">Deletar Fornecedor</NavDropdown.Item>
                             </NavDropdown>
 
                             {true &&

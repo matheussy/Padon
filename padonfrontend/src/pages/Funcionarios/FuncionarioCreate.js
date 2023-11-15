@@ -30,6 +30,7 @@ export default function FuncionarioCreate() {
       gerente: inputs.gerente === true,
     }
 
+    console.log(data);
     postApi('/funcionario/create', data).then(data => {
       navigate("/Funcionarios/");
     });

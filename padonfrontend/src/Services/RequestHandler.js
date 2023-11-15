@@ -8,6 +8,7 @@ export async function getApi(endpoint) {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
+            'token': sessionStorage.getItem("token")
         }
     })
         .then(response => {
@@ -25,7 +26,7 @@ export const postApi = async (endpoint, data) => {
     try {
         const response = await fetch(URL + endpoint, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json','token': sessionStorage.getItem("token") },
             body: JSON.stringify(data),
         });
         
@@ -39,33 +40,6 @@ export const postApi = async (endpoint, data) => {
         throw new Error(`Erro no REQUEST: ${error.message}`);
     }
 };
-
-
-/*export const getApi = async (endpoint) => {
-    try {
-        await fetch(URL + endpoint, {
-            method: 'GET'
-        })
-            .then(response => response.json()) // Analisa a resposta como JSON
-            .then(data => {
-                console.log(data);
-                return data;
-            })
-            .catch(error => {
-                console.error('Erro ao fazer a solicitação:', error);
-            });
-
-        /*if (!response.ok) {
-            throw new Error(`Erro no REQUEST, Resposta: ${response.status}`);
-        }
-
-        const responseData = await response.json();
-        alert("ResponseData ->"+JSON.stringify(responseData));
-        return responseData;
-    } catch (error) {
-        throw new Error(`Erro no REQUEST: ${error.message}`);
-    }
-};*/
 
 
 

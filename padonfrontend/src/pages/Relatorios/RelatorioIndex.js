@@ -21,17 +21,7 @@ export default function RelatoriosIndex() {
   const [dataFim, setDataFim] = useState(new Date());
 
   useEffect(() => {
-    var req = { dtinicial: format(dataIni, 'dd/MM/yyyy'), dtfinal: format(dataFim, 'dd/MM/yyyy') }
-    console.log(req);
-
-    postApi('/relatorio/bydate', req)
-      .then((data) => {
-        console.log(data);
-        setVendas(data);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+    requestRelatorio();
   }, []);
 
   const handleDateIniChange = (date) => {
@@ -58,7 +48,7 @@ export default function RelatoriosIndex() {
   };
 
   const handleButtonBaixar = () => {
-    const doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4', putOnlyUsedFonts:true });
+    const doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4', putOnlyUsedFonts: true });
 
     // Adding the fonts.
     //doc.setFont('Inter-Regular', 'normal');
@@ -126,17 +116,21 @@ export default function RelatoriosIndex() {
                         <th>Venda Id</th>
                         <th>Data</th>
                         <th>Sub Total</th>
-                        <th></th>
                       </tr>
                     </thead>
                     <tbody>
-                      {vendas.map((v, index) =>
+                      {vendas.map((v, index) => {
                         <tr key={v.vendaId}>
                           <td>{v.vendaId}</td>
                           <td>{format(parseISO(v.dataVenda), 'dd/MM/yyyy')}</td>
                           <td>R${v.valorTotal}</td>
-                          <td className='text-center'></td>
                         </tr>
+                        {
+                          v.produtos.map((p, index) =>
+                            <></>
+                          )
+                        }
+                      }
                       )}
 
                     </tbody>
