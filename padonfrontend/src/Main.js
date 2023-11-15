@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import Home from './pages/Home';
 import Pagina from './pages/Pagina';
+import Login from './pages/Login';
 import { ProdutoIndex, ProdutoCreate, ProdutoEdit, ProdutoDelete, Estoque, EstoqueAdiciona } from './pages/Produtos';
 import { Categoria, CategoriaIndex, CategoriaCreate, CategoriaEdit, CategoriaDelete } from './pages/Categorias';
 import { Fornecedor, FornecedorCreate, FornecedorIndex, FornecedorEdit, FornecedorDelete } from './pages/Fornecedores';
@@ -20,6 +21,7 @@ export default function Main() {
     <Routes> {/* The Routes decides which component to show based on the current URL.*/}
       <Route exact path='/' element={<Home />}></Route>
       <Route exact path='/Pagina' element={<Pagina />}></Route>
+      <Route exact path='/Login' element={<Login />}></Route>
 
       <Route exact path='/Produtos/' element={<ProdutoIndex />}></Route>
       <Route exact path='/Produtos/Index' element={<ProdutoIndex />}></Route>

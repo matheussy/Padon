@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import './Style.css';
 import { useNavigate } from "react-router-dom";
-import { postApi } from '../../Services/RequestHandler';
+import { postApi, postApiNoToken } from '../../Services/RequestHandler';
 
 export default function FuncionarioCreate() {
   let navigate = useNavigate();
@@ -31,7 +31,7 @@ export default function FuncionarioCreate() {
     }
 
     console.log(data);
-    postApi('/funcionario/create', data).then(data => {
+    postApiNoToken('/funcionario/create', data).then(data => {
       navigate("/Funcionarios/");
     });
 

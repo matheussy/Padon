@@ -4,7 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Form from 'react-bootstrap/Form';
 import './StyleNav.css';
-import { getApi, postApi } from '../Services/RequestHandler';
+import { getApi, getApiNoToken, postApi } from '../Services/RequestHandler';
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 
@@ -19,7 +19,9 @@ function PadonNavbar() {
       const storedLojaId = sessionStorage.getItem("lojaId");
       setLojaId(storedLojaId ? parseInt(storedLojaId, 10) : 0);
 
-      getApi('/loja/get')
+      console.log("TOKEN -> "+sessionStorage.getItem("token"));
+
+      getApiNoToken('/loja/get')
         .then((data) => {
           setLojas(data);
         })

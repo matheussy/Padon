@@ -1,7 +1,7 @@
 import React from 'react';
-/*import ReactDOM from 'react-dom/client';
-import App from '../App';
-import reportWebVitals from '../reportWebVitals';*/
+import { useNavigate } from 'react-router-dom';
+import { postApiNoToken } from '../Services/RequestHandler';
+import { useState } from 'react';
 
 export default function Login() {
   let navigate = useNavigate();
@@ -22,8 +22,9 @@ export default function Login() {
       senha: inputs.senha
     }
 
-    postApi('/login', data).then(data => {
+    postApiNoToken('/login', data).then(data => {
       sessionStorage.setItem("token", data.token);
+      navigate('/home');
     });
 
   }

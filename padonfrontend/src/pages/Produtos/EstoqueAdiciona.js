@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import { postApi } from '../../Services/RequestHandler';
+import { getApiNoToken, postApi } from '../../Services/RequestHandler';
 import { getApi } from '../../Services/RequestHandler';
 
 
@@ -28,7 +28,7 @@ export default function EstoqueAdiciona({ prodid = null }) {
         console.log(err.message);
       });
 
-      getApi('/loja/get')
+      getApiNoToken('/loja/get')
       .then((data) => {
         //console.log(JSON.stringify(data) + "LENGHT ->" + data.length);
         setLoja(data);

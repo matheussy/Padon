@@ -1,5 +1,5 @@
 import React from 'react';
-import { getApi } from '../../Services/RequestHandler';
+import { getApi, getApiNoToken } from '../../Services/RequestHandler';
 import { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
@@ -9,7 +9,7 @@ export default function LojaIndex() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    getApi('/loja/get')
+    getApiNoToken('/loja/get')
       .then((data) => {
         //console.log(JSON.stringify(data) + "LENGHT ->" + data.length);
         setData(data);

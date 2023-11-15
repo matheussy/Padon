@@ -21,7 +21,17 @@ export default function RelatoriosIndex() {
   const [dataFim, setDataFim] = useState(new Date());
 
   useEffect(() => {
-    requestRelatorio();
+    var req = { dtinicial: format(dataIni, 'dd/MM/yyyy'), dtfinal: format(dataFim, 'dd/MM/yyyy') }
+    console.log(req);
+
+    postApi('/relatorio/bydate', req)
+      .then((data) => {
+        console.log(data);
+        setVendas(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   }, []);
 
   const handleDateIniChange = (date) => {
@@ -116,17 +126,17 @@ export default function RelatoriosIndex() {
                         <th>Venda Id</th>
                         <th>Data</th>
                         <th>Sub Total</th>
+                        <th></th>
                       </tr>
                     </thead>
                     <tbody>
-                      {vendas.map((v, index) => {
+                      {vendas.map((v, index) =>
                         <tr key={v.vendaId}>
                           <td>{v.vendaId}</td>
                           <td>{format(parseISO(v.dataVenda), 'dd/MM/yyyy')}</td>
                           <td>R${v.valorTotal}</td>
+                          <td className='text-center'></td>
                         </tr>
-                        
-                      }
                       )}
 
                     </tbody>

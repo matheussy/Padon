@@ -21,7 +21,16 @@ export default function RelatoriosProdutos() {
   const [dataFim, setDataFim] = useState(new Date());
 
   useEffect(() => {
-    requestRelatorio();
+    var req = { dtinicial: format(dataIni, 'dd/MM/yyyy'), dtfinal: format(dataFim, 'dd/MM/yyyy') }
+    console.log(req);
+
+    postApi('/relatorio/produtos', req)
+      .then((data) => {
+        setVendas(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   }, []);
 
   const handleDateIniChange = (date) => {
@@ -39,7 +48,6 @@ export default function RelatoriosProdutos() {
 
     postApi('/relatorio/produtos', req)
       .then((data) => {
-        console.log("Teste -> "+JSON.stringify(data));
         setVendas(data);
       })
       .catch((err) => {
@@ -50,9 +58,6 @@ export default function RelatoriosProdutos() {
   const handleButtonBaixar = () => {
     const doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4', putOnlyUsedFonts:true });
 
-    // Adding the fonts.
-    //doc.setFont('Inter-Regular', 'normal');
-
     doc.html(document.getElementById('relatorio'), {
       async callback(doc) {
         await doc.save('document');
@@ -61,8 +66,8 @@ export default function RelatoriosProdutos() {
       x: 15,
       y: 15,
       autoPaging: 'text',
-      width: 170, //target width in the PDF document 170
-      windowWidth: 700 //window width in CSS pixels 650
+      width: 170, 
+      windowWidth: 700 
 
     });
   };
@@ -106,31 +111,41 @@ export default function RelatoriosProdutos() {
             <div className='row'>
               <div className='container' id="relatorio">
                 <div className='row text-center'>
-                  <span className='h3'>Relatório de Vendas:</span>
+                  <span className='h3'>Relatório de Vendas: {JSON.stringify(vendas)}</span>
                   <div>{format(dataIni, 'dd/MM/yyyy')} - {format(dataFim, 'dd/MM/yyyy')}</div>
                 </div>
                 {vendas.length > 0 ?
                   <Table responsive>
-                    <thead>
-                      <tr>
-                        <th>Venda Id</th>
-                        <th>Data</th>
-                        <th>Sub Total</th>
-                        <th></th>
+                  <thead>
+                    <tr>
+                      <th colSpan={4}>Venda Id</th>
+                      <th colSpan={4}>Data</th>
+                      <th colSpan={4}>Sub Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {vendas.map((v, index) => {
+                      <tr key={index}>
+                        <td colSpan={4}>{v.vendaId}</td>
+                        <td colSpan={4}>{format(parseISO(v.dataVenda), 'dd/MM/yyyy')}</td>
+                        <td colSpan={4}>R${v.valorTotal}</td>
                       </tr>
-                    </thead>
-                    <tbody>
-                      {vendas.map((v, index) =>
-                        <tr key={v.vendaId}>
-                          <td>{v.vendaId}</td>
-                          <td>{format(parseISO(v.dataVenda), 'dd/MM/yyyy')}</td>
-                          <td>R${v.valorTotal}</td>
-                          <td className='text-center'></td>
-                        </tr>
-                      )}
 
-                    </tbody>
-                  </Table>
+                      {v.produtos!=null && v.produtos.length>0 ? 
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                        :
+                        <tr></tr>
+                      } 
+                    }
+                    )}
+
+                  </tbody>
+                </Table>
 
                   :
 
