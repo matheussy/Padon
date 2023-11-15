@@ -31,7 +31,7 @@ export default function LojaIndex() {
               <div className='row mb-2'>
                 <div className='col'>
                   <div>
-                    <Link to="/Loja/Create">
+                    <Link to="/Lojas/Create">
                       <button className='btn btn-success'>
                         <i className="bi bi-plus-circle"></i>
                         <span className='mx-1'>Adicionar Loja</span>

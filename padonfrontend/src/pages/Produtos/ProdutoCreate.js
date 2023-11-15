@@ -53,7 +53,20 @@ export default function ProdutoCreate({}) {
       image: imageBase64
     }
 
-    postApi('/produto/create', data).then(data => {
+    postApi('/produto/create', data).then(dataProd => {
+      
+      console.log(dataProd);
+
+      var loja = sessionStorage.getItem("lojaId");
+
+      let dataCriar = {
+        lojaId: loja,
+        produtoId: dataProd.produtoId,
+        estoque: 0,
+        quantidadeMinima:0
+      }
+
+      postApi('/loja/addproduto', dataCriar);
       navigate("/Produtos/");
     });
   }
