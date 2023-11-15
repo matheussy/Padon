@@ -1,12 +1,10 @@
 package br.com.padon.application.controllers;
 
 import br.com.padon.application.models.Funcionario;
-import br.com.padon.application.models.Produto;
-import br.com.padon.application.models.Trabalha;
 import br.com.padon.application.repositorys.FuncionarioRepository;
-import br.com.padon.application.repositorys.TrabalhaRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +24,7 @@ public class FuncionarioController {
 				node.get("cpf").asText(),
 				node.get("usuario").asText(),
 				node.get("nome").asText(),
-				node.get("senha").asText(),
+				new BCryptPasswordEncoder().encode(node.get("senha").asText()),
 				node.get("email").asText(),
 				node.get("telefone").asText(),
 				node.get("gerente").asBoolean()

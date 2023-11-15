@@ -38,7 +38,6 @@ function PadonNavbar() {
         window.location.reload();
       };
     return (
-
         <div className="App">
             <Navbar expand="lg" className="navbar navbar-dark bg-dark justify-content-between">
                 <Container>

@@ -6,6 +6,7 @@ import { postApi } from '../../Services/RequestHandler';
 import Collapse from 'react-bootstrap/Collapse';
 import Modal from 'react-bootstrap/Modal';
 import { Link } from 'react-router-dom';
+import { format, parseISO } from 'date-fns';
 
 
 export default function Venda({ venid = null }) {
@@ -57,11 +58,19 @@ export default function Venda({ venid = null }) {
       return 0;
   }
 
+  const AtualizarTotal = (data, sub) =>{
+    postApi('/venda/save', { id: venid, status:true, valor:sub, comanda:data.comanda, data:format(parseISO(data.dataVenda), 'dd/MM/yyyy') })
+      .then((data) => {
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
 
   useEffect(() => {
     postApi('/venda/byid', { id: venid })
-      .then((data) => {
-        setVenda(data);
+      .then((datav) => {
+        setVenda(datav);
 
         postApi('/produto/fromvenda', { id: venid })
           .then((data) => {
@@ -75,6 +84,7 @@ export default function Venda({ venid = null }) {
               }
             })
             setTotal(sub);
+            AtualizarTotal(datav, sub);
           })
           .catch((err) => {
             console.log(err.message);
@@ -94,6 +104,8 @@ export default function Venda({ venid = null }) {
 
 
   }, [venid]);
+
+  
 
   // Request e evento de Adicionar
   const AdicionarProd = (venid, prodId, prodQtd, prodPreco) => {
