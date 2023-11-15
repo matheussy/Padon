@@ -32,7 +32,6 @@ public class SecurityService {
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 		return httpSecurity
 				.csrf(AbstractHttpConfigurer::disable)
-				.cors(AbstractHttpConfigurer::disable)
 				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authorizeHttpRequests(a -> a
 						.requestMatchers(HttpMethod.POST, "/login").permitAll()
