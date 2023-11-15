@@ -13,6 +13,7 @@ export async function getApi(endpoint) {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'token': token,
         }
     })
         .then(response => {
@@ -35,7 +36,7 @@ export const postApi = async (endpoint, data) => {
 
         const response = await fetch(URL + endpoint, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', },
+            headers: { 'Content-Type': 'application/json', 'token': token,},
             body: JSON.stringify(data),
         });
 
