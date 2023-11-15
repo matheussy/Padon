@@ -12,8 +12,10 @@ export async function getApi(endpoint) {
     return fetch(URL + endpoint, {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json',
-            'token': token,
+            Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'token': token,
         }
     })
         .then(response => {
