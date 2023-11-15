@@ -1,6 +1,6 @@
 package br.com.padon.application.controllers;
 
-import br.com.padon.application.TokenService;
+import br.com.padon.application.security.TokenService;
 import br.com.padon.application.models.Funcionario;
 import br.com.padon.application.repositorys.FuncionarioRepository;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -21,8 +21,7 @@ import java.util.Map;
 
 
 @RestController
-@Service
-public class LoginController implements UserDetailsService {
+public class LoginController {
 
 	@Autowired
 	private FuncionarioRepository funcionario;
@@ -31,13 +30,8 @@ public class LoginController implements UserDetailsService {
 	@Autowired
 	private TokenService tokenService;
 
-	@Override
-	public UserDetails loadUserByUsername(String usuario) throws UsernameNotFoundException {
-		return funcionario.findByUsuario(usuario);
-	}
-
 	@PostMapping("/login")
-	public Map<String, String> login(@RequestBody JsonNode node){
+	public Map<String, String> login(@RequestBody JsonNode node) {
 		var usernamePassword = new UsernamePasswordAuthenticationToken(node.get("usuario"), node.get("senha"));
 		Authentication auth = authManager.authenticate(usernamePassword);
 		String token = tokenService.generateToken((Funcionario) auth.getPrincipal());
