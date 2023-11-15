@@ -82,9 +82,6 @@ export default function VendaIndex() {
           <div className='card-body'>
 
             <div className='row'>
-              <div className='text-center'>
-                <span className='h4'>Produtos na Venda</span>
-              </div>
               <div>
                 {vendas.length > 0 ?
                   <Table responsive>
