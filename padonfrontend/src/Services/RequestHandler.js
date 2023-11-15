@@ -12,9 +12,8 @@ export async function getApi(endpoint) {
     return fetch(URL + endpoint, {
         method: 'GET',
         headers: {
-            Accept: 'application/json',
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
+          mode: 'no-cors',
           'token': token,
         }
     })
