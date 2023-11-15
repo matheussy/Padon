@@ -125,11 +125,7 @@ export default function RelatoriosIndex() {
                           <td>{format(parseISO(v.dataVenda), 'dd/MM/yyyy')}</td>
                           <td>R${v.valorTotal}</td>
                         </tr>
-                        {
-                          v.produtos.map((p, index) =>
-                            <></>
-                          )
-                        }
+                        
                       }
                       )}
 
@@ -150,3 +146,9 @@ export default function RelatoriosIndex() {
     </div >
   );
 }
+
+/*{
+                          v.produtos.map((p, index) =>
+                            <tr></tr>
+                          )
+                        } */
