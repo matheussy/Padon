@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
@@ -39,6 +40,16 @@ public class VendaController {
 	@GetMapping("/get")
 	public List<Venda> getAllVendas() {
 		return venda.findAll();
+	}
+
+	@GetMapping("/gettrue")
+	public List<Venda> getAllVendasTrue() {
+		return venda.findAll().stream().filter(Venda::getStatusVenda).collect(Collectors.toList());
+	}
+
+	@GetMapping("/getfalse")
+	public List<Venda> getAllVendasFalse() {
+		return venda.findAll().stream().filter(v -> !v.getStatusVenda()).collect(Collectors.toList());
 	}
 
 	@PostMapping("/save")
