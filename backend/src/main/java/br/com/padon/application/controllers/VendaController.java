@@ -47,7 +47,7 @@ public class VendaController {
 		if (!vendaById.getStatusVenda()) {
 			throw new IllegalAccessError("venda encerrada, alteração negada");
 		}
-		vendaById.setDataVenda(DateFormat.getDateInstance().parse(node.get("data").asText()));
+		vendaById.setDataVenda(parser.parse(node.get("data").asText()));
 		vendaById.setStatusVenda(node.get("status").asBoolean());
 		vendaById.setValorTotal(node.get("valor").asDouble());
 		vendaById.setComanda(node.get("comanda").asInt());
