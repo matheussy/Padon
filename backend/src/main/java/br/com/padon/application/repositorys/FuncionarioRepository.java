@@ -14,5 +14,6 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, String
 	@Query("select f from Funcionario f where (select count(*) from Trabalha r where r.lojaId = :lojaId and f.cpf = r.cpf) = 0")
 	List<Funcionario> getFuncionarioOutLoja(int lojaId);
 
+	@Query("select f from Funcionario f where f.usuario = :usuario")
 	Funcionario findByUsuario(String usuario);
 }

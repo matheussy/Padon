@@ -26,7 +26,10 @@ public class SecurityService {
 		return httpSecurity
 				.csrf(AbstractHttpConfigurer::disable)
 				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.authorizeHttpRequests(a -> a.requestMatchers(HttpMethod.POST, "/login").permitAll().anyRequest().authenticated())
+				.authorizeHttpRequests(a -> a
+						.requestMatchers(HttpMethod.POST, "/login").permitAll()
+						.anyRequest().authenticated()
+				)
 				.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
 				.build();
 	}
