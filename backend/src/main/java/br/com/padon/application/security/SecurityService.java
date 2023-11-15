@@ -29,10 +29,10 @@ public class SecurityService {
 				.csrf(AbstractHttpConfigurer::disable)
 				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authorizeHttpRequests(a -> a
-//						.requestMatchers(HttpMethod.POST, "/login").permitAll()
-//						.requestMatchers(HttpMethod.POST, "/funcionario/create").permitAll()
-//						.requestMatchers(HttpMethod.POST, "/loja/get").permitAll()
-						.anyRequest().permitAll()
+						.requestMatchers(HttpMethod.POST, "/login").permitAll()
+						.requestMatchers(HttpMethod.POST, "/funcionario/create").permitAll()
+						.requestMatchers(HttpMethod.GET, "/loja/get").permitAll()
+						.anyRequest().authenticated()
 				)
 				.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
 				.build();
