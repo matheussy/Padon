@@ -5,11 +5,11 @@ import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
 
 
-export default function Estoque() {
+export default function LojaIndex() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    getApi('/produto/get')
+    getApi('/loja/get')
       .then((data) => {
         //console.log(JSON.stringify(data) + "LENGHT ->" + data.length);
         setData(data);
@@ -24,28 +24,42 @@ export default function Estoque() {
       <div className='col-11 col-md-9'>
         <div className='card mt-1'>
           <div className='card-header text-center'>
-            <span className='h4'>Produtos</span>
+            <span className='h4'>Lojas</span>
           </div>
           <div className='card-body'>
             <div className='m-3'>
+              <div className='row mb-2'>
+                <div className='col'>
+                  <div>
+                    <Link to="/Loja/Create">
+                      <button className='btn btn-success'>
+                        <i className="bi bi-plus-circle"></i>
+                        <span className='mx-1'>Adicionar Loja</span>
+                      </button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
               {data.length > 0 ?
                 <Table responsive>
                   <thead>
                     <tr>
                       <th>Id</th>
                       <th>Nome</th>
+                      <th>Endereço</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody>
-                    {data.map((prod, index) => (
-                      <tr key={prod.produtoId}>
-                        <td>{prod.produtoId}</td>
-                        <td>{prod.nome}</td>
+                    {data.map((lojid, index) => (
+                      <tr key={lojid.lojaId}>
+                        <td>{lojid.lojaId}</td>
+                        <td>{lojid.nome}</td>
+                        <td>{lojid.endereco}</td>
                         <td className='text-center'>
-                          <Link to={'/Produtos/Estoque/Adiciona/' + prod.produtoId}>
-                            <button className='btn btn-dark mx-3'>
-                              <i class="bi bi-plus-circle"></i>
+                          <Link to={'/Lojas/Edit/' + lojid.lojaId}>
+                            <button className='btn btn-info mx-3'>
+                              <i className="bi bi-pencil-square"></i>
                             </button>
                           </Link>
                         </td>
