@@ -21,17 +21,7 @@ export default function RelatoriosProdutos() {
   const [dataFim, setDataFim] = useState(new Date());
 
   useEffect(() => {
-    var req = { dtinicial: format(dataIni, 'dd/MM/yyyy'), dtfinal: format(dataFim, 'dd/MM/yyyy') }
-    console.log(req);
-
-    postApi('/relatorio/bydate', req)
-      .then((data) => {
-        console.log(data);
-        setVendas(data);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+    requestRelatorio();
   }, []);
 
   const handleDateIniChange = (date) => {
@@ -47,9 +37,9 @@ export default function RelatoriosProdutos() {
     var req = { dtinicial: format(ini, 'dd/MM/yyyy'), dtfinal: format(fim, 'dd/MM/yyyy') }
     console.log(req);
 
-    postApi('/relatorio/bydate', req)
+    postApi('/relatorio/produtos', req)
       .then((data) => {
-        console.log(data);
+        console.log("Teste -> "+JSON.stringify(data));
         setVendas(data);
       })
       .catch((err) => {
@@ -82,7 +72,7 @@ export default function RelatoriosProdutos() {
       <div className='col-11 col-md-8'>
         <div className='card mt-1'>
           <div className='card-header text-center'>
-            <span className='h4'>Relatórios de Vendas Finalizadas</span>
+            <span className='h4'>Relatórios de Vendas com Produtos</span>
           </div>
 
           <div className='card-body'>
