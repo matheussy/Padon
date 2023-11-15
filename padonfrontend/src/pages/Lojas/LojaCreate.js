@@ -25,7 +25,8 @@ export default function LojaCreate({}) {
     }
 
     postApi('/loja/create', data).then(data => {
-      navigate("/Lojas/LojaIndex");
+      navigate("/Lojas/Index");
+      window.location.reload();
     });
   }
 

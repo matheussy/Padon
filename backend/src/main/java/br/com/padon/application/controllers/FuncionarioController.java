@@ -17,6 +17,7 @@ public class FuncionarioController {
 
 	@Autowired
 	private FuncionarioRepository funcionario;
+	private final BCryptPasswordEncoder senha = new BCryptPasswordEncoder();
 
 	@PostMapping("/create")
 	public Funcionario createFuncionario(@RequestBody JsonNode node) {
@@ -24,7 +25,7 @@ public class FuncionarioController {
 				node.get("cpf").asText(),
 				node.get("usuario").asText(),
 				node.get("nome").asText(),
-				new BCryptPasswordEncoder().encode(node.get("senha").asText()),
+				senha.encode(node.get("senha").asText()),
 				node.get("email").asText(),
 				node.get("telefone").asText(),
 				node.get("gerente").asBoolean()
@@ -41,7 +42,7 @@ public class FuncionarioController {
 		Funcionario funcionarioById = funcionario.findById(node.get("cpf").asText()).orElseThrow();
 		funcionarioById.setUsuario(node.get("usuario").asText());
 		funcionarioById.setNome(node.get("nome").asText());
-		funcionarioById.setSenha(node.get("senha").asText());
+		funcionarioById.setSenha(senha.encode(node.get("senha").asText()));
 		funcionarioById.setEmail(node.get("email").asText());
 		funcionarioById.setTelefone(node.get("telefone").asText());
 		funcionarioById.setGerente(node.get("gerente").asBoolean());

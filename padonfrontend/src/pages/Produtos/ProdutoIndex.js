@@ -1,23 +1,30 @@
-import React from 'react';
-import { getApi } from '../../Services/RequestHandler';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
+import { postApi } from '../../Services/RequestHandler';
 import { Link } from 'react-router-dom';
 
 
 export default function CategoriaIndex() {
-  const [data, setData] = useState([]);
 
-  useEffect(() => {
-    getApi('/produto/get')
-      .then((data) => {
-        //console.log(JSON.stringify(data) + "LENGHT ->" + data.length);
-        setData(data);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-  }, []);
+  const [data, setData] = useState([]);
+  const [lojaId, setLojaId] = useState(sessionStorage.getItem("lojaId"));
+
+
+    useEffect(() => {
+      // Só faz a requisição se lojaId estiver definido
+      if (lojaId !== undefined) {
+        const request = { id: parseInt(lojaId) };
+  
+        postApi('/produto/fromloja', request)
+          .then((data) => {
+            setData(data);
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+      }
+    }, [lojaId]);
+
 
   function VerificaPreco(prod) {
     if (prod.precoPorUnidade > 0)

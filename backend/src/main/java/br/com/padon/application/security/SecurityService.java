@@ -31,6 +31,7 @@ public class SecurityService {
 				.authorizeHttpRequests(a -> a
 						.requestMatchers(HttpMethod.POST, "/login").permitAll()
 						.requestMatchers(HttpMethod.POST, "/funcionario/create").permitAll()
+						.requestMatchers(HttpMethod.GET, "/loja/get").permitAll()
 						.anyRequest().authenticated()
 				)
 				.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
