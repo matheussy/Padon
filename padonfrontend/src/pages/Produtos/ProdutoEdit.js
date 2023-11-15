@@ -73,7 +73,6 @@ export default function ProdutoEdit({ prodid = null }) {
     bloqueado: produto.bloqueado === true,
     porQuilo: produto.porQuilo === true,
     image: produto.image,
-    
   });
  
   const handleChange = (event) => {

@@ -7,7 +7,6 @@ import './StyleNav.css';
 
 function PadonNavbar() {
     return (
-
         <div className="App">
             <Navbar expand="lg" className="navbar navbar-dark bg-dark justify-content-between">
                 <Container>
@@ -30,6 +29,7 @@ function PadonNavbar() {
                             <NavDropdown title="Produtos" id="basic-nav-dropdown">
                                 <NavDropdown.Item href="/Produtos">Listar</NavDropdown.Item>
                                 <NavDropdown.Item href="/Produtos/Create">Adicionar Produto</NavDropdown.Item>
+                                <NavDropdown.Item href="/Produtos/Estoque">Estoque</NavDropdown.Item>
                             </NavDropdown>
 
                             <NavDropdown title="Categorias" id="basic-nav-dropdown">
@@ -60,10 +60,15 @@ function PadonNavbar() {
                                     <NavDropdown.Item href="/Funcionarios/Delete">Deletar Funcionarios</NavDropdown.Item>
                                 </NavDropdown>
                             }
+                            
+                            <NavDropdown title="Lojas" id="basic-nav-dropdown">
+                                <NavDropdown.Item href="/Lojas/Index">Listar</NavDropdown.Item>
+                                <NavDropdown.Item href="/Lojas/Create">Criar Loja</NavDropdown.Item>
+                            </NavDropdown>
 
                         </Nav>
                     </Navbar.Collapse>
-                    
+
                     <Form className=''>
                         <Form.Select >
                             <option>Lojas</option>

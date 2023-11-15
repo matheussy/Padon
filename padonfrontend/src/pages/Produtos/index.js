@@ -3,4 +3,5 @@ export { default as ProdutoCreate } from './ProdutoCreate';
 export { default as ProdutoEdit } from './ProdutoEdit';
 export { default as ProdutoDelete } from './ProdutoDelete';
 export { default as Estoque } from './Estoque';
+export { default as EstoqueAdiciona } from './EstoqueAdiciona';
 
