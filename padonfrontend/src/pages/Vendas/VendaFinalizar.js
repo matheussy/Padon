@@ -6,6 +6,7 @@ import { postApi } from '../../Services/RequestHandler';
 import Modal from 'react-bootstrap/Modal';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import { format, parseISO } from 'date-fns';
 
 
 export default function VendaFinalizar({ venid = null }) {
@@ -46,10 +47,13 @@ export default function VendaFinalizar({ venid = null }) {
 
 
   const FinalizarCompra = () => {
-    postApi('/venda/remove', {})
+    
+    var data = {id: venid, status:false, valor:total, comanda:0, data:format(parseISO(venda.dataVenda), 'dd/MM/yyyy')};
+    console.log(data);
+    postApi('/venda/save', data)
       .then((data) => {
-        alert("Produto Removido da Venda com Sucesso!");
-        window.location.reload();
+        alert("Venda Finalizada!");
+        navigate('/Vendas/');
       })
       .catch((err) => {
         console.log(err.message);
@@ -192,7 +196,7 @@ export default function VendaFinalizar({ venid = null }) {
         <Modal.Body>
           <h4>Você tem certeza que deseja finalizar a Venda?</h4>
           <div className='row text-end h3'>
-            Total da Compra: R$00
+            Total da Compra: R${total}
           </div>
         </Modal.Body>
         <Modal.Footer>

@@ -2,16 +2,17 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import Form from 'react-bootstrap/Form';
 import './StyleNav.css';
 
 function PadonNavbar() {
     return (
 
         <div className="App">
-            <Navbar expand="lg" className="navbar navbar-dark bg-dark">
+            <Navbar expand="lg" className="navbar navbar-dark bg-dark justify-content-between">
                 <Container>
                     <Navbar.Brand href="/">Padon</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <Nav.Link href="/">Home</Nav.Link>
@@ -59,10 +60,21 @@ function PadonNavbar() {
                                     <NavDropdown.Item href="/Funcionarios/Delete">Deletar Funcionarios</NavDropdown.Item>
                                 </NavDropdown>
                             }
-                            
+
                         </Nav>
                     </Navbar.Collapse>
+                    
+                    <Form className=''>
+                        <Form.Select >
+                            <option>Lojas</option>
+                            <option value="1">Loja 1</option>
+                            <option value="2">Loja 2</option>
+                        </Form.Select>
+                    </Form>
+
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 </Container>
+
             </Navbar>
 
         </div>
