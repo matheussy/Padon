@@ -35,10 +35,10 @@ public class SecurityService {
 				.cors(AbstractHttpConfigurer::disable)
 				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authorizeHttpRequests(a -> a
-						.requestMatchers(HttpMethod.POST, "/login").permitAll()
-						.requestMatchers(HttpMethod.POST, "/funcionario/create").permitAll()
-						.requestMatchers(HttpMethod.GET, "/loja/get").permitAll()
-						.anyRequest().authenticated()
+//						.requestMatchers(HttpMethod.POST, "/login").permitAll()
+//						.requestMatchers(HttpMethod.POST, "/funcionario/create").permitAll()
+//						.requestMatchers(HttpMethod.GET, "/loja/get").permitAll()
+						.anyRequest().permitAll()
 				)
 				.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
 				.build();
