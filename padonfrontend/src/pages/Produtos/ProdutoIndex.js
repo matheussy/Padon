@@ -4,7 +4,7 @@ import { postApi } from '../../Services/RequestHandler';
 import { Link } from 'react-router-dom';
 
 
-export default function CategoriaIndex() {
+export default function ProdutoIndex() {
 
   const [data, setData] = useState([]);
   const [lojaId, setLojaId] = useState(sessionStorage.getItem("lojaId"));
