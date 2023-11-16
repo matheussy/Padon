@@ -31,9 +31,11 @@ public class LoginController {
 	public Map<String, String> login(@RequestBody JsonNode node) {
 		var usernamePassword = new UsernamePasswordAuthenticationToken(node.get("usuario").asText(), node.get("senha").asText());
 		Authentication auth = authManager.authenticate(usernamePassword);
-		String token = tokenService.generateToken((Funcionario) auth.getPrincipal());
+		Funcionario user = (Funcionario) auth.getPrincipal();
+		String token = tokenService.generateToken(user);
 		HashMap<String, String> map = new HashMap<>();
 		map.put("token", token);
+		map.put("gerente", String.valueOf(user.isGerente()));
 		return map;
 	}
 }
