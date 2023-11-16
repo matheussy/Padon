@@ -1,13 +1,26 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
 import { postApi } from '../../Services/RequestHandler';
 import { useNavigate } from "react-router-dom";
+import { Modal, Button } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
 
-export default function LojaCreate({}) {
+export default function LojaCreate({ }) {
   let navigate = useNavigate();
 
 
   const [inputs, setInputs] = useState({});
+  const [showPermissionModal, setShowPermissionModal] = useState(false);
+  const handleClosePermissionModal = () => {
+    setShowPermissionModal(false);
+    navigate("/Lojas/Index");
+  };
+
+  useEffect(() => {
+    const gerente = sessionStorage.getItem('gerente');
+    if (gerente === 'false') {
+      setShowPermissionModal(true);
+    }
+  }, []);
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -15,7 +28,6 @@ export default function LojaCreate({}) {
     setInputs(values => ({ ...values, [name]: value }))
   }
 
-  
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -32,6 +44,19 @@ export default function LojaCreate({}) {
 
   return (
     <div>
+      <Modal show={showPermissionModal} onHide={handleClosePermissionModal} backdrop="static" centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Permissão Negada!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Você não tem permissão para acessar esta tela.</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClosePermissionModal}>
+            Confirmar
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <div className="justify-content-center row">
         <div className='col-md-8'>
           <div className='card mt-2'>

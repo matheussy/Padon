@@ -1,13 +1,25 @@
 import React from 'react';
-import { useState } from 'react';
-import './Style.css';
 import { useNavigate } from "react-router-dom";
 import { postApi, postApiNoToken } from '../../Services/RequestHandler';
+import { Modal, Button } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
 
 export default function FuncionarioCreate() {
   let navigate = useNavigate();
 
   const [inputs, setInputs] = useState({});
+  const [showPermissionModal, setShowPermissionModal] = useState(false);
+  const handleClosePermissionModal = () => {
+    setShowPermissionModal(false);
+    navigate("/Funcionarios");
+  };
+
+  useEffect(() => {
+    const gerente = sessionStorage.getItem('gerente');
+    if (gerente === 'false') {
+      setShowPermissionModal(true);
+    }
+  }, []);
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -32,13 +44,26 @@ export default function FuncionarioCreate() {
 
     console.log(data);
     postApiNoToken('/funcionario/create', data).then(data => {
-      navigate("/Funcionarios/");
+      navigate("/Funcionarios");
     });
 
 
   }
   return (
     <div>
+      <Modal show={showPermissionModal} onHide={handleClosePermissionModal} backdrop="static" centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Permissão Negada!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Você não tem permissão para acessar esta tela.</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClosePermissionModal}>
+            Confirmar
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <div className="justify-content-center row">
         <div className='col-11 col-md-8'>
           <div className='card mt-1'>

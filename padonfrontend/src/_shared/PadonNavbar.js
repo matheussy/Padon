@@ -11,34 +11,34 @@ import { useNavigate, useParams, Link } from 'react-router-dom';
 function PadonNavbar() {
 
     const [lojas, setLojas] = useState([]);
-    const [lojaId, setLojaId] = useState(); 
-  
+    const [lojaId, setLojaId] = useState();
+
     useEffect(() => {
-      // Carrega a lista de lojas ao montar o componente
+        // Carrega a lista de lojas ao montar o componente
 
-      const storedLojaId = sessionStorage.getItem("lojaId");
-      setLojaId(storedLojaId ? parseInt(storedLojaId, 10) : 0);
+        const storedLojaId = sessionStorage.getItem("lojaId");
+        setLojaId(storedLojaId ? parseInt(storedLojaId, 10) : 0);
 
-      console.log("TOKEN -> "+sessionStorage.getItem("token"));
+        console.log("TOKEN -> " + sessionStorage.getItem("token"));
 
-      getApiNoToken('/loja/get')
-        .then((data) => {
-          setLojas(data);
-        })
-        .catch((err) => {
-          console.log(err.message);
-        });
+        getApiNoToken('/loja/get')
+            .then((data) => {
+                setLojas(data);
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
     }, []);
-  
+
     const handleLojaChange = (event) => {
         const selectedLojaId = event.target.value != null ? event.target.value : 0;
-        
+
         // Armazena o valor no sessionStorage antes de recarregar a página
         sessionStorage.setItem("lojaId", selectedLojaId);
-      
+
         // Recarrega a página
         window.location.reload();
-      };
+    };
     return (
         <div className="App">
             <Navbar expand="lg" className="navbar navbar-dark bg-dark justify-content-between">
@@ -84,12 +84,9 @@ function PadonNavbar() {
 
                             {true &&
                                 <NavDropdown title="Funcionarios" id="basic-nav-dropdown">
-                                    <NavDropdown.Item href="/Funcionarios">Funcionarios</NavDropdown.Item>
-                                    <NavDropdown.Divider />
                                     <NavDropdown.Item href="/Funcionarios">Listar</NavDropdown.Item>
+                                    <NavDropdown.Divider />
                                     <NavDropdown.Item href="/Funcionarios/Create">Adicionar Funcionario</NavDropdown.Item>
-                                    <NavDropdown.Item href="/Funcionarios/Edit">Editar Funcionario</NavDropdown.Item>
-                                    <NavDropdown.Item href="/Funcionarios/Delete">Deletar Funcionarios</NavDropdown.Item>
                                 </NavDropdown>
                             }
 
@@ -111,6 +108,11 @@ function PadonNavbar() {
                             ))}
                         </Form.Select>
                     </Form>
+
+                    <div className="d-flex justify-content-between me-1 ms-5">
+                        {/* ... Outros elementos do Navbar ... */}
+                        <Link to="/Login" className="btn btn-dark">Login</Link>
+                    </div>
 
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 </Container>

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { postApi } from '../../Services/RequestHandler';
 import { useNavigate } from "react-router-dom";
+import { Modal, Button } from 'react-bootstrap';
 
 export default function FornecedorEdit({ fornid = null }) {
   let navigate = useNavigate();
@@ -13,17 +14,30 @@ export default function FornecedorEdit({ fornid = null }) {
   }
 
   const [fornecedor, setFornecedor] = useState([]);
-  useEffect(() => {
-    postApi('/fornecedor/byid', { id: fornid })
-      .then((data) => {
-        console.log(JSON.stringify(data));
-        setFornecedor(data);
+  const [showPermissionModal, setShowPermissionModal] = useState(false);
+  const handleClosePermissionModal = () => {
+    setShowPermissionModal(false);
+    navigate("/Fornecedores");
+  };
 
-        setInputs({ nome: data.nome, contato: data.contato, endereco: data.endereco, telefone: data.telefone });
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+  useEffect(() => {
+    const gerente = sessionStorage.getItem('gerente');
+    if (gerente === 'false') {
+      setShowPermissionModal(true);
+    }
+    else {
+      postApi('/fornecedor/byid', { id: fornid })
+        .then((data) => {
+          console.log(JSON.stringify(data));
+          setFornecedor(data);
+
+          setInputs({ nome: data.nome, contato: data.contato, endereco: data.endereco, telefone: data.telefone });
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    }
+
   }, [fornid]);
 
   const [inputs, setInputs] = useState({ nome: fornecedor.nome, contato: fornecedor.contato, endereco: fornecedor.endereco, telefone: fornecedor.telefone });
@@ -40,8 +54,8 @@ export default function FornecedorEdit({ fornid = null }) {
     let data = {
       id: fornid,
       nome: inputs.nome,
-      contato: inputs.contato, 
-      endereco: inputs.endereco, 
+      contato: inputs.contato,
+      endereco: inputs.endereco,
       telefone: inputs.telefone,
     }
     postApi('/fornecedor/save', data).then(data => {
@@ -51,37 +65,52 @@ export default function FornecedorEdit({ fornid = null }) {
   }
 
   return (
-    <div className='justify-content-center row'>
-      <div className='col-11 col-md-8'>
-        <div className='card mt-1'>
-          <div className='card-header text-center'>
-            <span className='h4'>Editar Fornecedor</span>
-          </div>
-          <form onSubmit={handleSubmit}>
-            <div className='card-body'>
-              <div className="mb-3">
-                <label htmlFor="nome" className="form-label">Nome da Fornecedor:</label>
-                <input type="text" name="nome" id="nome" className='form-control' value={inputs.nome || ""} onChange={handleChange} />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="nome" className="form-label">Contato:</label>
-                <input type="text" name="nome" id="nome" className='form-control' value={inputs.contato || ""} onChange={handleChange} />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="nome" className="form-label">Endereço:</label>
-                <input type="text" name="nome" id="nome" className='form-control' value={inputs.endereco || ""} onChange={handleChange} />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="nome" className="form-label">Telefone:</label>
-                <input type="text" name="nome" id="nome" className='form-control' value={inputs.telefone || ""} onChange={handleChange} />
-              </div>
-
-              <button type="submit" className='btn btn-success'>
-                <i className="bi bi-box-arrow-down"></i>
-                <span className='mx-1'>Salvar Alterações</span>
-              </button>
+    <div>
+      <Modal show={showPermissionModal} onHide={handleClosePermissionModal} backdrop="static" centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Permissão Negada!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Você não tem permissão para acessar esta tela.</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClosePermissionModal}>
+            Confirmar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <div className='justify-content-center row'>
+        <div className='col-11 col-md-8'>
+          <div className='card mt-1'>
+            <div className='card-header text-center'>
+              <span className='h4'>Editar Fornecedor</span>
             </div>
-          </form>
+            <form onSubmit={handleSubmit}>
+              <div className='card-body'>
+                <div className="mb-3">
+                  <label htmlFor="nome" className="form-label">Nome da Fornecedor:</label>
+                  <input type="text" name="nome" id="nome" className='form-control' value={inputs.nome || ""} onChange={handleChange} />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="nome" className="form-label">Contato:</label>
+                  <input type="text" name="nome" id="nome" className='form-control' value={inputs.contato || ""} onChange={handleChange} />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="nome" className="form-label">Endereço:</label>
+                  <input type="text" name="nome" id="nome" className='form-control' value={inputs.endereco || ""} onChange={handleChange} />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="nome" className="form-label">Telefone:</label>
+                  <input type="text" name="nome" id="nome" className='form-control' value={inputs.telefone || ""} onChange={handleChange} />
+                </div>
+
+                <button type="submit" className='btn btn-success'>
+                  <i className="bi bi-box-arrow-down"></i>
+                  <span className='mx-1'>Salvar Alterações</span>
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>

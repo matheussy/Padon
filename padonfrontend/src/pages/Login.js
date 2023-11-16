@@ -1,9 +1,14 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { postApiNoToken } from '../Services/RequestHandler';
-import { useState } from 'react';
+import ReactDOM from 'react-dom/client';
+import App from '../App';
+import reportWebVitals from '../reportWebVitals';
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { postApi, postApiNoToken } from '../Services/RequestHandler';
 
 export default function Login() {
+
+
   let navigate = useNavigate();
 
   const [inputs, setInputs] = useState({});
@@ -22,9 +27,11 @@ export default function Login() {
       senha: inputs.senha
     }
 
-    postApiNoToken('/login', data).then(data => {
+    postApi('/login', data).then(data => {
       sessionStorage.setItem("token", data.token);
-      navigate('/home');
+      sessionStorage.setItem("gerente", data.gerente);
+      console.log(JSON.stringify(data.gerente));
+      navigate('/Home');
     });
 
   }

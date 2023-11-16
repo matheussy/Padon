@@ -64,6 +64,8 @@ export default function Main() {
       <Route exact path='/Relatorios/' element={<RelatoriosIndex />}></Route>
       <Route exact path='/Relatorios/Produtos' element={<RelatoriosProdutos />}></Route>
 
+      <Route exact path='/Login' element={<Login />}></Route>
+
     </Routes>
   );
 }

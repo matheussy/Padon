@@ -8,15 +8,27 @@ import { Button, Modal } from 'react-bootstrap';
 export default function ProdutoDelete({ catid = null }) {
   let navigate = useNavigate();
 
-  const [showModal, setShowModal] = useState(false);
-
-  const handleShowModal = () => setShowModal(true);
-  const handleCloseModal = () => setShowModal(false);
-
   const { id } = useParams();
   if (catid === undefined || catid === null) {
     catid = id;
   }
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleShowModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
+  const [showPermissionModal, setShowPermissionModal] = useState(false);
+  const handleClosePermissionModal = () => {
+    setShowPermissionModal(false);
+    navigate("/Produtos");
+  };
+
+  useEffect(() => {
+    const gerente = sessionStorage.getItem('gerente');
+    if (gerente === 'false') {
+      setShowPermissionModal(true);
+    }
+  }, []);
 
   const [produto, setProduto] = useState([]);
   useEffect(() => {
@@ -38,12 +50,26 @@ export default function ProdutoDelete({ catid = null }) {
     });
   }
   return (
-    <div className='justify-content-center row' >
-      <div className='col-11 col-md-8'>
-        <div className='card mt-1'>
-          <div className='card-header text-center'>
-            <span className='h4'>Deletar Produto: {produto.nome}</span>
-          </div>
+    <div>
+      <Modal show={showPermissionModal} onHide={handleClosePermissionModal} backdrop="static" centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Permissão Negada!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Você não tem permissão para acessar esta tela.</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClosePermissionModal}>
+            Confirmar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <div className='justify-content-center row' >
+        <div className='col-11 col-md-8'>
+          <div className='card mt-1'>
+            <div className='card-header text-center'>
+              <span className='h4'>Deletar Produto: {produto.nome}</span>
+            </div>
             <div className='card-body'>
               <div className="mb-3">
                 <span className='fw-bold'>Id do produto: </span>{catid}
@@ -68,24 +94,25 @@ export default function ProdutoDelete({ catid = null }) {
                 </div>
               </div>
             </div>
+          </div>
         </div>
+        <Modal show={showModal} onHide={handleCloseModal} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>Confirmação</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Tem certeza que deseja deletar o produto {catid}?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseModal}>
+              Cancelar
+            </Button>
+            <Button variant="danger" onClick={handleDelete}>
+              Deletar
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
-      <Modal show={showModal} onHide={handleCloseModal} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirmação</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Tem certeza que deseja deletar o produto {catid}?
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
-            Cancelar
-          </Button>
-          <Button variant="danger" onClick={handleDelete}>
-            Deletar
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </div>
   );
 

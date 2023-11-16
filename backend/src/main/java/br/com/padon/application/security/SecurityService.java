@@ -31,6 +31,7 @@ public class SecurityService {
 				.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authorizeHttpRequests(a -> a
 						.requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+						.requestMatchers(HttpMethod.GET, "/produto/get").permitAll()
 						.requestMatchers(HttpMethod.POST, "/login").permitAll()
 						.requestMatchers(HttpMethod.POST, "/funcionario/create").permitAll()
 						.requestMatchers(HttpMethod.GET, "/loja/get").permitAll()

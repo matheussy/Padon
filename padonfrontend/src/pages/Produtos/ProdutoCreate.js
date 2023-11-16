@@ -1,15 +1,28 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { postApi } from '../../Services/RequestHandler';
-import { useNavigate } from "react-router-dom";
+import { generatePath, useNavigate } from "react-router-dom";
+import { Modal, Button } from 'react-bootstrap';
 
-export default function ProdutoCreate({}) {
+export default function ProdutoCreate({ }) {
   let navigate = useNavigate();
 
   const [inputs, setInputs] = useState({});
   const [image, setImage] = useState(null);
-  const [imageBase64, setImageBase64] = useState("");
+  const [imageBase64, setImageBase64] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
+  useEffect(() => {
+    const gerente = sessionStorage.getItem('gerente');
+    if (gerente === 'false') {
+      setShowModal(true);
+    }
+  }, []);
+
+  const handleClose = () => {
+    setShowModal(false);
+    navigate(-1); // Volta para a página anterior
+  };
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -30,7 +43,7 @@ export default function ProdutoCreate({}) {
     document.getElementById("image").value = ""; // Isso limpa o valor do campo de arquivo para que o usuário possa selecionar uma nova imagem posteriormente
   };
 
-  
+
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -38,7 +51,7 @@ export default function ProdutoCreate({}) {
     setInputs(values => ({ ...values, [name]: value }))
   }
 
-  
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -54,7 +67,7 @@ export default function ProdutoCreate({}) {
     }
 
     postApi('/produto/create', data).then(dataProd => {
-      
+
       console.log(dataProd);
 
       var loja = sessionStorage.getItem("lojaId");
@@ -63,16 +76,30 @@ export default function ProdutoCreate({}) {
         lojaId: loja,
         produtoId: dataProd.produtoId,
         estoque: 0,
-        quantidadeMinima:0
+        quantidadeMinima: 0
       }
 
       postApi('/loja/addproduto', dataCriar);
       navigate("/Produtos/");
+      window.location.reload();
     });
   }
 
   return (
     <div>
+      <Modal show={showModal} onHide={handleClose} backdrop="static" centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Permissão Negada!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Você não tem permissão para acessar esta tela.</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Confirmar
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <div className="justify-content-center row">
         <div className='col-md-8'>
           <div className='card mt-2'>
@@ -131,7 +158,7 @@ export default function ProdutoCreate({}) {
                       <label htmlFor="image" className="form-label">Adicionar imagem:</label>
                     </div>
                     <div className="mb-2 d-flex align-items-center">
-                      <input type="file" accept="image/*" className="form-control shadow-sm me-2" id="image" name='image' onChange={handleImageChange}/>
+                      <input type="file" accept="image/*" className="form-control shadow-sm me-2" id="image" name='image' onChange={handleImageChange} />
                       <button type="button" className="btn btn-danger" onClick={() => handleRemoveImage()}>
                         <i class="bi bi-file-earmark-x"></i>
                       </button>

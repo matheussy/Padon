@@ -16,19 +16,31 @@ export default function FuncionarioEdit({ cpfid = null }) {
 
     const handleShowModal = () => setShowModal(true);
     const handleCloseModal = () => setShowModal(false);
+    const [showPermissionModal, setShowPermissionModal] = useState(false);
+    const handleClosePermissionModal = () => {
+        setShowPermissionModal(false);
+        navigate("/Produtos");
+    };
 
     const [funcionario, setFuncionario] = useState({});
 
     useEffect(() => {
-        postApi('/funcionario/byid', { cpf: cpfid })
-            .then((data) => {
-                console.log(JSON.stringify(data));
-                setFuncionario(data);
-            })
-            .catch((err) => {
-                console.log(err.message);
-            });
-    }, [cpfid]);    
+        const gerente = sessionStorage.getItem('gerente');
+        if (gerente === 'false') {
+            setShowPermissionModal(true);
+        }
+        else {
+            postApi('/funcionario/byid', { cpf: cpfid })
+                .then((data) => {
+                    console.log(JSON.stringify(data));
+                    setFuncionario(data);
+                })
+                .catch((err) => {
+                    console.log(err.message);
+                });
+        }
+
+    }, [cpfid]);
 
     const [inputs, setInputs] = useState({
         cpf: '',
@@ -80,6 +92,19 @@ export default function FuncionarioEdit({ cpfid = null }) {
     }
     return (
         <div>
+            <Modal show={showPermissionModal} onHide={handleClosePermissionModal} backdrop="static" centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Permissão Negada!</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>Você não tem permissão para acessar esta tela.</p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClosePermissionModal}>
+                        Confirmar
+                    </Button>
+                </Modal.Footer>
+            </Modal>
             <div className="justify-content-center row">
                 <div className='col-11 col-md-8'>
                     <div className='card mt-1'>

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { postApi } from '../../Services/RequestHandler';
 import { useNavigate } from "react-router-dom";
+import { Modal, Button } from 'react-bootstrap';
 
 export default function CategoriaEdit({ catid = null }) {
   let navigate = useNavigate();
@@ -13,18 +14,30 @@ export default function CategoriaEdit({ catid = null }) {
   }
 
   const [categoria, setCategoria] = useState([]);
-  useEffect(() => {
-    postApi('/categoria/byid', { id: catid })
-      .then((data) => {
-        console.log(JSON.stringify(data));
-        setCategoria(data);
+  const [showPermissionModal, setShowPermissionModal] = useState(false);
+  const handleClosePermissionModal = () => {
+    setShowPermissionModal(false);
+    navigate("/Categorias");
+  };
 
-        setInputs({ nome: data.nome });
-        setTextarea(data.descricao);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+  useEffect(() => {
+    const gerente = sessionStorage.getItem('gerente');
+    if (gerente === 'false') {
+      setShowPermissionModal(true);
+    }
+    else {
+      postApi('/categoria/byid', { id: catid })
+        .then((data) => {
+          console.log(JSON.stringify(data));
+          setCategoria(data);
+
+          setInputs({ nome: data.nome });
+          setTextarea(data.descricao);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    }
   }, [catid]);
 
   const [inputs, setInputs] = useState({ nome: categoria.nome });
@@ -55,29 +68,44 @@ export default function CategoriaEdit({ catid = null }) {
   }
 
   return (
-    <div className='justify-content-center row'>
-      <div className='col-11 col-md-8'>
-        <div className='card mt-1'>
-          <div className='card-header text-center'>
-            <span className='h4'>Editar Categoria</span>
-          </div>
-          <form onSubmit={handleSubmit}>
-            <div className='card-body'>
-              <div className="mb-3">
-                <label htmlFor="nome" className="form-label">Nome da Categoria:</label>
-                <input type="text" name="nome" id="nome" className='form-control' value={inputs.nome || ""} onChange={handleChange} />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="desc" className="form-label">Descrição da Categoria</label>
-                <textarea className="form-control" id="desc" rows="3" value={textarea} onChange={handleChangeTextArea}></textarea>
-              </div>
-
-              <button type="submit" className='btn btn-success'>
-                <i className="bi bi-box-arrow-down"></i>
-                <span className='mx-1'>Salvar Alterações</span>
-              </button>
+    <div>
+      <Modal show={showPermissionModal} onHide={handleClosePermissionModal} backdrop="static" centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Permissão Negada!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Você não tem permissão para acessar esta tela.</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClosePermissionModal}>
+            Confirmar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <div className='justify-content-center row'>
+        <div className='col-11 col-md-8'>
+          <div className='card mt-1'>
+            <div className='card-header text-center'>
+              <span className='h4'>Editar Categoria</span>
             </div>
-          </form>
+            <form onSubmit={handleSubmit}>
+              <div className='card-body'>
+                <div className="mb-3">
+                  <label htmlFor="nome" className="form-label">Nome da Categoria:</label>
+                  <input type="text" name="nome" id="nome" className='form-control' value={inputs.nome || ""} onChange={handleChange} />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="desc" className="form-label">Descrição da Categoria</label>
+                  <textarea className="form-control" id="desc" rows="3" value={textarea} onChange={handleChangeTextArea}></textarea>
+                </div>
+
+                <button type="submit" className='btn btn-success'>
+                  <i className="bi bi-box-arrow-down"></i>
+                  <span className='mx-1'>Salvar Alterações</span>
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>

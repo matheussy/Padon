@@ -17,12 +17,30 @@ export default function ProdutoEdit({ prodid = null }) {
   const [produto, setProduto] = useState([]);
   const [image, setImage] = useState(null);
   const [imageBase64, setImageBase64] = useState("");
-  const [showModal, setShowModal] = useState(false);
-  const handleShowModal = () => setShowModal(true);
-  const handleCloseModal = () => setShowModal(false);
+
+  const [showPermissionModal, setShowPermissionModal] = useState(false);
+  const handleClosePermissionModal = () => {
+    setShowPermissionModal(false);
+    navigate("/Produtos");
+  };
+
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const handleShowConfirmationModal = () => setShowConfirmationModal(true);
+  const handleCloseConfirmationModal = () => setShowConfirmationModal(false);
+
+  const handleSave = () => {
+    setShowConfirmationModal(true); // Exibir o modal de confirmação
+  };
+
+
 
   useEffect(() => {
-    postApi('/produto/byid', { id: prodid })
+    const gerente = sessionStorage.getItem('gerente');
+    if (gerente === 'false') {
+      setShowPermissionModal(true);
+    }
+    else{
+      postApi('/produto/byid', { id: prodid })
       .then((data) => {
         console.log(JSON.stringify(data));
         
@@ -43,6 +61,7 @@ export default function ProdutoEdit({ prodid = null }) {
       .catch((err) => {
         console.log(err.message);
       });
+    }
   }, [prodid]);
 
   const handleImageChange = (event) => {
@@ -103,6 +122,19 @@ export default function ProdutoEdit({ prodid = null }) {
 
   return (
     <div>
+      <Modal show={showPermissionModal} onHide={handleClosePermissionModal} backdrop="static" centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Permissão Negada!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Você não tem permissão para acessar esta tela.</p>
+        </Modal.Body>
+        <Modal.Footer>
+        <Button variant="secondary" onClick={handleClosePermissionModal}>
+            Confirmar
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <div className="justify-content-center row">
         <div className='col-md-8'>
           <div className='card mt-2'>
@@ -148,7 +180,7 @@ export default function ProdutoEdit({ prodid = null }) {
                     </div>
                     <div className='row justify-content-md-left'>
                       <div className='col-md-auto'>
-                        <button type="submit" className="btn btn-lg shadow btn-success mb-2" onClick={handleShowModal}>
+                      <button type="submit" className="btn btn-lg shadow btn-success mb-2" onClick={handleSave}>
                           <i class="bi bi-floppy-fill"></i>
                           <span className='mx-2'>Salvar</span>
                         </button>
@@ -184,7 +216,7 @@ export default function ProdutoEdit({ prodid = null }) {
           </div>
         </div>
       </div>
-      <Modal show={showModal} onHide={handleCloseModal} centered>
+      <Modal show={showConfirmationModal} onHide={handleCloseConfirmationModal} centered>
                 <Modal.Header closeButton>
                     <Modal.Title>Confirmação</Modal.Title>
                 </Modal.Header>
@@ -192,7 +224,7 @@ export default function ProdutoEdit({ prodid = null }) {
                     Tem certeza que deseja salvar o Produto {prodid}?
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseModal}>
+                <Button variant="secondary" onClick={handleCloseConfirmationModal}>
                         Cancelar
                     </Button>
                     <Button variant="success" onClick={handleDelete}>
