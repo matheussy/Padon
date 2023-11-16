@@ -2,7 +2,6 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import Home from './pages/Home';
-import Pagina from './pages/Pagina';
 import Login from './pages/Login';
 import { ProdutoIndex, ProdutoCreate, ProdutoEdit, ProdutoDelete, Estoque, EstoqueAdiciona } from './pages/Produtos';
 import { Categoria, CategoriaIndex, CategoriaCreate, CategoriaEdit, CategoriaDelete } from './pages/Categorias';
@@ -22,7 +21,6 @@ export default function Main() {
       <Route exact path='/' element={<Home />}></Route>
       <Route exact path='/Index' element={<Home />}></Route>
       <Route exact path='/Home' element={<Home />}></Route>
-      <Route exact path='/Pagina' element={<Pagina />}></Route>
       <Route exact path='/Login' element={<Login />}></Route>
 
       <Route exact path='/Produtos/' element={<ProdutoIndex />}></Route>
@@ -65,7 +63,6 @@ export default function Main() {
 
       <Route exact path='/Relatorios/' element={<RelatoriosIndex />}></Route>
       <Route exact path='/Relatorios/Produtos' element={<RelatoriosProdutos />}></Route>
-
     </Routes>
   );
 }
