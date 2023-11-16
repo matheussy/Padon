@@ -47,8 +47,8 @@ export default function VendaFinalizar({ venid = null }) {
 
 
   const FinalizarCompra = () => {
-    
-    var data = {id: venid, status:false, valor:total, comanda:0, data:format(parseISO(venda.dataVenda), 'dd/MM/yyyy')};
+
+    var data = { id: venid, status: false, valor: total, comanda: 0, data: format(parseISO(venda.dataVenda), 'dd/MM/yyyy') };
     console.log(data);
     postApi('/venda/save', data)
       .then((data) => {
@@ -68,8 +68,8 @@ export default function VendaFinalizar({ venid = null }) {
 
         postApi('/produto/fromvenda', { id: venid })
           .then((data) => {
-            if(data.length<1){
-              navigate('/Vendas/'+venid);
+            if (data.length < 1) {
+              navigate('/Vendas/' + venid);
             }
             setProdVen(data);
             var sub = 0;
@@ -167,14 +167,14 @@ export default function VendaFinalizar({ venid = null }) {
           <div className='card-footer'>
             <div className='row'>
               <div className='col'>
-                <Link to={'/Vendas/'+venda.vendaId}>
+                <Link to={'/Vendas/' + venda.vendaId}>
                   <button className='btn btn-secondary'>
                     <i className="bi bi-arrow-return-left"></i>
                     <span className='mx-1'>Voltar</span>
                   </button>
                 </Link>
               </div>
-              
+
               <div className='col text-end'>
                 <button onClick={handleShow} className='btn btn-success'>
                   <i className="bi bi-check-circle"></i>
@@ -201,7 +201,7 @@ export default function VendaFinalizar({ venid = null }) {
         </Modal.Body>
         <Modal.Footer>
           <button onClick={FinalizarCompra} className='btn btn-success'>
-            <i className="bi bi-trash"></i>
+            <i className="bi bi-bag-check"></i>
             <span className='mx-1'>Finalizar Venda</span>
           </button>
           <button onClick={handleClose} className='btn btn-secondary'>

@@ -8,21 +8,22 @@ export async function getApi(endpoint) {
     if (sessionStorage.getItem("token") != null) {
         token = sessionStorage.getItem("token");
     }
-    console.log("Teste ->"+token);
+
     return fetch(URL + endpoint, {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
-          'token': token,
+            'Content-Type': 'application/json',
+            'token': token,
         }
     })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Erro na solicitação');
+                throw new Error('Erro na request get com token');
             }
             return response.json();
         })
         .catch(error => {
+            window.location.href = "/Login";
             console.error('Erro na solicitação:', error);
         });
 }
@@ -36,17 +37,18 @@ export const postApi = async (endpoint, data) => {
 
         const response = await fetch(URL + endpoint, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'token': token,},
+            headers: { 'Content-Type': 'application/json', 'token': token, },
             body: JSON.stringify(data),
         });
 
         if (!response.ok) {
-            throw new Error(`Erro no REQUEST, Resposta: ${response.status}`);
+            throw new Error(`Erro no REQUEST GET com Token, Resposta: ${response.status}`);
         }
 
         const responseData = await response.json();
         return responseData;
     } catch (error) {
+        window.location.href = "/Login";
         throw new Error(`Erro no REQUEST: ${error.message}`);
     }
 };
@@ -56,17 +58,18 @@ export const postApiNoToken = async (endpoint, data) => {
     try {
         const response = await fetch(URL + endpoint, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data),
         });
 
         if (!response.ok) {
-            throw new Error(`Erro no REQUEST, Resposta: ${response.status}`);
+            throw new Error(`Erro no REQUEST POST sem Token, Resposta: ${response.status}`);
         }
 
         const responseData = await response.json();
         return responseData;
     } catch (error) {
+        window.location.href = "/Login";
         throw new Error(`Erro no REQUEST: ${error.message}`);
     }
 };
@@ -75,17 +78,18 @@ export async function getApiNoToken(endpoint) {
     return fetch(URL + endpoint, {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
         }
     })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Erro na solicitação');
+                throw new Error('Erro no Request GET sem Token');
             }
             return response.json();
         })
         .catch(error => {
             console.error('Erro na solicitação:', error);
+            window.location.href = "/Login";
         });
 }
 

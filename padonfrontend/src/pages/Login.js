@@ -7,8 +7,6 @@ import { useState, useEffect } from 'react';
 import { postApi, postApiNoToken } from '../Services/RequestHandler';
 
 export default function Login() {
-
-
   let navigate = useNavigate();
 
   const [inputs, setInputs] = useState({});
@@ -27,11 +25,12 @@ export default function Login() {
       senha: inputs.senha
     }
 
-    postApi('/login', data).then(data => {
+    sessionStorage.setItem("token", '');
+    sessionStorage.setItem("gerente", '');
+    postApiNoToken('/login', data).then(data => {
       sessionStorage.setItem("token", data.token);
       sessionStorage.setItem("gerente", data.gerente);
-      console.log(JSON.stringify(data.gerente));
-      navigate('/Home');
+      navigate('/');
     });
 
   }

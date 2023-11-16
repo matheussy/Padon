@@ -20,6 +20,8 @@ export default function Main() {
   return (
     <Routes> {/* The Routes decides which component to show based on the current URL.*/}
       <Route exact path='/' element={<Home />}></Route>
+      <Route exact path='/Index' element={<Home />}></Route>
+      <Route exact path='/Home' element={<Home />}></Route>
       <Route exact path='/Pagina' element={<Pagina />}></Route>
       <Route exact path='/Login' element={<Login />}></Route>
 
@@ -63,8 +65,6 @@ export default function Main() {
 
       <Route exact path='/Relatorios/' element={<RelatoriosIndex />}></Route>
       <Route exact path='/Relatorios/Produtos' element={<RelatoriosProdutos />}></Route>
-
-      <Route exact path='/Login' element={<Login />}></Route>
 
     </Routes>
   );

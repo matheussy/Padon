@@ -22,7 +22,7 @@ export default function RelatoriosIndex() {
 
   useEffect(() => {
     var req = { dtinicial: format(dataIni, 'dd/MM/yyyy'), dtfinal: format(dataFim, 'dd/MM/yyyy') }
-    console.log(req);
+    //console.log(req);
 
     postApi('/relatorio/bydate', req)
       .then((data) => {

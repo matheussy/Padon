@@ -5,6 +5,7 @@ import { getApi, postApi } from '../../Services/RequestHandler';
 import { format, parseISO } from 'date-fns';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+import RelatorioListaProdutos from './RelatorioListaProdutos';
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -22,12 +23,12 @@ export default function RelatoriosProdutos() {
 
     useEffect(() => {
         var req = { dtinicial: format(dataIni, 'dd/MM/yyyy'), dtfinal: format(dataFim, 'dd/MM/yyyy') }
-        console.log(req);
+        //console.log(req);
 
         postApi('/relatorio/produtos', req)
             .then((data) => {
                 setVendas(data);
-                alert(JSON.stringify(data));
+                console.log(data);
             })
             .catch((err) => {
                 console.log(err.message);
@@ -111,49 +112,35 @@ export default function RelatoriosProdutos() {
                         <div className='row'>
                             <div className='container' id="relatorio">
                                 <div className='row text-center'>
-                                    <span className='h3'>Relatório de Vendas: {JSON.stringify(vendas)}</span>
+                                    <span className='h3'>Relatório de Vendas com Produtos:</span>
                                     <div>{format(dataIni, 'dd/MM/yyyy')} - {format(dataFim, 'dd/MM/yyyy')}</div>
                                 </div>
                                 {vendas.length > 0 ?
                                     <Table responsive>
                                         <thead>
-                                            <tr>
+                                            <tr key={0}>
                                                 <th colSpan={4}>Venda Id</th>
                                                 <th colSpan={4}>Data</th>
                                                 <th colSpan={4}>Sub Total</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr></tr>
                                             {vendas.map((v, index) => {
-                                                <tr key={index}>
-                                                    <td colSpan={4}>{v.vendaId}</td>
-                                                    <td colSpan={4}>{format(parseISO(v.dataVenda), 'dd/MM/yyyy')}</td>
-                                                    <td colSpan={4}>R${v.valorTotal}</td>
-                                                </tr>
-
-                                                {
-                                                    v.produtos != null && v.produtos.length > 0 ?
-                                                    v.produtos.map((p, i) => {
-                                                        <tr key={index+"-"+i}>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
+                                                return (
+                                                    <>
+                                                        <tr>
+                                                            <td colSpan={4}>{v.vendaId}</td>
+                                                            <td colSpan={4}>{format(parseISO(v.dataVenda), 'dd/MM/yyyy')}</td>
+                                                            <td colSpan={4}>R${v.valorTotal}</td>
                                                         </tr>
-                                                    })
-
-                                                    :
-                                                    <tr></tr>
-                                                }
+                                                        <RelatorioListaProdutos produtos={v.produtos} />
+                                                    </>
+                                                )
                                             }
                                             )}
-
                                         </tbody>
                                     </Table>
-
                                     :
-
                                     <div className='row text-center mt-2'>
                                         <span className='h5'>Sem Vendas finalizadas</span>
                                     </div>

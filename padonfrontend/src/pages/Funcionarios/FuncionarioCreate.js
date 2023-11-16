@@ -44,7 +44,7 @@ export default function FuncionarioCreate() {
 
     console.log(data);
     postApiNoToken('/funcionario/create', data).then(data => {
-      navigate("/Funcionarios");
+      navigate("/Login");
     });
 
 
