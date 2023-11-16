@@ -105,7 +105,7 @@ public class Funcionario implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return getNome();
+		return getUsuario();
 	}
 
 	@Override
