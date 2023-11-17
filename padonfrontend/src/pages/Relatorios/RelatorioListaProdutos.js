@@ -38,17 +38,3 @@ export default function RelatorioListaProdutos({ produtos }) {
 
   );
 }
-
-/*return (
-            produtos.map((p, i) => {
-
-              return (
-                <tr className='p-3'>
-                  <td colSpan={3}>1</td>
-                  <td colSpan={3}>1</td>
-                  <td colSpan={3}>1</td>
-                  <td colSpan={3}>1</td>
-                </tr>
-              )
-            })
-          ); */

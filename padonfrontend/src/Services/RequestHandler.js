@@ -1,7 +1,5 @@
-//import React from 'react';
-
 const URL = 'http://localhost:8080';
-// Função para fazer uma solicitação POST para um endpoint específico 'Content-Type': 'application/json',
+
 
 export async function getApi(endpoint) {
     var token = "";

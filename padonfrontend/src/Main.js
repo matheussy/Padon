@@ -11,13 +11,9 @@ import { Venda, VendaIndex, VendaCreate, VendaFinalizar } from './pages/Vendas';
 import { LojaCreate, LojaIndex, LojaEdit } from './pages/Lojas';
 import { RelatoriosIndex, RelatoriosProdutos } from './pages/Relatorios';
 
-/*<Route exact path='/Teste' element={<Teste />}></Route>
-
-<Route exact path='/Produtos/Create' element={<ProdutoCreate />}></Route>*/
-
 export default function Main() {
   return (
-    <Routes> {/* The Routes decides which component to show based on the current URL.*/}
+    <Routes> {/* As Routes decidem qual componente mostrar dependendo do URL*/}
       <Route exact path='/' element={<Home />}></Route>
       <Route exact path='/Index' element={<Home />}></Route>
       <Route exact path='/Home' element={<Home />}></Route>

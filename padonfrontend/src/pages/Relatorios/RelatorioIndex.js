@@ -156,9 +156,3 @@ export default function RelatoriosIndex() {
     </div >
   );
 }
-
-/*{
-                          v.produtos.map((p, index) =>
-                            <tr></tr>
-                          )
-                        } */
